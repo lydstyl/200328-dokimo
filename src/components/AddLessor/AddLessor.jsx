@@ -20,7 +20,7 @@ export const AddLessor = () => {
       lessor[node.name] = node.value;
     });
 
-    console.log(lessor);
+    console.log(JSON.stringify(lessor, null, 4));
   };
 
   return (
@@ -42,6 +42,7 @@ export const AddLessor = () => {
       ) : (
         <>
           <Input name='managerFirstName' />
+          <Input name='managerLastName' />
         </>
       )}
 
