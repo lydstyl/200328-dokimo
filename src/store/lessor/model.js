@@ -3,6 +3,7 @@ import { action } from 'easy-peasy';
 export default {
   lessors: [
     {
+      id: 1,
       companyName: 'SCI XXX',
       managerFirstName: 'Gabriel',
       managerLastName: 'Brun',
@@ -12,6 +13,7 @@ export default {
       townName: 'Valenciennes'
     },
     {
+      id: 2,
       managerFirstName: 'Jean',
       managerLastName: 'Brun',
       address1: '200 rue Baldure',
@@ -23,5 +25,9 @@ export default {
 
   addLessor: action((state, payload) => {
     state.lessors.push(payload);
+  }),
+
+  delLessor: action((state, payload) => {
+    state.lessors = state.lessors.filter(lessor => lessor.id !== payload);
   })
 };

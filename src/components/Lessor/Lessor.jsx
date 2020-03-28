@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useStoreState } from 'easy-peasy';
 
+import { LessorCard } from '../LessorCard/LessorCard';
+
 export const Lessor = () => {
   const lessors = useStoreState(state => state.lessor.lessors);
 
@@ -10,7 +12,11 @@ export const Lessor = () => {
       <h1>Bailleurs</h1>
       <Link to='/add-lessor'>Ajouter un bailleur</Link>
 
-      <pre>{JSON.stringify(lessors, null, 4)}</pre>
+      <div className='row'>
+        {lessors.map(lessor => (
+          <LessorCard key={lessor.id} lessor={lessor} />
+        ))}
+      </div>
     </div>
   );
 };
