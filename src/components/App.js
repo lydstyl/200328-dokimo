@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StoreProvider } from 'easy-peasy';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -7,15 +7,20 @@ import { Nav } from './Nav/Nav';
 import { Lessor } from './Lessor/Lessor';
 import { AddLessor } from './AddLessor/AddLessor';
 
+import 'materialize-css/dist/css/materialize.min.css';
+import M from 'materialize-css/dist/js/materialize.min.js';
+
 import './App.css';
 
 function App() {
+  useEffect(() => {
+    M.AutoInit();
+  }, []);
+
   return (
     <StoreProvider store={store}>
       <Router>
         <div className='App'>
-          <h1>Real Estate Documents Creator</h1>
-
           <Nav />
         </div>
 
