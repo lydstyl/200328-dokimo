@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import { useStoreActions } from 'easy-peasy';
 
 import { Input } from '../Input/Input';
 
 export const AddLessor = () => {
   const [type, setType] = useState(null);
+
+  const { addLessor } = useStoreActions(actions => actions.lessor);
 
   const handleChangeType = e => {
     setType(e.target.value);
@@ -21,6 +24,8 @@ export const AddLessor = () => {
     });
 
     console.log(JSON.stringify(lessor, null, 4));
+
+    addLessor(lessor);
   };
 
   return (

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useStoreState } from 'easy-peasy';
 
 export const Lessor = () => {
-  const lessors = useStoreState(state => state.lessors);
+  const lessors = useStoreState(state => state.lessor.lessors);
 
   return (
     <div>
