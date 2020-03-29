@@ -1,13 +1,10 @@
 import React, { useEffect } from 'react';
 import { StoreProvider } from 'easy-peasy';
-import {
-  BrowserRouter as Router,
-  Switch
-  // , Route
-} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import store from '../store/store';
 import { Nav } from './Nav/Nav';
+import { Home } from '../pages/Home/Home';
 
 import { PrivateRoute } from './PrivateRoute/PrivateRoute';
 
@@ -32,9 +29,9 @@ function App() {
         </div>
 
         <Switch>
-          {/* <Route path='/lessors'>
-            <Lessor />
-          </Route> */}
+          <Route exact path='/'>
+            <Home />
+          </Route>
 
           <PrivateRoute path='/lessors'>
             <Lessor />
