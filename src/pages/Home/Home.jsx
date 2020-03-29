@@ -1,13 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-import { auth } from '../../firebase/firebase';
+import { useStoreActions } from 'easy-peasy';
 
 export const Home = () => {
+  const signOut = useStoreActions(actions => actions.user.signOut);
+
   const handleSignOut = e => {
     e.preventDefault();
 
-    auth.signOut();
+    signOut();
   };
 
   return (
@@ -22,7 +23,11 @@ export const Home = () => {
         <i className='material-icons'>business</i> ou créer un compte
       </Link>
 
-      <a onClick={handleSignOut} href='#!' class='waves-effect waves-light btn'>
+      <a
+        onClick={handleSignOut}
+        href='#!'
+        className='waves-effect waves-light btn'
+      >
         signOut
       </a>
     </div>

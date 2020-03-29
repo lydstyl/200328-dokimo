@@ -1,20 +1,19 @@
 import React from 'react';
 
-import { auth } from '../../firebase/firebase';
-import M from 'materialize-css/dist/js/materialize.min.js';
+import { useStoreActions } from 'easy-peasy';
 
 export const Login = () => {
+  const signInWithEmailAndPassword = useStoreActions(
+    actions => actions.user.signInWithEmailAndPassword
+  );
+
   const handleLogin = e => {
     e.preventDefault();
 
-    auth
-      .signInWithEmailAndPassword(
-        document.querySelector('#email').value,
-        document.querySelector('#password').value
-      )
-      .catch(function(error) {
-        M.toast({ html: error.message });
-      });
+    signInWithEmailAndPassword({
+      email: document.querySelector('#email').value,
+      password: document.querySelector('#password').value
+    });
   };
 
   return (

@@ -1,26 +1,22 @@
 import React, { useRef } from 'react';
 
-import M from 'materialize-css/dist/js/materialize.min.js';
-
-import { auth } from '../../firebase/firebase';
+import { useStoreActions } from 'easy-peasy';
 
 export const SignUp = () => {
+  const createUserWithEmailAndPassword = useStoreActions(
+    actions => actions.user.createUserWithEmailAndPassword
+  );
+
   const emailInput = useRef(null);
   const passwordInput = useRef(null);
 
   const handleSignUp = e => {
     e.preventDefault();
 
-    M.toast({ html: 'createUserWithEmailAndPassword' });
-
-    auth
-      .createUserWithEmailAndPassword(
-        emailInput.current.value,
-        passwordInput.current.value
-      )
-      .catch(function(error) {
-        M.toast({ html: error.message });
-      });
+    createUserWithEmailAndPassword({
+      email: emailInput.current.value,
+      password: passwordInput.current.value
+    });
   };
 
   return (
