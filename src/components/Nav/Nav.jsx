@@ -5,6 +5,8 @@ import {
   useStoreActions
 } from 'easy-peasy';
 
+import M from 'materialize-css/dist/js/materialize.min.js';
+
 import { auth } from '../../firebase/firebase';
 
 export const Nav = () => {
@@ -24,13 +26,15 @@ export const Nav = () => {
         var uid = user.uid;
         // var providerData = user.providerData;
         setIsAuthenticated(true);
-        alert(uid);
+
+        M.toast({ html: `user connected ${uid}` });
         // ...
       } else {
         // User is signed out.
         // ...
         setIsAuthenticated(false);
-        alert('no user');
+
+        M.toast({ html: 'no user' });
       }
     });
   }, [setIsAuthenticated]);

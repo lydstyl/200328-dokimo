@@ -1,35 +1,47 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { auth } from '../../firebase/firebase';
+import M from 'materialize-css/dist/js/materialize.min.js';
 
 export const Login = () => {
-  useEffect(() => {
-    const email = 'ddddddd@gmail.com';
-    const password = 'dddddddddddddd';
+  const handleLogin = e => {
+    e.preventDefault();
 
-    auth.signInWithEmailAndPassword(email, password).catch(function(error) {
-      // Handle Errors here.
-      // var errorCode = error.code;
-      // var errorMessage = error.message;
-      // ...
-    });
-  }, []);
+    auth
+      .signInWithEmailAndPassword(
+        document.querySelector('#email').value,
+        document.querySelector('#password').value
+      )
+      .catch(function(error) {
+        M.toast({ html: error.message });
+      });
+  };
 
   return (
-    <div>
-      <h1>Login</h1>
+    <form className='row'>
+      <div className='input-field col s12'>
+        <h1>Login</h1>
+      </div>
 
-      <form className='row'>
-        <div className='input-field col s12 m6'>
-          <input id='email' type='email' className='validate' />
-          <label htmlFor='email'>Email</label>
-        </div>
+      <div className='input-field col s12 m6'>
+        <input id='email' type='email' className='validate' />
+        <label htmlFor='email'>Email</label>
+      </div>
 
-        <div className='input-field col s12 m6'>
-          <input id='password' type='password' className='validate' />
-          <label htmlFor='password'>Password</label>
-        </div>
-      </form>
-    </div>
+      <div className='input-field col s12 m6'>
+        <input id='password' type='password' className='validate' />
+        <label htmlFor='password'>Password</label>
+      </div>
+
+      <div className='input-field col s12'>
+        <a
+          onClick={handleLogin}
+          href='!#'
+          className='waves-effect waves-light btn'
+        >
+          <i className='material-icons left'>cloud</i>button
+        </a>
+      </div>
+    </form>
   );
 };
