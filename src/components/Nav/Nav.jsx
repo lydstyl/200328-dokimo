@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useStoreState, useStoreActions } from 'easy-peasy';
+import {
+  // useStoreState,
+  useStoreActions
+} from 'easy-peasy';
 
 import { auth } from '../../firebase/firebase';
 
 export const Nav = () => {
-  const { isAuthenticated } = useStoreState(state => state.user);
+  // const { isAuthenticated } = useStoreState(state => state.user);
 
   const { setIsAuthenticated } = useStoreActions(actions => actions.user);
-
-  console.log('ddd', setIsAuthenticated);
 
   useEffect(() => {
     auth.onAuthStateChanged(function(user) {
@@ -32,7 +33,7 @@ export const Nav = () => {
         alert('no user');
       }
     });
-  }, []);
+  }, [setIsAuthenticated]);
 
   return (
     <>

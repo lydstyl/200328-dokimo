@@ -5,6 +5,8 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import store from '../store/store';
 import { Nav } from './Nav/Nav';
 import { Home } from '../pages/Home/Home';
+import { Login } from '../pages/Login/Login';
+import { SignUp } from '../pages/SignUp/SignUp';
 
 import { PrivateRoute } from './PrivateRoute/PrivateRoute';
 
@@ -31,6 +33,13 @@ function App() {
         <Switch>
           <Route exact path='/'>
             <Home />
+          </Route>
+
+          <Route exact path='/login'>
+            <Login />
+          </Route>
+          <Route exact path='/sign-up'>
+            <SignUp />
           </Route>
 
           <PrivateRoute path='/lessors'>
