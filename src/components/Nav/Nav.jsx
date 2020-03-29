@@ -5,39 +5,14 @@ import {
   useStoreActions
 } from 'easy-peasy';
 
-import M from 'materialize-css/dist/js/materialize.min.js';
-
-import { auth } from '../../firebase/firebase';
-
 export const Nav = () => {
-  // const { isAuthenticated } = useStoreState(state => state.user);
-
-  const { setIsAuthenticated } = useStoreActions(actions => actions.user);
+  const onAuthStateChanged = useStoreActions(
+    actions => actions.user.onAuthStateChanged
+  );
 
   useEffect(() => {
-    auth.onAuthStateChanged(function(user) {
-      if (user) {
-        // User is signed in.
-        // var displayName = user.displayName;
-        // var email = user.email;
-        // var emailVerified = user.emailVerified;
-        // var photoURL = user.photoURL;
-        // var isAnonymous = user.isAnonymous;
-        var uid = user.uid;
-        // var providerData = user.providerData;
-        setIsAuthenticated(true);
-
-        M.toast({ html: `user connected ${uid}` });
-        // ...
-      } else {
-        // User is signed out.
-        // ...
-        setIsAuthenticated(false);
-
-        M.toast({ html: 'no user' });
-      }
-    });
-  }, [setIsAuthenticated]);
+    onAuthStateChanged();
+  }, [onAuthStateChanged]);
 
   return (
     <>
