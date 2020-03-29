@@ -1,9 +1,16 @@
 import React, { useEffect } from 'react';
 import { StoreProvider } from 'easy-peasy';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch
+  // , Route
+} from 'react-router-dom';
 
 import store from '../store/store';
 import { Nav } from './Nav/Nav';
+
+import { PrivateRoute } from './PrivateRoute/PrivateRoute';
+
 import { Lessor } from './Lessor/Lessor';
 import { AddLessor } from './AddLessor/AddLessor';
 
@@ -25,13 +32,17 @@ function App() {
         </div>
 
         <Switch>
-          <Route path='/lessors'>
+          {/* <Route path='/lessors'>
             <Lessor />
-          </Route>
+          </Route> */}
 
-          <Route path='/add-lessor'>
+          <PrivateRoute path='/lessors'>
+            <Lessor />
+          </PrivateRoute>
+
+          <PrivateRoute path='/add-lessor'>
             <AddLessor />
-          </Route>
+          </PrivateRoute>
         </Switch>
       </Router>
     </StoreProvider>

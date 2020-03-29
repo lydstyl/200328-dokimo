@@ -1,16 +1,11 @@
 import { createStore } from 'easy-peasy';
 
+import userModel from './user/model';
 import lessorsModel from './lessor/model';
 
-const productsModel = {
-  items: {
-    1: { id: 1, name: 'Peas', price: 10 }
-  }
-};
-
 const storeModel = {
-  lessor: lessorsModel,
-  products: productsModel
+  user: userModel,
+  lessor: lessorsModel
 };
 
 export default createStore(storeModel);
