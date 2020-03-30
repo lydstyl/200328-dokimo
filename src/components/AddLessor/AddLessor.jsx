@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
-import { useStoreActions } from 'easy-peasy';
+import { useStoreState, useStoreActions } from 'easy-peasy';
+import { useHistory } from 'react-router-dom';
 
 import { Input } from '../Input/Input';
 
 export const AddLessor = () => {
   const [type, setType] = useState(null);
 
-  const { addLessor } = useStoreActions(actions => actions.lessor);
+  const {
+    user: { uid }
+  } = useStoreState(state => state.user);
+
+  const { firestoreAddLessor } = useStoreActions(actions => actions.lessor);
+
+  const history = useHistory();
 
   const handleChangeType = e => {
     setType(e.target.value);
@@ -23,9 +30,11 @@ export const AddLessor = () => {
       lessor[node.name] = node.value;
     });
 
-    console.log(JSON.stringify(lessor, null, 4));
+    lessor['uid'] = uid;
 
-    addLessor(lessor);
+    firestoreAddLessor(lessor);
+
+    history.push('/lessors');
   };
 
   return (

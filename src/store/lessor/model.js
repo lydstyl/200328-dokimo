@@ -1,4 +1,5 @@
-import { action } from 'easy-peasy';
+import { thunk, action } from 'easy-peasy';
+import { firestore } from '../../firebase/firebase';
 
 export default {
   lessors: [
@@ -22,6 +23,23 @@ export default {
       townName: 'Raismes'
     }
   ],
+
+  // THUNKS
+  firestoreAddLessor: thunk(async (actions, payload) => {
+    firestore
+      .collection('lessors')
+      .add(payload)
+      .then(function(docRef) {
+        console.log('Document written with ID: ', docRef.id);
+
+        actions.addLessor({ ...payload, id: docRef.id }); // 👈 dispatch local actions to update state
+      })
+      .catch(function(error) {
+        console.error('Error adding document: ', error);
+      });
+  }),
+
+  // ACTIONS
 
   addLessor: action((state, payload) => {
     state.lessors.push(payload);
