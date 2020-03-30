@@ -29,48 +29,58 @@ export const AddLessor = () => {
   };
 
   return (
-    <form>
-      <h1>Ajouter un bailleur</h1>
+    <form className='row'>
+      <h1 className='col s12'>Ajouter un bailleur</h1>
 
-      <div className='row'>
-        <div className='input-field col s12'>
-          <select onChange={handleChangeType}>
-            <option defaultValue=''>--Merci de choisir une option--</option>
-            <option value='person'>Personne physique</option>
-            <option value='company'>Société</option>
-          </select>
+      <div className='col s12'>
+        <div className='input-fiel'>
+          <div>
+            <select onChange={handleChangeType} style={{ display: 'block' }}>
+              <option value=''>--Merci de choisir une option--</option>
+              <option value='person'>Personne physique</option>
+              <option value='company'>Société</option>
+            </select>
 
-          <label>Type</label>
+            <label>Type</label>
+          </div>
         </div>
       </div>
 
       {type === 'company' ? (
-        <div className='row'>
-          <div className='input-field col s12'>
-            <div className='row'>
-              <Input name='companyName' size='s12' />
-            </div>
-            <div className='row'>
-              <Input name='managerFirstName' size='s6' />
-              <Input name='managerLastName' size='s6' />
-            </div>
+        <div className='input-field col s12'>
+          <div className='row'>
+            <Input name='companyName' size='s12' />
+          </div>
+          <div className='row'>
+            <Input name='managerFirstName' size='s6' />
+            <Input name='managerLastName' size='s6' />
           </div>
         </div>
       ) : (
-        <>
-          <Input name='managerFirstName' />
-          <Input name='managerLastName' />
-        </>
+        <div className='col s12'>
+          <div className='row'>
+            <Input name='managerFirstName' size='s6' />
+            <Input name='managerLastName' size='s6' />
+          </div>
+        </div>
       )}
 
-      <Input name='address1' />
-      <Input name='address2' />
-      <div className='row'>
-        <Input name='postalCode' size='s6' />
-        <Input name='townName' size='s6' />
-      </div>
+      <Input name='address1' size='s12' />
+      <Input name='address2' size='s12' />
 
-      <button onClick={e => handleAddLessor(e)}>+</button>
+      <div className='col s12'>
+        <div className='row'>
+          <Input name='postalCode' size='s4' />
+          <Input name='townName' size='s4' />
+
+          <button
+            onClick={e => handleAddLessor(e)}
+            className='waves-effect waves-light btn col s4'
+          >
+            +
+          </button>
+        </div>
+      </div>
     </form>
   );
 };

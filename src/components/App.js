@@ -26,30 +26,30 @@ function App() {
   return (
     <StoreProvider store={store}>
       <Router>
-        <div className='App'>
-          <Nav />
+        <Nav />
+
+        <div className='container'>
+          <Switch>
+            <Route exact path='/'>
+              <Home />
+            </Route>
+
+            <Route exact path='/login'>
+              <Login />
+            </Route>
+            <Route exact path='/sign-up'>
+              <SignUp />
+            </Route>
+
+            <PrivateRoute path='/lessors'>
+              <Lessor />
+            </PrivateRoute>
+
+            <PrivateRoute path='/add-lessor'>
+              <AddLessor />
+            </PrivateRoute>
+          </Switch>
         </div>
-
-        <Switch>
-          <Route exact path='/'>
-            <Home />
-          </Route>
-
-          <Route exact path='/login'>
-            <Login />
-          </Route>
-          <Route exact path='/sign-up'>
-            <SignUp />
-          </Route>
-
-          <PrivateRoute path='/lessors'>
-            <Lessor />
-          </PrivateRoute>
-
-          <PrivateRoute path='/add-lessor'>
-            <AddLessor />
-          </PrivateRoute>
-        </Switch>
       </Router>
     </StoreProvider>
   );

@@ -8,14 +8,16 @@ export const Lessor = () => {
   const lessors = useStoreState(state => state.lessor.lessors);
 
   return (
-    <div>
-      <h1>Bailleurs</h1>
-      <Link to='/add-lessor'>Ajouter un bailleur</Link>
+    <div className='row'>
+      <div className='col s12'>
+        <h1>Bailleurs</h1>
+        <Link to='/add-lessor'>Ajouter un bailleur</Link>
 
-      <div className='row'>
-        {lessors.map(lessor => (
-          <LessorCard key={lessor.id} lessor={lessor} />
-        ))}
+        <div className='row'>
+          {lessors.map(lessor => (
+            <LessorCard key={lessor.id} lessor={lessor} />
+          ))}
+        </div>
       </div>
     </div>
   );

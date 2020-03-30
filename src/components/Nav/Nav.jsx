@@ -15,8 +15,8 @@ export const Nav = () => {
   }, [onAuthStateChanged]);
 
   return (
-    <>
-      <nav>
+    <div className='row'>
+      <nav className='col s12'>
         <div className='nav-wrapper'>
           <Link className='brand-logo' to='/'>
             <i className='material-icons'>business</i> DOKIMO
@@ -70,6 +70,6 @@ export const Nav = () => {
           <Link to='/'>Révisions de loyer</Link>
         </li>
       </ul>
-    </>
+    </div>
   );
 };
