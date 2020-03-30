@@ -2,19 +2,19 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 
-import { LessorCard } from '../LessorCard/LessorCard';
 import { Preloader } from '../Preloader/Preloader';
+import { LessorCard } from '../LessorCard/LessorCard';
 
 export const Lessor = () => {
   const {
     user: { uid }
   } = useStoreState(state => state.user);
+
   const { lessors, loading } = useStoreState(state => state.lessor);
+
   const { firestoreGetLessors } = useStoreActions(actions => actions.lessor);
 
   useEffect(() => {
-    console.log('uid', uid);
-
     firestoreGetLessors(uid);
   }, [uid, firestoreGetLessors]);
 
