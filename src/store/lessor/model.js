@@ -52,6 +52,27 @@ export default {
       });
   }),
 
+  firestoreDelLessor: thunk(async (actions, payload) => {
+    actions.setLoading(true);
+
+    firestore
+      .collection('lessors')
+      .doc(payload)
+      .delete()
+      .then(function() {
+        console.log('Document successfully deleted!');
+
+        actions.delLessor(payload);
+
+        actions.setLoading(false);
+      })
+      .catch(function(error) {
+        console.error('Error removing document: ', error);
+
+        actions.setLoading(false);
+      });
+  }),
+
   // ACTIONS
   setLoading: action((state, payload) => {
     state.loading = payload;

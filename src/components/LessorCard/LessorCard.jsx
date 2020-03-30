@@ -2,7 +2,7 @@ import React from 'react';
 import { useStoreActions } from 'easy-peasy';
 
 export const LessorCard = ({ lessor }) => {
-  const { delLessor } = useStoreActions(actions => actions.lessor);
+  const { firestoreDelLessor } = useStoreActions(actions => actions.lessor);
 
   const {
     id,
@@ -18,7 +18,7 @@ export const LessorCard = ({ lessor }) => {
   const handleDelete = e => {
     e.preventDefault();
 
-    delLessor(id);
+    firestoreDelLessor(id);
   };
 
   return (
