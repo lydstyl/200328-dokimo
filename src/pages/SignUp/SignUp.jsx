@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 
 import { useStoreActions } from 'easy-peasy';
 
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
 export const SignUp = () => {
   const history = useHistory();
@@ -55,6 +55,10 @@ export const SignUp = () => {
           <i className='material-icons left'>cloud</i>button
         </a>
       </div>
+
+      <p>
+        <Link to='/login'>ou se connecter</Link>
+      </p>
     </form>
   );
 };

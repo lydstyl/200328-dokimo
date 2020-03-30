@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useStoreActions } from 'easy-peasy';
 
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
 export const Login = () => {
   const history = useHistory();
@@ -47,6 +47,10 @@ export const Login = () => {
           <i className='material-icons left'>cloud</i>button
         </a>
       </div>
+
+      <p>
+        <Link to='/sign-up'>ou créer un compte</Link>
+      </p>
     </form>
   );
 };
