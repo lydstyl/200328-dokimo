@@ -2,27 +2,9 @@ import { thunk, action } from 'easy-peasy';
 import { firestore } from '../../firebase/firebase';
 
 export default {
-  lessors: [
-    {
-      id: 1,
-      companyName: 'SCI XXX',
-      managerFirstName: 'Gabriel',
-      managerLastName: 'Brun',
-      address1: '10 Rue Denis Papin',
-      address2: '',
-      postalCode: '59300',
-      townName: 'Valenciennes'
-    },
-    {
-      id: 2,
-      managerFirstName: 'Jean',
-      managerLastName: 'Brun',
-      address1: '200 rue Baldure',
-      address2: '',
-      postalCode: '59590',
-      townName: 'Raismes'
-    }
-  ],
+  lessors: [],
+
+  loading: false,
 
   // THUNKS
   firestoreAddLessor: thunk(async (actions, payload) => {
@@ -39,10 +21,37 @@ export default {
       });
   }),
 
+  firestoreGetLessors: thunk(async (actions, payload) => {
+    actions.setLoading(true);
+
+    firestore
+      .collection('lessors')
+      .where('uid', '==', payload)
+      .get()
+      .then(querySnapshot => {
+        const lessors = [];
+
+        querySnapshot.forEach(doc => {
+          lessors.push({ ...doc.data(), id: doc.id });
+        });
+
+        actions.setLessors(lessors);
+
+        actions.setLoading(false);
+      });
+  }),
+
   // ACTIONS
+  setLoading: action((state, payload) => {
+    state.loading = payload;
+  }),
 
   addLessor: action((state, payload) => {
     state.lessors.push(payload);
+  }),
+
+  setLessors: action((state, payload) => {
+    state.lessors = payload;
   }),
 
   delLessor: action((state, payload) => {
