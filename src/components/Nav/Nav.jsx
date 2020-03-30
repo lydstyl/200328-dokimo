@@ -1,14 +1,23 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import {
-  // useStoreState,
-  useStoreActions
-} from 'easy-peasy';
+import { useStoreState, useStoreActions } from 'easy-peasy';
+import { Link, useHistory } from 'react-router-dom';
 
 export const Nav = () => {
-  const onAuthStateChanged = useStoreActions(
-    actions => actions.user.onAuthStateChanged
+  const history = useHistory();
+
+  const { email } = useStoreState(state => state.user);
+
+  const { signOut, onAuthStateChanged } = useStoreActions(
+    actions => actions.user
   );
+
+  const handleSignOut = e => {
+    e.preventDefault();
+
+    signOut();
+
+    history.push('/login');
+  };
 
   useEffect(() => {
     onAuthStateChanged();
@@ -43,6 +52,19 @@ export const Nav = () => {
             <li>
               <Link to='/'>Révisions de loyer</Link>
             </li>
+
+            {email && (
+              <li style={{ display: 'flex' }}>
+                <span className=''>{email}</span>
+                <i
+                  onClick={handleSignOut}
+                  className='material-icons'
+                  style={{ marginLeft: '10px', cursor: 'pointer' }}
+                >
+                  face
+                </i>
+              </li>
+            )}
           </ul>
         </div>
       </nav>
@@ -69,6 +91,21 @@ export const Nav = () => {
         <li>
           <Link to='/'>Révisions de loyer</Link>
         </li>
+
+        {email && (
+          <li>
+            <a href='!#' style={{ display: 'flex' }}>
+              <span className=''>{email}</span>
+              <i
+                onClick={handleSignOut}
+                className='material-icons'
+                style={{ marginLeft: '10px', cursor: 'pointer' }}
+              >
+                face
+              </i>
+            </a>
+          </li>
+        )}
       </ul>
     </div>
   );

@@ -2,7 +2,11 @@ import React, { useRef } from 'react';
 
 import { useStoreActions } from 'easy-peasy';
 
+import { useHistory } from 'react-router-dom';
+
 export const SignUp = () => {
+  const history = useHistory();
+
   const createUserWithEmailAndPassword = useStoreActions(
     actions => actions.user.createUserWithEmailAndPassword
   );
@@ -17,6 +21,8 @@ export const SignUp = () => {
       email: emailInput.current.value,
       password: passwordInput.current.value
     });
+
+    history.push('/lessors');
   };
 
   return (

@@ -6,9 +6,12 @@ import { Preloader } from '../Preloader/Preloader';
 import { LessorCard } from '../LessorCard/LessorCard';
 
 export const Lessor = () => {
-  const {
-    user: { uid }
-  } = useStoreState(state => state.user);
+  const { user } = useStoreState(state => state.user);
+
+  let uid = null;
+  if (user) {
+    uid = user.uid;
+  }
 
   const { lessors, loading } = useStoreState(state => state.lessor);
 

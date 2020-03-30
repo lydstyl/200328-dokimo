@@ -2,7 +2,11 @@ import React from 'react';
 
 import { useStoreActions } from 'easy-peasy';
 
+import { useHistory } from 'react-router-dom';
+
 export const Login = () => {
+  const history = useHistory();
+
   const signInWithEmailAndPassword = useStoreActions(
     actions => actions.user.signInWithEmailAndPassword
   );
@@ -14,6 +18,8 @@ export const Login = () => {
       email: document.querySelector('#email').value,
       password: document.querySelector('#password').value
     });
+
+    history.push('/lessors');
   };
 
   return (

@@ -7,6 +7,8 @@ import M from 'materialize-css/dist/js/materialize.min.js';
 export default {
   user: null,
   isAuthenticated: false,
+  loading: false,
+  email: null,
 
   // THUNKS
   signOut: thunk(async actions => {
@@ -61,12 +63,15 @@ export default {
   // ACTIONS
   setUser: action((state, payload) => {
     state.user = payload;
+    state.email = payload.email;
   }),
 
   setIsAuthenticated: action((state, payload) => {
     state.isAuthenticated = payload;
+
     if (!payload) {
       state.uid = null;
+      state.email = null;
     }
   })
 };
