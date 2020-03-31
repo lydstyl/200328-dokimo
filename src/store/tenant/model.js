@@ -51,6 +51,27 @@ export default {
       });
   }),
 
+  firestoreDelTenant: thunk(async (actions, payload) => {
+    actions.setLoading(true);
+
+    firestore
+      .collection('tenants')
+      .doc(payload)
+      .delete()
+      .then(function() {
+        console.log('Document successfully deleted!');
+
+        actions.delTenant(payload);
+
+        actions.setLoading(false);
+      })
+      .catch(function(error) {
+        console.error('Error removing document: ', error);
+
+        actions.setLoading(false);
+      });
+  }),
+
   // ACTIONS
   setLoading: action((state, payload) => {
     state.loading = payload;
@@ -62,5 +83,9 @@ export default {
 
   setTenants: action((state, payload) => {
     state.tenants = payload;
+  }),
+
+  delTenant: action((state, payload) => {
+    state.tenants = state.tenants.filter(tenant => tenant.id !== payload);
   })
 };

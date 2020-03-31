@@ -2,17 +2,20 @@ import React, { useEffect } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 
 import { Input } from '../../components/Input/Input';
+import { Preloader } from '../../components/Preloader/Preloader';
 
 export const Tenants = () => {
   const {
     user: { uid }
   } = useStoreState(state => state.user);
 
-  const { tenants } = useStoreState(state => state.tenant);
+  const { tenants, loading } = useStoreState(state => state.tenant);
 
-  const { firestoreAddTenant, firestoreGetTenants } = useStoreActions(
-    actions => actions.tenant
-  );
+  const {
+    firestoreAddTenant,
+    firestoreGetTenants,
+    firestoreDelTenant
+  } = useStoreActions(actions => actions.tenant);
 
   const handleAdd = e => {
     e.preventDefault();
@@ -28,6 +31,10 @@ export const Tenants = () => {
     });
 
     firestoreAddTenant(tenant);
+  };
+
+  const handleDelete = id => {
+    firestoreDelTenant(id);
   };
 
   useEffect(() => {
@@ -52,6 +59,20 @@ export const Tenants = () => {
       </form>
 
       <pre>{JSON.stringify(tenants, null, 4)}</pre>
+
+      {loading && <Preloader />}
+
+      {!loading &&
+        tenants.length !== 0 &&
+        tenants.map(tenant => (
+          <li key={tenant.id}>
+            <span>{tenant.civility}</span> <span>{tenant.firstName}</span>{' '}
+            <span>{tenant.lastName}</span>
+            <button onClick={() => handleDelete(tenant.id)}>
+              <i className='material-icons'>delete</i>
+            </button>
+          </li>
+        ))}
     </div>
   );
 };
