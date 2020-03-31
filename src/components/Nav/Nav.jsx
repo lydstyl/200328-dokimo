@@ -38,10 +38,10 @@ export const Nav = () => {
               <Link to='/bailleurs'>Bailleurs</Link>
             </li>
             <li>
-              <Link to='/lots'>Lots</Link>
+              <Link to='/locataires'>Locataires</Link>
             </li>
             <li>
-              <Link to='/locataires'>Locataires</Link>
+              <Link to='/lots'>Lots</Link>
             </li>
 
             {email && (
@@ -68,10 +68,10 @@ export const Nav = () => {
           <Link to='/bailleurs'>Bailleurs</Link>
         </li>
         <li>
-          <Link to='/lots'>Lots</Link>
+          <Link to='/locataires'>Locataires</Link>
         </li>
         <li>
-          <Link to='/locataires'>Locataires</Link>
+          <Link to='/lots'>Lots</Link>
         </li>
 
         {email && (

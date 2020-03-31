@@ -1,9 +1,12 @@
-import { thunk, action } from 'easy-peasy';
+import {
+  thunk
+  //action
+} from 'easy-peasy';
 import { firestore } from '../../firebase/firebase';
 
 export default {
   loading: false,
-  batches: []
+  batches: [],
 
   // THUNKS
   firestoreAddLessor: thunk(async (actions, payload) => {
@@ -24,7 +27,7 @@ export default {
 
         actions.setLoading(false);
       });
-  }),
+  })
 
   // firestoreGetLessors: thunk(async (actions, payload) => {
   //   actions.setLoading(true);

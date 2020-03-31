@@ -1,5 +1,5 @@
 import React from 'react';
-import { useStoreState, useStoreActions } from 'easy-peasy';
+import { useStoreState } from 'easy-peasy';
 import { Link } from 'react-router-dom';
 
 export const Batches = () => {
