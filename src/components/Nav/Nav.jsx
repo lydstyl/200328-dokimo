@@ -41,16 +41,7 @@ export const Nav = () => {
               <Link to='/lots'>Lots</Link>
             </li>
             <li>
-              <Link to='/'>Avis d'échéance</Link>
-            </li>
-            <li>
-              <Link to='/'>Quittances</Link>
-            </li>
-            <li>
-              <Link to='/'>Reçu partiel de loyer</Link>
-            </li>
-            <li>
-              <Link to='/'>Révisions de loyer</Link>
+              <Link to='/locataires'>Locataires</Link>
             </li>
 
             {email && (
@@ -80,16 +71,7 @@ export const Nav = () => {
           <Link to='/lots'>Lots</Link>
         </li>
         <li>
-          <Link to='/'>Avis d'échéance</Link>
-        </li>
-        <li>
-          <Link to='/'>Quittances</Link>
-        </li>
-        <li>
-          <Link to='/'>Reçu partiel de loyer</Link>
-        </li>
-        <li>
-          <Link to='/'>Révisions de loyer</Link>
+          <Link to='/locataires'>Locataires</Link>
         </li>
 
         {email && (

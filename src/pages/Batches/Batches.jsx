@@ -1,6 +1,6 @@
 import React from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export const Batches = () => {
   const { lessors } = useStoreState(state => state.lessor);
@@ -9,20 +9,22 @@ export const Batches = () => {
     <div>
       <h1>Lots</h1>
 
-      {lessors.length ? (
-        <>
-          <p>Ajouter un lot</p>
-
-          <p>Liste des lots</p>
-        </>
+      {!lessors.length ? (
+        <p>
+          <Link to='/bailleurs'>
+            Vous devez d'abord ajouter un bailleurs pour pouvoir ajouter un lot
+          </Link>
+        </p>
       ) : (
         <>
-          <p>
-            Vous devez d'abord ajouter un bailleurs pour pouvoir ajouter un lot
-          </p>
-          <p>
-            <Link to='/bailleurs'>Bailleurs</Link>
-          </p>
+          <Link to='/ajouter-lot'>Ajouter un lot</Link>
+          <ul>
+            <li>Avis d'échéance</li>
+            <li>Quittance</li>
+            <li>Reçu partiel de loyer</li>
+            <li>Révision de loyer</li>
+          </ul>
+          <p>Liste des lots</p>
         </>
       )}
     </div>

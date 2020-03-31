@@ -12,7 +12,11 @@ import { PrivateRoute } from './PrivateRoute/PrivateRoute';
 
 import { Lessor } from './Lessor/Lessor';
 import { AddLessor } from './AddLessor/AddLessor';
+
 import { Batches } from '../pages/Batches/Batches';
+import { AddBatch } from '../pages/AddBatch/AddBatch';
+
+import { Tenants } from '../pages/Tenants/Tenants';
 
 import 'materialize-css/dist/css/materialize.min.css';
 import M from 'materialize-css/dist/js/materialize.min.js';
@@ -45,13 +49,19 @@ function App() {
             <PrivateRoute path='/bailleurs'>
               <Lessor />
             </PrivateRoute>
-
             <PrivateRoute path='/add-lessor'>
               <AddLessor />
             </PrivateRoute>
 
+            <PrivateRoute path='/locataires'>
+              <Tenants />
+            </PrivateRoute>
+
             <PrivateRoute path='/lots'>
               <Batches />
+            </PrivateRoute>
+            <PrivateRoute path='/ajouter-lot'>
+              <AddBatch />
             </PrivateRoute>
           </Switch>
         </div>

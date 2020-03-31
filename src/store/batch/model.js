@@ -5,26 +5,26 @@ export default {
   loading: false,
   batches: []
 
-  // // THUNKS
-  // firestoreAddLessor: thunk(async (actions, payload) => {
-  //   actions.setLoading(true);
+  // THUNKS
+  firestoreAddLessor: thunk(async (actions, payload) => {
+    actions.setLoading(true);
 
-  //   firestore
-  //     .collection('lessors')
-  //     .add(payload)
-  //     .then(function(docRef) {
-  //       console.log('Document written with ID: ', docRef.id);
+    firestore
+      .collection('lessors')
+      .add(payload)
+      .then(function(docRef) {
+        console.log('Document written with ID: ', docRef.id);
 
-  //       //actions.addLessor({ ...payload, id: docRef.id }); // 👈 dispatch local actions to update state
+        //actions.addLessor({ ...payload, id: docRef.id }); // 👈 dispatch local actions to update state
 
-  //       actions.setLoading(false);
-  //     })
-  //     .catch(function(error) {
-  //       console.error('Error adding document: ', error);
+        actions.setLoading(false);
+      })
+      .catch(function(error) {
+        console.error('Error adding document: ', error);
 
-  //       actions.setLoading(false);
-  //     });
-  // }),
+        actions.setLoading(false);
+      });
+  }),
 
   // firestoreGetLessors: thunk(async (actions, payload) => {
   //   actions.setLoading(true);
