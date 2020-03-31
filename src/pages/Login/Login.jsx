@@ -7,6 +7,10 @@ import { useHistory, Link } from 'react-router-dom';
 export const Login = () => {
   const history = useHistory();
 
+  // si user et
+  // si > 0 lot history.push('/lots');
+  // sinon history.push('/bailleurs');
+
   const signInWithEmailAndPassword = useStoreActions(
     actions => actions.user.signInWithEmailAndPassword
   );
@@ -19,7 +23,7 @@ export const Login = () => {
       password: document.querySelector('#password').value
     });
 
-    history.push('/lessors');
+    history.push('/');
   };
 
   return (

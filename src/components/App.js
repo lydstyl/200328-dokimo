@@ -12,6 +12,7 @@ import { PrivateRoute } from './PrivateRoute/PrivateRoute';
 
 import { Lessor } from './Lessor/Lessor';
 import { AddLessor } from './AddLessor/AddLessor';
+import { Batches } from '../pages/Batches/Batches';
 
 import 'materialize-css/dist/css/materialize.min.css';
 import M from 'materialize-css/dist/js/materialize.min.js';
@@ -41,12 +42,16 @@ function App() {
               <SignUp />
             </Route>
 
-            <PrivateRoute path='/lessors'>
+            <PrivateRoute path='/bailleurs'>
               <Lessor />
             </PrivateRoute>
 
             <PrivateRoute path='/add-lessor'>
               <AddLessor />
+            </PrivateRoute>
+
+            <PrivateRoute path='/lots'>
+              <Batches />
             </PrivateRoute>
           </Switch>
         </div>

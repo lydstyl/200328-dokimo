@@ -22,7 +22,7 @@ export const SignUp = () => {
       password: passwordInput.current.value
     });
 
-    history.push('/lessors');
+    history.push('/bailleurs');
   };
 
   return (

@@ -35,10 +35,10 @@ export const Nav = () => {
           </Link>
           <ul className='right hide-on-med-and-down'>
             <li>
-              <Link to='/lessors'>Bailleurs</Link>
+              <Link to='/bailleurs'>Bailleurs</Link>
             </li>
             <li>
-              <Link to='/'>Lots</Link>
+              <Link to='/lots'>Lots</Link>
             </li>
             <li>
               <Link to='/'>Avis d'échéance</Link>
@@ -74,10 +74,10 @@ export const Nav = () => {
           <Link to='/'>Home</Link>
         </li>
         <li>
-          <Link to='/lessors'>Bailleurs</Link>
+          <Link to='/bailleurs'>Bailleurs</Link>
         </li>
         <li>
-          <Link to='/'>Lots</Link>
+          <Link to='/lots'>Lots</Link>
         </li>
         <li>
           <Link to='/'>Avis d'échéance</Link>

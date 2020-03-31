@@ -37,7 +37,7 @@ export const AddLessor = () => {
 
     firestoreAddLessor(lessor);
 
-    history.push('/lessors');
+    history.push('/bailleurs');
   };
 
   return (
