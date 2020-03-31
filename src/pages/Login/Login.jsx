@@ -1,15 +1,14 @@
 import React from 'react';
 
-import { useStoreActions } from 'easy-peasy';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 
 import { useHistory, Link } from 'react-router-dom';
 
 export const Login = () => {
-  const history = useHistory();
+  const { user } = useStoreState(state => state.user);
+  const { lessors } = useStoreState(state => state.lessor);
 
-  // si user et
-  // si > 0 lot history.push('/lots');
-  // sinon history.push('/bailleurs');
+  const history = useHistory();
 
   const signInWithEmailAndPassword = useStoreActions(
     actions => actions.user.signInWithEmailAndPassword
@@ -23,7 +22,13 @@ export const Login = () => {
       password: document.querySelector('#password').value
     });
 
-    history.push('/');
+    if (user) {
+      if (lessors.length) {
+        history.push('/lots'); // TODO fix not working
+      } else {
+        history.push('/bailleurs');
+      }
+    }
   };
 
   return (
