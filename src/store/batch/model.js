@@ -40,6 +40,13 @@ export default {
           batches.push({ ...doc.data(), id: doc.id });
         });
 
+        batches.map(batch => {
+          batch.balance = parseFloat(batch.balance);
+          batch.rent = parseFloat(batch.rent);
+          batch.charge = parseFloat(batch.charge);
+          return batch;
+        });
+
         actions.setBatches(batches);
 
         actions.setLoading(false);
