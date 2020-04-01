@@ -5,11 +5,15 @@ import { Link, useHistory } from 'react-router-dom';
 export const Nav = () => {
   const history = useHistory();
 
-  const { email } = useStoreState(state => state.user);
+  const { user, email } = useStoreState(state => state.user);
 
   const { signOut, onAuthStateChanged } = useStoreActions(
     actions => actions.user
   );
+
+  const { firestoreGetLessors } = useStoreActions(actions => actions.lessor);
+  const { firestoreGetTenants } = useStoreActions(actions => actions.tenant);
+  // const { firestoreGetBatches } = useStoreActions(actions => actions.batch);
 
   const handleSignOut = e => {
     e.preventDefault();
@@ -22,6 +26,16 @@ export const Nav = () => {
   useEffect(() => {
     onAuthStateChanged();
   }, [onAuthStateChanged]);
+
+  useEffect(() => {
+    if (user) {
+      if (user.uid) {
+        firestoreGetLessors(user.uid);
+        firestoreGetTenants(user.uid);
+        // firestoreGetBatches(user.uid);
+      }
+    }
+  }, [user, firestoreGetLessors, firestoreGetTenants]);
 
   return (
     <div className='row'>
