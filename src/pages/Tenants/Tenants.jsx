@@ -42,7 +42,7 @@ export const Tenants = () => {
   }, [firestoreGetTenants, uid]);
 
   return (
-    <div>
+    <>
       <h1 className='row'>Locataires</h1>
 
       <form className='row'>
@@ -58,21 +58,36 @@ export const Tenants = () => {
         </button>
       </form>
 
-      <pre>{JSON.stringify(tenants, null, 4)}</pre>
-
       {loading && <Preloader />}
 
-      {!loading &&
-        tenants.length !== 0 &&
-        tenants.map(tenant => (
-          <li key={tenant.id}>
-            <span>{tenant.civility}</span> <span>{tenant.firstName}</span>{' '}
-            <span>{tenant.lastName}</span>
-            <button onClick={() => handleDelete(tenant.id)}>
-              <i className='material-icons'>delete</i>
-            </button>
-          </li>
-        ))}
-    </div>
+      {!loading && tenants.length !== 0 && (
+        <ul className='row'>
+          {tenants.map(tenant => (
+            <li
+              key={tenant.id}
+              className='card-content white-text col s12 m6 l4'
+            >
+              <div className='card blue-grey darken-1'>
+                <div className='card-content white-text'>
+                  <span className='card-title'>
+                    <span>{tenant.civility}</span>{' '}
+                    <span>{tenant.firstName}</span>{' '}
+                    <span>{tenant.lastName}</span>
+                  </span>
+
+                  <ul className='card-action'>
+                    <li>
+                      <button onClick={() => handleDelete(tenant.id)}>
+                        <i className='material-icons'>delete</i>
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </>
   );
 };
