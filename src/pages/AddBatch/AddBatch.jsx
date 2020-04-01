@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import { useHistory } from 'react-router-dom';
 
 import { Input } from '../../components/Input/Input';
+
+import M from 'materialize-css/dist/js/materialize.min.js';
 
 export const AddBatch = () => {
   const { user } = useStoreState(state => state.user);
@@ -64,6 +66,19 @@ export const AddBatch = () => {
     history.push('/lots');
   };
 
+  useEffect(() => {
+    var elems = document.querySelectorAll('.datepicker');
+    const options = {
+      format: 'dd/mm/yyyy',
+      defaultDate: new Date(),
+      setDefaultDate: true,
+      firstDay: 1,
+      yearRange: 2
+    };
+    // var instances = M.Datepicker.init(elems, options);
+    M.Datepicker.init(elems, options);
+  }, []);
+
   return (
     <div>
       <h1 className='row'>Ajouter un lot / une location</h1>
@@ -81,6 +96,16 @@ export const AddBatch = () => {
 
         <Input name='rent' size='s6' />
         <Input name='charge' size='s6' />
+
+        <div className='input input-field col s12'>
+          <input type='text' name='beginDate' className='datepicker' />
+          <label htmlFor='beginDate'>Date de début</label>
+        </div>
+
+        <div className='input input-field col s12'>
+          <input type='text' name='paymentDeadline' className='datepicker' />
+          <label htmlFor='paymentDeadline'>Date limite de paiement</label>
+        </div>
 
         <button
           onClick={e => handleAddBatch(e)}

@@ -57,6 +57,12 @@ export const Nav = () => {
             <li>
               <Link to='/lots'>Lots</Link>
             </li>
+            {/* <li>
+              <Link to='/paiement'>Paiement</Link>
+            </li> */}
+            <li>
+              <Link to='/revision-loyer'>Révision de loyer</Link>
+            </li>
 
             {email && (
               <li style={{ display: 'flex' }}>
@@ -86,6 +92,12 @@ export const Nav = () => {
         </li>
         <li>
           <Link to='/lots'>Lots</Link>
+        </li>
+        {/* <li>
+          <Link to='/paiement'>Paiement</Link>
+        </li> */}
+        <li>
+          <Link to='/revision-loyer'>Révision de loyer</Link>
         </li>
 
         {email && (
