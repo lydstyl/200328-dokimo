@@ -13,7 +13,7 @@ export const Nav = () => {
 
   const { firestoreGetLessors } = useStoreActions(actions => actions.lessor);
   const { firestoreGetTenants } = useStoreActions(actions => actions.tenant);
-  // const { firestoreGetBatches } = useStoreActions(actions => actions.batch);
+  const { firestoreGetBatches } = useStoreActions(actions => actions.batch);
 
   const handleSignOut = e => {
     e.preventDefault();
@@ -32,10 +32,10 @@ export const Nav = () => {
       if (user.uid) {
         firestoreGetLessors(user.uid);
         firestoreGetTenants(user.uid);
-        // firestoreGetBatches(user.uid);
+        firestoreGetBatches(user.uid);
       }
     }
-  }, [user, firestoreGetLessors, firestoreGetTenants]);
+  }, [user, firestoreGetLessors, firestoreGetTenants, firestoreGetBatches]);
 
   return (
     <div className='row'>

@@ -1,46 +1,84 @@
 import React from 'react';
+import { useStoreState, useStoreActions } from 'easy-peasy';
+import { useHistory } from 'react-router-dom';
 
 import { Input } from '../../components/Input/Input';
 
 export const AddBatch = () => {
-  const handleAddBatch = e => {};
+  const { user } = useStoreState(state => state.user);
+  const { lessors } = useStoreState(state => state.lessor);
+  const { tenants } = useStoreState(state => state.tenant);
 
-  /*
-  name
-  uid
-  lid
-  
-  address1
-  address2
-  postalCode
-  town
+  const { firestoreAddBatch } = useStoreActions(actions => actions.batch);
 
-  balance (0 by default)
-  
-  rent
-  charge
-  
-  (tenants array)
-  tenantCivility
-  tenantFirstName
-  tenantLastName
-  */
+  const history = useHistory();
+
+  const LessorSelect = () => {
+    return (
+      <div className='input-fiel'>
+        <div>
+          <label>Bailleur</label>
+
+          <select name='lid' style={{ display: 'block' }}>
+            {lessors.map(lessor => (
+              <option key={lessor.id} value={lessor.id}>
+                {lessor.companyName ||
+                  `${lessor.managerFirstName} ${lessor.managerLastName}`}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+    );
+  };
+
+  const TenantSelect = () => {
+    return (
+      <div className='input-fiel'>
+        <div>
+          <label>Locataire</label>
+
+          <select name='tid' style={{ display: 'block' }}>
+            {tenants.map(tenant => (
+              <option key={tenant.id} value={tenant.id}>
+                {`${tenant.civility} ${tenant.lastName}`}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+    );
+  };
+
+  const handleAddBatch = e => {
+    e.preventDefault();
+
+    const inputs = document.querySelectorAll('form [name]');
+    const batch = { uid: user.uid, balance: 0 };
+    inputs.forEach(input => {
+      batch[input.name] = input.value;
+    });
+
+    firestoreAddBatch(batch);
+
+    history.push('/lots');
+  };
 
   return (
     <div>
-      <h1 className='row'>AddBatch</h1>
+      <h1 className='row'>Ajouter un lot / une location</h1>
 
       <form className='row'>
-        <Input name='name' size='s12' />
-        <Input name='uid' size='s6' />
-        <Input name='lid' size='s6' />
+        <LessorSelect />
 
+        <TenantSelect />
+
+        <Input name='name' size='s12' />
         <Input name='address1' size='s12' />
         <Input name='address2' size='s12' />
         <Input name='postalCode' size='s6' />
         <Input name='townName' size='s6' />
 
-        <Input name='balance' size='s12' />
         <Input name='rent' size='s6' />
         <Input name='charge' size='s6' />
 

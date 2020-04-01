@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 
 export const Batches = () => {
   const { lessors } = useStoreState(state => state.lessor);
+  const { tenants } = useStoreState(state => state.tenant);
+  const { batches } = useStoreState(state => state.batch);
 
   return (
     <div>
@@ -25,6 +27,15 @@ export const Batches = () => {
             <li>Révision de loyer</li>
           </ul>
           <p>Liste des lots</p>
+
+          <ul>
+            {batches.map(batch => (
+              <li key={batch.id}>
+                {batch.name}{' '}
+                {tenants.filter(tenant => tenant.id === batch.tid)[0].lastName}
+              </li>
+            ))}
+          </ul>
         </>
       )}
     </div>
