@@ -39,7 +39,6 @@ export const Batches = () => {
                       }
                     </span>
 
-                    <pre>{JSON.stringify(batch, null, 4)}</pre>
                     <p>body</p>
 
                     <ul className='card-action'>

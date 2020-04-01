@@ -25,7 +25,7 @@ export const Tenants = () => {
       uid
     };
 
-    const inputs = document.querySelectorAll('input[name]');
+    const inputs = document.querySelectorAll('form [name]');
     inputs.forEach(input => {
       tenant[input.name] = input.value;
     });
@@ -46,7 +46,21 @@ export const Tenants = () => {
       <h1 className='row'>Locataires</h1>
 
       <form className='row'>
-        <Input name='civility' size='s12' />
+        {/* <Input name='civility' size='s12' /> */}
+
+        <div className='col s12'>
+          <div className='input-fiel'>
+            <div>
+              <select style={{ display: 'block' }} name='civility'>
+                <option value='Monsieur'>Monsieur</option>
+                <option value='Madame'>Madame</option>
+              </select>
+
+              <label>Type</label>
+            </div>
+          </div>
+        </div>
+
         <Input name='firstName' size='s12' />
         <Input name='lastName' size='s12' />
 
