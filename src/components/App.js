@@ -15,6 +15,7 @@ import { AddLessor } from './AddLessor/AddLessor';
 
 import { Batches } from '../pages/Batches/Batches';
 import { AddBatch } from '../pages/AddBatch/AddBatch';
+import { BatchDetail } from '../pages/BatchDetail/BatchDetail';
 
 import { Tenants } from '../pages/Tenants/Tenants';
 
@@ -62,6 +63,10 @@ function App() {
             </PrivateRoute>
             <PrivateRoute path='/ajouter-lot'>
               <AddBatch />
+            </PrivateRoute>
+
+            <PrivateRoute path='/lot/:id'>
+              <BatchDetail />
             </PrivateRoute>
           </Switch>
         </div>

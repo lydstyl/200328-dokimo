@@ -44,6 +44,9 @@ export const Batches = () => {
 
                     <ul className='card-action'>
                       <li>
+                        <Link to={`/lot/${batch.id}`}>Détail</Link>
+                      </li>
+                      <li>
                         <a href='#!'>Réception paiement</a>
                       </li>
                       <li>
