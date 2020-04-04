@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useStoreState } from 'easy-peasy';
 
 import { useParams } from 'react-router-dom';
@@ -75,12 +75,54 @@ export const BatchDetail = () => {
     '/' +
     date.getFullYear();
 
+  const [csBalance, setCsBalance] = useState(balance); //
+
+  const onCsBalanceChange = e => {
+    setCsBalance(parseFloat(e.target.value));
+  };
+
   return (
     <div>
-      <h1>Détail de la location</h1>
-      <pre>{JSON.stringify(batch, null, 4)}</pre>
-      <pre>{JSON.stringify(lessor, null, 4)}</pre>
-      <pre>{JSON.stringify(tenant, null, 4)}</pre>
+      <h1 className='row'>Détail de la location</h1>
+
+      <div className='row json no-print'>
+        <pre>{JSON.stringify(batch, null, 4)}</pre>
+        <pre>{JSON.stringify(lessor, null, 4)}</pre>
+        <pre>{JSON.stringify(tenant, null, 4)}</pre>
+      </div>
+
+      <form className='row no-print'>
+        <div className='input-field col s6'>
+          <input
+            onChange={onCsBalanceChange}
+            name='balance'
+            id='balance'
+            type='number'
+            className='validate'
+            value={csBalance}
+          />
+          <label for='balance'>Solde antérieur</label>
+        </div>
+
+        <div className='input-field col s6'>
+          <input name='docDate' id='docDate' type='date' className='validate' />
+          <label for='docDate'>Date du document</label>
+        </div>
+
+        <div className='input-field col s6'>
+          <input
+            name='termFrom'
+            id='termFrom'
+            type='date'
+            className='validate'
+          />
+          <label for='termFrom'>Term du</label>
+        </div>
+
+        <div className='input-field col s6'>
+          <button onClick='handleChange'>Ok</button>
+        </div>
+      </form>
 
       <div className='due-notice'>
         <div className='row sender'>
@@ -117,10 +159,10 @@ export const BatchDetail = () => {
           </p>
 
           <ul>
-            <li>Solde antérieur: {balance}</li>
+            <li>Solde antérieur: {csBalance}</li>
             <li>Loyer nu : {rent}</li>
             <li>Charges: {charge}</li>
-            <li>Total à payer : {balance + rent + charge}</li>
+            <li>Total à payer : {csBalance + rent + charge}</li>
           </ul>
         </div>
 

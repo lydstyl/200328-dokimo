@@ -38,7 +38,7 @@ export const Nav = () => {
   }, [user, firestoreGetLessors, firestoreGetTenants, firestoreGetBatches]);
 
   return (
-    <div className='row'>
+    <div className='row no-print'>
       <nav className='col s12'>
         <div className='nav-wrapper'>
           <Link className='brand-logo' to='/'>

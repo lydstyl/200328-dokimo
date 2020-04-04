@@ -45,6 +45,9 @@ export const Batches = () => {
                       <li>
                         <Link to={`/lot/${batch.id}`}>Détail</Link>
                       </li>
+                      {/* <li>
+                        <Link to={`/lot/${batch.id}/editer`}>Éditer</Link>
+                      </li> */}
                       <li>
                         <a href='#!'>Réception paiement</a>
                       </li>
