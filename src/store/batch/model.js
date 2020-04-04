@@ -3,7 +3,33 @@ import { firestore } from '../../firebase/firebase';
 
 export default {
   loading: false,
+  terms: [
+    { termFrom: { year: 2020, month: 4, day: 10 } },
+    { termFrom: { year: 2020, month: 5, day: 11 } }
+  ],
   batches: [],
+
+  utils: {
+    inputDateExtractor: inputValue => {
+      const tmp = inputValue.split('-');
+
+      return {
+        string: inputValue,
+        year: parseInt(tmp[0], 10),
+        month: parseInt(tmp[1], 10),
+        day: parseInt(tmp[2], 10)
+      };
+    },
+
+    prefix0: number => {
+      if (
+        number < 10
+        // && number.split(0) != 0
+      )
+        return '0' + number;
+      return number;
+    }
+  },
 
   // THUNKS
   firestoreAddBatch: thunk(async (actions, payload) => {

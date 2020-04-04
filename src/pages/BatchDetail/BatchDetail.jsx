@@ -8,7 +8,10 @@ export const BatchDetail = () => {
 
   const { lessors } = useStoreState(state => state.lessor);
   const { tenants } = useStoreState(state => state.tenant);
-  const { batches } = useStoreState(state => state.batch);
+  const {
+    batches,
+    utils: { prefix0 }
+  } = useStoreState(state => state.batch);
 
   const batch = batches.filter(batch => batch.id === id)[0];
   const {
@@ -37,11 +40,6 @@ export const BatchDetail = () => {
 
   const docPlace = 'Raismes';
   const date = new Date();
-
-  function prefix0(number) {
-    if (number < 10) return '0' + number;
-    return number;
-  }
 
   // must be editable
   let docDate =
@@ -101,12 +99,12 @@ export const BatchDetail = () => {
             className='validate'
             value={csBalance}
           />
-          <label for='balance'>Solde antérieur</label>
+          <label htmlFor='balance'>Solde antérieur</label>
         </div>
 
         <div className='input-field col s6'>
           <input name='docDate' id='docDate' type='date' className='validate' />
-          <label for='docDate'>Date du document</label>
+          <label htmlFor='docDate'>Date du document</label>
         </div>
 
         <div className='input-field col s6'>
@@ -116,11 +114,15 @@ export const BatchDetail = () => {
             type='date'
             className='validate'
           />
-          <label for='termFrom'>Term du</label>
+          <label htmlFor='termFrom'>Term du</label>
         </div>
 
         <div className='input-field col s6'>
-          <button onClick='handleChange'>Ok</button>
+          <button
+          // onClick={handleChange}
+          >
+            Ok
+          </button>
         </div>
       </form>
 

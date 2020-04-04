@@ -17,6 +17,8 @@ import { Batches } from '../pages/Batches/Batches';
 import { AddBatch } from '../pages/AddBatch/AddBatch';
 import { BatchDetail } from '../pages/BatchDetail/BatchDetail';
 
+import { Terms } from '../pages/Terms/Terms';
+
 import { Tenants } from '../pages/Tenants/Tenants';
 
 import 'materialize-css/dist/css/materialize.min.css';
@@ -56,6 +58,10 @@ function App() {
 
             <PrivateRoute path='/locataires'>
               <Tenants />
+            </PrivateRoute>
+
+            <PrivateRoute path='/terms'>
+              <Terms />
             </PrivateRoute>
 
             <PrivateRoute path='/lots'>

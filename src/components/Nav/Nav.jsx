@@ -57,6 +57,9 @@ export const Nav = () => {
             <li>
               <Link to='/lots'>Lots</Link>
             </li>
+            <li>
+              <Link to='/terms'>Terms</Link>
+            </li>
             {/* <li>
               <Link to='/paiement'>Paiement</Link>
             </li> */}
