@@ -4,16 +4,21 @@ import { useStoreState, useStoreActions } from 'easy-peasy';
 export const Terms = () => {
   const [inputTermFrom, setInputTermFrom] = useState('');
   const [lastDayOfMonth, setLastDayOfMonth] = useState('');
+  const [term, setTerm] = useState(null);
+
+  const { uid } = useStoreState((state) => state.user);
 
   const {
-    loading,
+    // loading,
     terms,
-    utils: { inputDateExtractor, prefix0 }
-  } = useStoreState(state => state.batch);
+    utils: { inputDateExtractor, prefix0 },
+  } = useStoreState((state) => state.batch);
 
-  // const { firestoreAddLessor } = useStoreActions(actions => actions.batch);
+  const { firestoreAddTerm, firestoreDelTerm } = useStoreActions(
+    (actions) => actions.batch
+  );
 
-  const createTerm = inputTermFrom => {
+  const createTerm = (inputTermFrom) => {
     const termFrom = inputDateExtractor(inputTermFrom);
     let tmp = termFrom.string.split('-');
     tmp[2] = '01';
@@ -29,14 +34,14 @@ export const Terms = () => {
       string: `${year}-${month}-${day}`,
       year,
       month,
-      day
+      day,
     };
 
     setLastDayOfMonth(termTo.string);
 
     const term = {
       termFrom,
-      termTo
+      termTo,
     };
 
     console.log(term);
@@ -44,13 +49,20 @@ export const Terms = () => {
     return term;
   };
 
-  const handleTermFromChange = e => {
+  const handleTermFromChange = (e) => {
     const value = e.target.value;
     setInputTermFrom(value);
 
     const term = createTerm(e.target.value);
 
-    console.log(term);
+    term.uid = uid;
+    setTerm(term);
+  };
+
+  const handleAddTerm = (e) => {
+    e.preventDefault();
+
+    firestoreAddTerm(term);
   };
 
   return (
@@ -74,9 +86,20 @@ export const Terms = () => {
         </p>
 
         <div className='col'>
-          <button>+</button>
+          <button onClick={(e) => handleAddTerm(e)}>+</button>
         </div>
       </form>
+
+      <ul className='terms'>
+        {terms.map((term) => (
+          <li key={term.id}>
+            <p>
+              <button onClick={() => firestoreDelTerm(term.id)}>X</button>
+              Du {term.termFrom.string} au {term.termTo.string}
+            </p>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

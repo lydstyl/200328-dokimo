@@ -11,14 +11,14 @@ export default {
   email: null,
 
   // THUNKS
-  signOut: thunk(async actions => {
+  signOut: thunk(async (actions) => {
     auth.signOut();
 
     actions.setIsAuthenticated(false); // 👈 dispatch local actions to update state
   }),
 
   onAuthStateChanged: thunk(async (actions, payload) => {
-    auth.onAuthStateChanged(function(user) {
+    auth.onAuthStateChanged(function (user) {
       if (user) {
         // var uid = user.uid;
         // var email = user.email;
@@ -39,7 +39,7 @@ export default {
   createUserWithEmailAndPassword: thunk(async (actions, payload) => {
     auth
       .createUserWithEmailAndPassword(payload.email, payload.password)
-      .catch(function(error) {
+      .catch(function (error) {
         M.toast({ html: error.message });
       });
 
@@ -51,7 +51,7 @@ export default {
   signInWithEmailAndPassword: thunk(async (actions, payload) => {
     auth
       .signInWithEmailAndPassword(payload.email, payload.password)
-      .catch(function(error) {
+      .catch(function (error) {
         M.toast({ html: error.message });
       });
 
@@ -64,6 +64,7 @@ export default {
   setUser: action((state, payload) => {
     state.user = payload;
     state.email = payload.email;
+    state.uid = payload.uid;
   }),
 
   setIsAuthenticated: action((state, payload) => {
@@ -73,5 +74,5 @@ export default {
       state.uid = null;
       state.email = null;
     }
-  })
+  }),
 };

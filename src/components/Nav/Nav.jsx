@@ -5,17 +5,18 @@ import { Link, useHistory } from 'react-router-dom';
 export const Nav = () => {
   const history = useHistory();
 
-  const { user, email } = useStoreState(state => state.user);
+  const { user, email } = useStoreState((state) => state.user);
 
   const { signOut, onAuthStateChanged } = useStoreActions(
-    actions => actions.user
+    (actions) => actions.user
   );
 
-  const { firestoreGetLessors } = useStoreActions(actions => actions.lessor);
-  const { firestoreGetTenants } = useStoreActions(actions => actions.tenant);
-  const { firestoreGetBatches } = useStoreActions(actions => actions.batch);
+  const { firestoreGetLessors } = useStoreActions((actions) => actions.lessor);
+  const { firestoreGetTenants } = useStoreActions((actions) => actions.tenant);
+  const { firestoreGetBatches } = useStoreActions((actions) => actions.batch);
+  const { firestoreGetTerms } = useStoreActions((actions) => actions.batch);
 
-  const handleSignOut = e => {
+  const handleSignOut = (e) => {
     e.preventDefault();
 
     signOut();
@@ -33,9 +34,16 @@ export const Nav = () => {
         firestoreGetLessors(user.uid);
         firestoreGetTenants(user.uid);
         firestoreGetBatches(user.uid);
+        firestoreGetTerms(user.uid);
       }
     }
-  }, [user, firestoreGetLessors, firestoreGetTenants, firestoreGetBatches]);
+  }, [
+    user,
+    firestoreGetLessors,
+    firestoreGetTenants,
+    firestoreGetBatches,
+    firestoreGetTerms,
+  ]);
 
   return (
     <div className='row no-print'>
