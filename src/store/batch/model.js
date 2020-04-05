@@ -26,6 +26,11 @@ export default {
         return '0' + number;
       return number;
     },
+
+    enDateToFr: (date) => {
+      date = date.split('-');
+      return [date[2], date[1], date[0]].join('-');
+    },
   },
 
   // THUNKS

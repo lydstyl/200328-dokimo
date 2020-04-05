@@ -11,7 +11,7 @@ export const Terms = () => {
   const {
     // loading,
     terms,
-    utils: { inputDateExtractor, prefix0 },
+    utils: { inputDateExtractor, enDateToFr, prefix0 },
   } = useStoreState((state) => state.batch);
 
   const { firestoreAddTerm, firestoreDelTerm } = useStoreActions(
@@ -24,14 +24,16 @@ export const Terms = () => {
     tmp[2] = '01';
 
     termFrom.string = tmp.join('-');
+    termFrom.day = 1;
 
     const date = new Date(inputTermFrom);
 
     const year = date.getFullYear();
-    const month = prefix0(date.getMonth() + 1);
-    const day = prefix0(new Date(year, month, 0).getDate());
+    const month = date.getMonth() + 1;
+    const day = new Date(year, month, 0).getDate();
+
     const termTo = {
-      string: `${year}-${month}-${day}`,
+      string: `${year}-${prefix0(month)}-${day}`,
       year,
       month,
       day,
@@ -44,8 +46,6 @@ export const Terms = () => {
       termTo,
     };
 
-    console.log(term);
-
     return term;
   };
 
@@ -56,6 +56,17 @@ export const Terms = () => {
     const term = createTerm(e.target.value);
 
     term.uid = uid;
+
+    term.rentReceiptDate = { ...term.termFrom };
+    term.rentReceiptDate.day = 10;
+    term.rentReceiptDate.string = term.rentReceiptDate.string.split('-');
+    term.rentReceiptDate.string[2] = '10';
+    term.rentReceiptDate.string = term.rentReceiptDate.string.join('-');
+
+    term.termFrom.stringFr = enDateToFr(term.termFrom.string);
+    term.termTo.stringFr = enDateToFr(term.termTo.string);
+    term.rentReceiptDate.stringFr = enDateToFr(term.rentReceiptDate.string);
+
     setTerm(term);
   };
 
@@ -95,7 +106,7 @@ export const Terms = () => {
           <li key={term.id}>
             <p>
               <button onClick={() => firestoreDelTerm(term.id)}>X</button>
-              Du {term.termFrom.string} au {term.termTo.string}
+              Du {term.termFrom.stringFr} au {term.termTo.stringFr}
             </p>
           </li>
         ))}
