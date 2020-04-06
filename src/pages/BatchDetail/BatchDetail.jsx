@@ -6,25 +6,22 @@ import { useParams } from 'react-router-dom';
 export const BatchDetail = () => {
   const { id } = useParams();
 
-  const { lessors } = useStoreState(state => state.lessor);
-  const { tenants } = useStoreState(state => state.tenant);
-  const {
-    batches,
-    utils: { prefix0 }
-  } = useStoreState(state => state.batch);
+  const { lessors } = useStoreState((state) => state.lessor);
+  const { tenants } = useStoreState((state) => state.tenant);
+  const { batches, terms } = useStoreState((state) => state.batch);
 
-  const batch = batches.filter(batch => batch.id === id)[0];
+  const batch = batches.filter((batch) => batch.id === id)[0];
   const {
     lid,
     tid,
     charge,
     balance, // must be editable
-    rent
+    rent,
     // beginDate, paymentDeadline
   } = batch;
 
-  const lessor = lessors.filter(lessor => lessor.id === lid)[0];
-  const tenant = tenants.filter(tenant => tenant.id === tid)[0];
+  const lessor = lessors.filter((lessor) => lessor.id === lid)[0];
+  const tenant = tenants.filter((tenant) => tenant.id === tid)[0];
 
   const {
     companyName,
@@ -33,62 +30,31 @@ export const BatchDetail = () => {
     address1,
     address2,
     postalCode,
-    townName
+    townName,
   } = lessor;
 
   const { civility, firstName, lastName } = tenant;
 
   const docPlace = 'Raismes';
-  const date = new Date();
 
-  // must be editable
-  let docDate =
-    prefix0(date.getDate()) +
-    '/' +
-    prefix0(date.getMonth() + 1) +
-    '/' +
-    date.getFullYear();
+  const [dates, setDates] = useState(null);
+  const [csBalance, setCsBalance] = useState(balance); // component state balance
 
-  console.log(docDate);
-
-  // must be editable
-  const termFrom =
-    '01/' +
-    (parseInt(date.getMonth(), 10) + 1 < 10
-      ? '0' + (parseInt(date.getMonth(), 10) + 1)
-      : parseInt(date.getMonth(), 10) + 1) +
-    '/' +
-    date.getFullYear();
-
-  let lastDayOfMonth = parseInt(date.getMonth(), 10);
-  lastDayOfMonth = new Date(2008, lastDayOfMonth + 1, 0);
-  lastDayOfMonth = lastDayOfMonth.getDate();
-
-  const termTo =
-    lastDayOfMonth +
-    '/' +
-    (parseInt(date.getMonth(), 10) + 1 < 10
-      ? '0' + (parseInt(date.getMonth(), 10) + 1)
-      : parseInt(date.getMonth(), 10) + 1) +
-    '/' +
-    date.getFullYear();
-
-  const [csBalance, setCsBalance] = useState(balance); //
-
-  const onCsBalanceChange = e => {
+  const onCsBalanceChange = (e) => {
     setCsBalance(parseFloat(e.target.value));
   };
 
+  const handleTermChange = (e) => {
+    const value = JSON.parse(e.target.value);
+
+    setDates({
+      docDate: value.rentReceiptDate.stringFr,
+      termFrom: value.termFrom.stringFr,
+      termTo: value.termTo.stringFr,
+    });
+  };
   return (
     <div>
-      <h1 className='row'>Détail de la location</h1>
-
-      <div className='row json no-print'>
-        <pre>{JSON.stringify(batch, null, 4)}</pre>
-        <pre>{JSON.stringify(lessor, null, 4)}</pre>
-        <pre>{JSON.stringify(tenant, null, 4)}</pre>
-      </div>
-
       <form className='row no-print'>
         <div className='input-field col s6'>
           <input
@@ -102,31 +68,41 @@ export const BatchDetail = () => {
           <label htmlFor='balance'>Solde antérieur</label>
         </div>
 
-        <div className='input-field col s6'>
+        {/* <div className='input-field col s6'>
           <input name='docDate' id='docDate' type='date' className='validate' />
           <label htmlFor='docDate'>Date du document</label>
-        </div>
+        </div> */}
 
-        <div className='input-field col s6'>
-          <input
-            name='termFrom'
-            id='termFrom'
-            type='date'
-            className='validate'
-          />
-          <label htmlFor='termFrom'>Term du</label>
+        <div className='col s6'>
+          <div className='input-fiel'>
+            <div>
+              <label>Bailleur</label>
+
+              <select
+                onChange={handleTermChange}
+                name='term'
+                style={{ display: 'block' }}
+              >
+                {terms.map((term) => (
+                  <option key={term.id} value={JSON.stringify(term)}>
+                    {`${term.termFrom.stringFr} ${term.termTo.stringFr}`}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
         </div>
 
         <div className='input-field col s6'>
           <button
           // onClick={handleChange}
           >
-            Ok
+            Sauver le solde et le document de ce lot
           </button>
         </div>
       </form>
 
-      <div className='due-notice'>
+      <div className='container due-notice'>
         <div className='row sender'>
           <p>
             {companyName
@@ -152,19 +128,22 @@ export const BatchDetail = () => {
         </div>
 
         <div className='row where-when'>
-          à <span>{docPlace}</span>, le <span>{docDate}</span>
+          à <span>{docPlace}</span>, le <span>{dates && dates.docDate}</span>
         </div>
+
+        <h1 className='row'>Avis d'échéance</h1>
 
         <div className='row amount-to-pay'>
           <p>
-            Somme à payer sur le terme du {termFrom} au {termTo}
+            Somme à payer sur le terme du {dates && dates.termFrom} au{' '}
+            {dates && dates.termTo}.
           </p>
 
           <ul>
             <li>Solde antérieur: {csBalance}</li>
             <li>Loyer nu : {rent}</li>
             <li>Charges: {charge}</li>
-            <li>Total à payer : {csBalance + rent + charge}</li>
+            <li>Total à payer : {csBalance + rent + charge} €</li>
           </ul>
         </div>
 

@@ -1,3 +1,11 @@
+body {
+  line-height: 2;
+}
+
+h1 {
+  font-size: 2.1rem;
+}
+
 @media print {
   .no-print,
   .no-print * {
@@ -5,6 +13,15 @@
   }
 }
 
-.recipient {
-  margin-left: 50%;
+.recipient,
+.where-when {
+  margin-left: 60%;
+}
+
+.where-when {
+  margin-top: 100px;
+}
+
+.due-notice ul li {
+  list-style-type: disc;
 }
