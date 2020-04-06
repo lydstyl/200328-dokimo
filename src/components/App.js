@@ -16,6 +16,8 @@ import { AddLessor } from './AddLessor/AddLessor';
 import { Batches } from '../pages/Batches/Batches';
 import { AddBatch } from '../pages/AddBatch/AddBatch';
 import { BatchDetail } from '../pages/BatchDetail/BatchDetail';
+import { DueNotice } from '../pages/DueNotice/DueNotice';
+import { PaymentReceipt } from '../pages/PaymentReceipt/PaymentReceipt';
 
 import { Terms } from '../pages/Terms/Terms';
 
@@ -69,6 +71,14 @@ function App() {
             </PrivateRoute>
             <PrivateRoute path='/ajouter-lot'>
               <AddBatch />
+            </PrivateRoute>
+
+            <PrivateRoute path='/lot/:id/avis-echeance'>
+              <DueNotice />
+            </PrivateRoute>
+
+            <PrivateRoute path='/lot/:id/reception-paiement'>
+              <PaymentReceipt />
             </PrivateRoute>
 
             <PrivateRoute path='/lot/:id'>

@@ -3,9 +3,9 @@ import { useStoreState } from 'easy-peasy';
 import { Link } from 'react-router-dom';
 
 export const Batches = () => {
-  const { lessors } = useStoreState(state => state.lessor);
-  const { tenants } = useStoreState(state => state.tenant);
-  const { batches } = useStoreState(state => state.batch);
+  const { lessors } = useStoreState((state) => state.lessor);
+  const { tenants } = useStoreState((state) => state.tenant);
+  const { batches } = useStoreState((state) => state.batch);
 
   return (
     <>
@@ -24,7 +24,7 @@ export const Batches = () => {
           </div>
 
           <ul className='row'>
-            {batches.map(batch => (
+            {batches.map((batch) => (
               <li
                 key={batch.id}
                 className='card-content white-text col s12 m6 l4'
@@ -34,7 +34,7 @@ export const Batches = () => {
                     <span className='card-title'>
                       {batch.name}{' '}
                       {
-                        tenants.filter(tenant => tenant.id === batch.tid)[0]
+                        tenants.filter((tenant) => tenant.id === batch.tid)[0]
                           .lastName
                       }
                     </span>
@@ -45,19 +45,24 @@ export const Batches = () => {
                       <li>
                         <Link to={`/lot/${batch.id}`}>Détail</Link>
                       </li>
+                      <li>
+                        <Link to={`/lot/${batch.id}/avis-echeance`}>
+                          Avis d'échéance
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to={`/lot/${batch.id}/reception-paiement`}>
+                          Réception paiement
+                        </Link>
+                      </li>
                       {/* <li>
                         <Link to={`/lot/${batch.id}/editer`}>Éditer</Link>
                       </li> */}
-                      <li>
-                        <a href='#!'>Réception paiement</a>
-                      </li>
-                      <li>
-                        <i className='material-icons'>delete</i> Avis d'échéance
-                      </li>
-                      <li>
+
+                      {/* <li>
                         <i className='material-icons'>delete</i> Quittance
                       </li>
-                      <li>Reçu partiel de loyer</li>
+                      <li>Reçu partiel de loyer</li> */}
                     </ul>
                   </div>
                 </div>
