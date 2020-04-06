@@ -37,7 +37,11 @@ export const BatchDetail = () => {
 
   const docPlace = 'Raismes';
 
-  const [dates, setDates] = useState(null);
+  const [dates, setDates] = useState({
+    docDate: terms[0].rentReceiptDate.stringFr,
+    termFrom: terms[0].termFrom.stringFr,
+    termTo: terms[0].termTo.stringFr,
+  });
   const [csBalance, setCsBalance] = useState(balance); // component state balance
 
   const onCsBalanceChange = (e) => {
@@ -54,7 +58,7 @@ export const BatchDetail = () => {
     });
   };
   return (
-    <div>
+    <div className='container'>
       <form className='row no-print'>
         <div className='input-field col s6'>
           <input
@@ -102,7 +106,7 @@ export const BatchDetail = () => {
         </div>
       </form>
 
-      <div className='container due-notice'>
+      <div className=' due-notice'>
         <div className='row sender'>
           <p>
             {companyName
