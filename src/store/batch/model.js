@@ -1,6 +1,8 @@
 import { thunk, action } from 'easy-peasy';
 import { firestore } from '../../firebase/firebase';
 
+import M from 'materialize-css/dist/js/materialize.min.js';
+
 export default {
   loading: false,
   terms: [],
@@ -157,6 +159,7 @@ export default {
     state.loading = payload;
   }),
 
+  // Batch
   addBatch: action((state, payload) => {
     state.batches.push(payload);
   }),
@@ -165,6 +168,7 @@ export default {
     state.batches = payload;
   }),
 
+  // Term
   addTerm: action((state, payload) => {
     state.terms.push(payload);
   }),
@@ -175,5 +179,28 @@ export default {
 
   delTerm: action((state, payload) => {
     state.terms = state.terms.filter((term) => term.id !== payload);
+  }),
+
+  // Payment
+  addPayment: action((state, payload) => {
+    console.log(payload); // {bid: "cRAuH60aUd2OXPIVxmAX", date: "08/04/2020", amount: "55"}
+
+    state.batches.forEach((batch) => {
+      if (batch.id === payload.bid) {
+        // add to payments list
+        const amount = parseFloat(payload.amount);
+        if (!batch.payments) {
+          batch.payments = [];
+        }
+        batch.payments.push({ date: payload.date, amount });
+
+        // update balance
+        batch.balance -= amount;
+
+        M.toast({
+          html: `Paiment ajouté au store, nouvelle balance : ${batch.balance}`,
+        });
+      }
+    });
   }),
 };

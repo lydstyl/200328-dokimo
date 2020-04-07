@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
-// import { useStoreState } from 'easy-peasy';
+import {
+  //useStoreState,
+  useStoreActions,
+} from 'easy-peasy';
 
 import { useParams } from 'react-router-dom';
 
 export const PaymentReceipt = () => {
   const { id } = useParams(); // batch id
+
+  const { addPayment } = useStoreActions((actions) => actions.batch);
 
   const getNowFrDate = () => {
     const date = new Date();
@@ -29,7 +34,8 @@ export const PaymentReceipt = () => {
     let date = paymentDate.split('-');
     date = [date[2], date[1], date[0]].join('/');
 
-    console.log({ bid: id, date, amount }); // todo set this date in Firebase and in the store
+    // console.log({ bid: id, date, amount }); // todo set this date in Firebase and in the store
+    addPayment({ bid: id, date, amount });
   };
 
   return (
