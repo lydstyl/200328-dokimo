@@ -36,6 +36,8 @@ export default {
   },
 
   // THUNKS
+
+  // Batch
   firestoreAddBatch: thunk(async (actions, payload) => {
     actions.setLoading(true);
 
@@ -88,6 +90,11 @@ export default {
       });
   }),
 
+  firestoreUpdateBatch: thunk(async (actions, payload) => {
+    firestore.collection('batches').doc(payload.id).update(payload);
+  }),
+
+  // Term
   firestoreAddTerm: thunk(async (actions, payload) => {
     actions.setLoading(true);
 
@@ -152,6 +159,13 @@ export default {
 
         actions.setLoading(false);
       });
+  }),
+
+  // Payment
+  firestoreAddPayment: thunk(async (actions, payload) => {
+    actions.firestoreUpdateBatch(payload.batch);
+
+    actions.addPayment(payload.payment);
   }),
 
   // ACTIONS

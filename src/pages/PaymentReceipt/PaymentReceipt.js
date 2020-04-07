@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import {
-  //useStoreState,
-  useStoreActions,
-} from 'easy-peasy';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 
 import { useParams } from 'react-router-dom';
 
 export const PaymentReceipt = () => {
   const { id } = useParams(); // batch id
+  const { batches } = useStoreState((state) => state.batch);
+  const batch = batches.filter((batch) => batch.id === id)[0];
 
-  const { addPayment } = useStoreActions((actions) => actions.batch);
+  const { firestoreAddPayment } = useStoreActions((actions) => actions.batch);
 
   const getNowFrDate = () => {
     const date = new Date();
@@ -33,9 +32,18 @@ export const PaymentReceipt = () => {
 
     let date = paymentDate.split('-');
     date = [date[2], date[1], date[0]].join('/');
+    const payment = { bid: id, date, amount };
 
-    // console.log({ bid: id, date, amount }); // todo set this date in Firebase and in the store
-    addPayment({ bid: id, date, amount });
+    // add to payments list
+    if (!batch.payments) {
+      batch.payments = [];
+    }
+    batch.payments.push({ date, amount });
+
+    // update balance
+    batch.balance -= amount;
+
+    firestoreAddPayment({ batch, payment });
   };
 
   return (
@@ -51,7 +59,7 @@ export const PaymentReceipt = () => {
         />
 
         <input
-          onChange={(e) => setAmount(e.target.value)}
+          onChange={(e) => setAmount(parseFloat(e.target.value))}
           type='number'
           name='amount'
           value={amount}
@@ -59,6 +67,8 @@ export const PaymentReceipt = () => {
 
         <button onClick={handleSavePayment}>Sauver</button>
       </form>
+
+      <pre>{JSON.stringify(batch, null, 4)}</pre>
     </div>
   );
 };
