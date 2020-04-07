@@ -1,6 +1,8 @@
 import { thunk, action } from 'easy-peasy';
 import { firestore } from '../../firebase/firebase';
 
+import { getNewBalance } from './getNewBalance';
+
 import M from 'materialize-css/dist/js/materialize.min.js';
 
 export default {
@@ -33,6 +35,8 @@ export default {
       date = date.split('-');
       return [date[2], date[1], date[0]].join('-');
     },
+
+    getNewBalance,
   },
 
   // THUNKS
