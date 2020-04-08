@@ -6,9 +6,9 @@ function lastDayOfMonth(year, monthIndex) {
 function getOption(yyyy, mm) {
   const mm0 = mm < 10 ? '0' + mm : mm;
   const option = {
-    docDate: [10, mm0, yyyy].join('-'),
-    termFrom: ['01', mm0, yyyy].join('-'),
-    termTo: [lastDayOfMonth(yyyy, mm - 1), mm0, yyyy].join('-'),
+    docDate: [10, mm0, yyyy].join('/'),
+    termFrom: ['01', mm0, yyyy].join('/'),
+    termTo: [lastDayOfMonth(yyyy, mm - 1), mm0, yyyy].join('/'),
   };
 
   return option;
@@ -47,6 +47,7 @@ export function termOptionsMaker(beginDate) {
       mm--;
     }
   }
+
   return terms;
 }
 

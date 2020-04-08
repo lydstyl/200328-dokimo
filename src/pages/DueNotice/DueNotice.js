@@ -9,9 +9,9 @@ export const DueNotice = () => {
   const { lessors } = useStoreState((state) => state.lessor);
   const { tenants } = useStoreState((state) => state.tenant);
   const {
-    terms,
+    // terms,
     batches,
-    utils: { getNewBalance },
+    utils: { getNewBalance, termOptionsMaker },
   } = useStoreState((state) => state.batch);
 
   const batch = batches.filter((batch) => batch.id === id)[0];
@@ -42,10 +42,12 @@ export const DueNotice = () => {
 
   const docPlace = 'Raismes';
 
+  const terms = termOptionsMaker(beginDate);
+
   const [dates, setDates] = useState({
-    docDate: terms[0].rentReceiptDate.stringFr,
-    termFrom: terms[0].termFrom.stringFr,
-    termTo: terms[0].termTo.stringFr,
+    docDate: terms[0].docDate,
+    termFrom: terms[0].termFrom,
+    termTo: terms[0].termTo,
   });
 
   const newBalance = getNewBalance({
@@ -67,9 +69,9 @@ export const DueNotice = () => {
     const value = JSON.parse(e.target.value);
 
     setDates({
-      docDate: value.rentReceiptDate.stringFr,
-      termFrom: value.termFrom.stringFr,
-      termTo: value.termTo.stringFr,
+      docDate: value.docDate,
+      termFrom: value.termFrom,
+      termTo: value.termTo,
     });
   };
 
@@ -104,8 +106,8 @@ export const DueNotice = () => {
                 style={{ display: 'block' }}
               >
                 {terms.map((term) => (
-                  <option key={term.id} value={JSON.stringify(term)}>
-                    {`${term.termFrom.stringFr} ${term.termTo.stringFr}`}
+                  <option key={term.termFrom} value={JSON.stringify(term)}>
+                    {`${term.termFrom} ${term.termTo}`}
                   </option>
                 ))}
               </select>
