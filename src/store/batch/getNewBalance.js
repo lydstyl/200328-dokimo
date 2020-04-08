@@ -57,26 +57,53 @@ function getRentTotalFromTo(rent, balance, balanceDate, termTo) {
 function getTotalPayments(payments, balanceDate, termTo) {
   payments = filterPaymentFromTo(payments, balanceDate, termTo);
 
-  return payments.reduce(function (accumulateur, valeurCourante, index, array) {
+  let totalPayments = null;
+
+  if (payments.length === 1) {
+    totalPayments = payments[0].amount;
+
+    return totalPayments;
+  }
+
+  totalPayments = payments.reduce(function (
+    accumulateur,
+    valeurCourante,
+    index,
+    array
+  ) {
     if (index === 1) {
       accumulateur = accumulateur.amount;
     }
 
     return accumulateur + valeurCourante.amount;
   });
+
+  return totalPayments;
 }
 
 export function getNewBalance(o) {
+  console.log('o', o);
+
   const totalRents = getRentTotalFromTo(
     o.rent,
     o.balance,
-    o.balanceDate,
+    o.balanceDate, // todo make sure every batch have a beginDate when created
     o.termTo
   );
 
-  const totalPayments = getTotalPayments(o.payments, o.balanceDate, o.termTo);
+  let totalPayments = 0;
+  if (o.payments && o.payments.length) {
+    totalPayments = getTotalPayments(o.payments, o.balanceDate, o.termTo);
+  }
 
   const newBalance = totalRents - totalPayments;
+  console.log(
+    'totalRents - totalPayments',
+    totalRents,
+    totalPayments,
+    '=',
+    newBalance
+  );
 
   return newBalance;
 }

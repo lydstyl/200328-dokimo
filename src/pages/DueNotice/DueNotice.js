@@ -8,14 +8,19 @@ export const DueNotice = () => {
 
   const { lessors } = useStoreState((state) => state.lessor);
   const { tenants } = useStoreState((state) => state.tenant);
-  const { batches, terms } = useStoreState((state) => state.batch);
+  const {
+    terms,
+    batches,
+    utils: { getNewBalance },
+  } = useStoreState((state) => state.batch);
 
   const batch = batches.filter((batch) => batch.id === id)[0];
   const {
     lid,
     tid,
     charge,
-    balance, // must be editable
+    // balance, // must be editable
+    beginDate,
     rent,
     // beginDate, paymentDeadline
   } = batch;
@@ -42,7 +47,17 @@ export const DueNotice = () => {
     termFrom: terms[0].termFrom.stringFr,
     termTo: terms[0].termTo.stringFr,
   });
-  const [csBalance, setCsBalance] = useState(balance); // component state balance
+
+  const newBalance = getNewBalance({
+    payments: batch.payments,
+    rent: rent + charge,
+    balance: 0, //balance,
+    balanceDate: beginDate,
+    termTo: dates.termTo.replace('-', '/').replace('-', '/'), // termTo 31-05-2020
+  });
+
+  const dueNoticeBalance = newBalance - rent - charge;
+  const [csBalance, setCsBalance] = useState(dueNoticeBalance); // component state balance
 
   const onCsBalanceChange = (e) => {
     setCsBalance(parseFloat(e.target.value));
@@ -57,6 +72,7 @@ export const DueNotice = () => {
       termTo: value.termTo.stringFr,
     });
   };
+
   return (
     <div className='container'>
       <form className='row no-print'>
