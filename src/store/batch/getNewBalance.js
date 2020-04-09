@@ -71,19 +71,18 @@ function getTotalPayments(payments, balanceDate, termTo) {
     index,
     array
   ) {
-    if (index === 1) {
-      accumulateur = accumulateur.amount;
-    }
+    // if (!array.length) {
+    //   return 0;
+    // }
 
     return accumulateur + valeurCourante.amount;
-  });
+  },
+  0);
 
   return totalPayments;
 }
 
 export function getNewBalance(o) {
-  console.log('o', o);
-
   const totalRents = getRentTotalFromTo(
     o.rent,
     o.balance,
@@ -97,13 +96,6 @@ export function getNewBalance(o) {
   }
 
   const newBalance = totalRents - totalPayments;
-  console.log(
-    'totalRents - totalPayments',
-    totalRents,
-    totalPayments,
-    '=',
-    newBalance
-  );
 
   return newBalance;
 }

@@ -68,11 +68,7 @@ export const DueNotice = () => {
   const handleTermChange = (e) => {
     const value = JSON.parse(e.target.value);
 
-    setDates({
-      docDate: value.docDate,
-      termFrom: value.termFrom,
-      termTo: value.termTo,
-    });
+    setDates(value);
   };
 
   return (
@@ -89,11 +85,6 @@ export const DueNotice = () => {
           />
           <label htmlFor='balance'>Solde antérieur</label>
         </div>
-
-        {/* <div className='input-field col s6'>
-          <input name='docDate' id='docDate' type='date' className='validate' />
-          <label htmlFor='docDate'>Date du document</label>
-        </div> */}
 
         <div className='col s6'>
           <div className='input-fiel'>
