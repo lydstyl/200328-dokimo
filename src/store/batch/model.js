@@ -117,6 +117,27 @@ export default {
     actions.setLoading(false);
   }),
 
+  firestoreDelBatch: thunk(async (actions, payload) => {
+    actions.setLoading(true);
+
+    firestore
+      .collection('batches')
+      .doc(payload)
+      .delete()
+      .then(function () {
+        console.log('Document successfully deleted!');
+
+        actions.delBatch(payload);
+
+        actions.setLoading(false);
+      })
+      .catch(function (error) {
+        console.error('Error removing document: ', error);
+
+        actions.setLoading(false);
+      });
+  }),
+
   // Term
   firestoreAddTerm: thunk(async (actions, payload) => {
     actions.setLoading(true);
@@ -228,6 +249,10 @@ export default {
 
   setBatches: action((state, payload) => {
     state.batches = payload;
+  }),
+
+  delBatch: action((state, payload) => {
+    state.batches = state.batches.filter((batch) => batch.id !== payload);
   }),
 
   // Term
