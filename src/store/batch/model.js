@@ -105,7 +105,12 @@ export default {
   }),
 
   firestoreUpdateBatch: thunk(async (actions, payload) => {
+    actions.setLoading(true);
+
     firestore.collection('batches').doc(payload.id).update(payload);
+    actions.updateBatch(payload);
+
+    actions.setLoading(false);
   }),
 
   // Term
@@ -182,6 +187,20 @@ export default {
     actions.addPayment(payload.payment);
   }),
 
+  firestoreDeletePayment: thunk(async (actions, payload) => {
+    actions.setLoading(true);
+    const newPayments = payload.batch.payments.filter(
+      (payment) => payment.id !== payload.paymentId
+    );
+
+    const newBatch = { ...payload.batch, payments: newPayments };
+
+    actions.firestoreUpdateBatch(newBatch);
+
+    actions.setLoading(false);
+    console.log('after2'); // fix The specified value "10/04/2020" does not conform to the required format, "yyyy-MM-dd".
+  }),
+
   // ACTIONS
   setLoading: action((state, payload) => {
     state.loading = payload;
@@ -190,6 +209,15 @@ export default {
   // Batch
   addBatch: action((state, payload) => {
     state.batches.push(payload);
+  }),
+
+  updateBatch: action((state, payload) => {
+    state.batches.map((batch) => {
+      if (batch.id === payload.id) {
+        return payload;
+      }
+      return batch;
+    });
   }),
 
   setBatches: action((state, payload) => {
@@ -220,6 +248,11 @@ export default {
         if (!batch.payments) {
           batch.payments = [];
         }
+
+        if (!payload.id) {
+          return; // fix double add payment
+        }
+
         batch.payments.push({ date: payload.date, amount });
 
         // update balance

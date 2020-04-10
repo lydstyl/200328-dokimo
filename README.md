@@ -4,5 +4,4 @@ Create receipts and other documents
 
 todo
 
-- fix ajouter un paiement pas 2.
-- avis d'échéance : les options du select doivent être créés automatiquement entre beginDate du batch et date now. Puis suprimer le lien Terms.
+- finish delete payment && fix The specified value "10/04/2020" does not conform to the required format, "yyyy-MM-dd".

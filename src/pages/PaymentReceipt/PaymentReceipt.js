@@ -8,7 +8,9 @@ export const PaymentReceipt = () => {
   const { batches } = useStoreState((state) => state.batch);
   const batch = batches.filter((batch) => batch.id === id)[0];
 
-  const { firestoreAddPayment } = useStoreActions((actions) => actions.batch);
+  const { firestoreAddPayment, firestoreDeletePayment } = useStoreActions(
+    (actions) => actions.batch
+  );
 
   const getNowFrDate = () => {
     const date = new Date();
@@ -38,12 +40,22 @@ export const PaymentReceipt = () => {
     if (!batch.payments) {
       batch.payments = [];
     }
-    batch.payments.push({ date, amount });
+    batch.payments.push({
+      id: date + Math.random() * 1000000000000000000,
+      date,
+      amount,
+    });
 
     // update balance
     batch.balance -= amount;
 
     firestoreAddPayment({ batch, payment });
+  };
+
+  const handleDeletePayment = (id) => {
+    console.log(id);
+
+    firestoreDeletePayment({ batch, paymentId: id });
   };
 
   return (
@@ -67,6 +79,15 @@ export const PaymentReceipt = () => {
 
         <button onClick={handleSavePayment}>Sauver</button>
       </form>
+
+      <ul>
+        {batch.payments.map((payment) => (
+          <li key={payment.id}>
+            <button onClick={() => handleDeletePayment(payment.id)}>X</button>{' '}
+            {payment.date} {payment.amount}
+          </li>
+        ))}
+      </ul>
 
       <pre>{JSON.stringify(batch, null, 4)}</pre>
     </div>
