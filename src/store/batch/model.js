@@ -55,6 +55,10 @@ export default {
   firestoreAddBatch: thunk(async (actions, payload) => {
     actions.setLoading(true);
 
+    if (!payload.payments) {
+      payload.payments = [];
+    }
+
     firestore
       .collection('batches')
       .add(payload)
