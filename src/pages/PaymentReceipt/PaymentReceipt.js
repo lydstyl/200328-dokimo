@@ -86,8 +86,6 @@ export const PaymentReceipt = () => {
           </li>
         ))}
       </ul>
-
-      <pre>{JSON.stringify(batch, null, 4)}</pre>
     </div>
   );
 };

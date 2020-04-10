@@ -200,7 +200,7 @@ export default {
     actions.delPayment({ bid: newBatch.id, pid: payload.paymentId });
 
     actions.setLoading(false);
-    console.log('after2'); // fix The specified value "10/04/2020" does not conform to the required format, "yyyy-MM-dd".
+    // console.log('after2'); // fix The specified value "10/04/2020" does not conform to the required format, "yyyy-MM-dd".
   }),
 
   // ACTIONS
@@ -268,16 +268,12 @@ export default {
   delPayment: action((state, payload) => {
     const { bid, pid } = payload;
 
-    console.log(bid, pid);
-
     state.batches = state.batches.map((batch) => {
       if (batch.id === bid) {
         const newBatch = { ...batch };
         newBatch.payments = newBatch.payments.filter(
           (payment) => payment.id !== pid
         );
-
-        console.log('nn', newBatch);
 
         return newBatch;
       }
