@@ -11,12 +11,7 @@ export const DueNotice = () => {
   const {
     // terms,
     batches,
-    utils: {
-      getNewBalance,
-      getTotalPayments,
-      getRentTotalFromTo,
-      termOptionsMaker,
-    },
+    utils: { getTotalPayments, getRentTotalFromTo, termOptionsMaker },
   } = useStoreState((state) => state.batch);
 
   const batch = batches.filter((batch) => batch.id === id)[0];
@@ -60,41 +55,22 @@ export const DueNotice = () => {
   }
 
   const [dates, setDates] = useState({
-    // docDate: terms[0].docDate,
     docDate: dateMinus1month(terms[0].docDate),
     termFrom: terms[0].termFrom,
     termTo: terms[0].termTo,
   });
 
-  const newBalance = getNewBalance({
-    payments: batch.payments,
-    rent: rent + charge,
-    beginDate,
+  function getAnteriorBalance(docDate, termTo) {
+    let anteriorPayments = getTotalPayments(payments, '01/01/2000', docDate);
 
-    termTo: dates.docDate, // doc date exemple 10/02/2020
-
-    // termTo: dates.termTo.replace('-', '/').replace('-', '/'), // termTo 31-05-2020
-  });
-
-  const dueNoticeBalance = newBalance - rent - charge;
-  const [csBalance, setCsBalance] = useState(dueNoticeBalance); // component state balance
-
-  const onCsBalanceChange = (e) => {
-    setCsBalance(parseFloat(e.target.value));
-  };
-
-  const handleTermChange = (e) => {
-    const value = JSON.parse(e.target.value);
-
-    setDates({ ...value, docDate: dateMinus1month(value.docDate) });
-
-    let anteriorPayments = getTotalPayments(
+    console.log(
+      'fix ici anteriorPayments 0 initial au lieu de 250, anteriorPayments',
       payments,
       '01/01/2000',
-      value.docDate
+      docDate
+      // 'func',
+      // getTotalPayments
     );
-
-    let termTo = value.termTo;
 
     termTo = dateMinus1month(termTo); // minus 1 month the month of the document
 
@@ -105,30 +81,40 @@ export const DueNotice = () => {
       termTo
     );
 
-    const anteriorBalance = anteriorPayments - anteriorRents;
+    const anteriorBalance = anteriorRents - anteriorPayments;
 
-    setCsBalance(anteriorBalance);
+    console.log(`${anteriorBalance} = ${anteriorRents} - ${anteriorPayments}`);
+
+    return anteriorBalance;
+  }
+
+  const [csBalance, setCsBalance] = useState(
+    getAnteriorBalance(dates.docDate, dates.termTo)
+  ); // component state balance
+
+  const handleTermChange = (e) => {
+    const value = JSON.parse(e.target.value);
+
+    setDates({ ...value, docDate: dateMinus1month(value.docDate) });
+
+    setCsBalance(getAnteriorBalance(value.docDate, value.termTo));
   };
+
+  // console.log('csBalance', csBalance); // initial 500 puis 500 (500 - 0)   selectChange 250 puis 250 (500 - 250) why ????
+
+  let anteriorBalance = null;
+
+  // useEffect(() => {
+  //   anteriorBalance = getAnteriorBalance(dates.docDate, dates.termTo);
+  // }, []);
 
   return (
     <div className='container'>
       <form className='row no-print'>
-        <div className='input-field col s6'>
-          <input
-            onChange={onCsBalanceChange}
-            name='balance'
-            id='balance'
-            type='number'
-            className='validate'
-            value={csBalance}
-          />
-          <label htmlFor='balance'>Solde antérieur</label>
-        </div>
-
         <div className='col s6'>
           <div className='input-fiel'>
             <div>
-              <label>Bailleur</label>
+              <label>Terme</label>
 
               <select
                 onChange={handleTermChange}
@@ -143,14 +129,6 @@ export const DueNotice = () => {
               </select>
             </div>
           </div>
-        </div>
-
-        <div className='input-field col s6'>
-          <button
-          // onClick={handleChange}
-          >
-            Sauver le solde et le document de ce lot
-          </button>
         </div>
       </form>
 
@@ -192,7 +170,7 @@ export const DueNotice = () => {
           </p>
 
           <ul>
-            <li>Solde antérieur: {csBalance}</li>
+            <li>Solde antérieur: {anteriorBalance || csBalance}</li>
             <li>Loyer nu : {rent}</li>
             <li>Charges: {charge}</li>
             <li>Total à payer : {csBalance + rent + charge} €</li>
