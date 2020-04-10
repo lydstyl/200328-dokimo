@@ -7,11 +7,11 @@ import { Input } from '../../components/Input/Input';
 import M from 'materialize-css/dist/js/materialize.min.js';
 
 export const AddBatch = () => {
-  const { user } = useStoreState(state => state.user);
-  const { lessors } = useStoreState(state => state.lessor);
-  const { tenants } = useStoreState(state => state.tenant);
+  const { user } = useStoreState((state) => state.user);
+  const { lessors } = useStoreState((state) => state.lessor);
+  const { tenants } = useStoreState((state) => state.tenant);
 
-  const { firestoreAddBatch } = useStoreActions(actions => actions.batch);
+  const { firestoreAddBatch } = useStoreActions((actions) => actions.batch);
 
   const history = useHistory();
 
@@ -22,7 +22,7 @@ export const AddBatch = () => {
           <label>Bailleur</label>
 
           <select name='lid' style={{ display: 'block' }}>
-            {lessors.map(lessor => (
+            {lessors.map((lessor) => (
               <option key={lessor.id} value={lessor.id}>
                 {lessor.companyName ||
                   `${lessor.managerFirstName} ${lessor.managerLastName}`}
@@ -41,7 +41,7 @@ export const AddBatch = () => {
           <label>Locataire</label>
 
           <select name='tid' style={{ display: 'block' }}>
-            {tenants.map(tenant => (
+            {tenants.map((tenant) => (
               <option key={tenant.id} value={tenant.id}>
                 {`${tenant.civility} ${tenant.lastName}`}
               </option>
@@ -52,12 +52,12 @@ export const AddBatch = () => {
     );
   };
 
-  const handleAddBatch = e => {
+  const handleAddBatch = (e) => {
     e.preventDefault();
 
     const inputs = document.querySelectorAll('form [name]');
     const batch = { uid: user.uid, balance: 0 };
-    inputs.forEach(input => {
+    inputs.forEach((input) => {
       batch[input.name] = input.value;
     });
 
@@ -73,7 +73,7 @@ export const AddBatch = () => {
       defaultDate: new Date(),
       setDefaultDate: true,
       firstDay: 1,
-      yearRange: 2
+      yearRange: 2,
     };
     // var instances = M.Datepicker.init(elems, options);
     M.Datepicker.init(elems, options);
@@ -102,13 +102,13 @@ export const AddBatch = () => {
           <label htmlFor='beginDate'>Date de début</label>
         </div>
 
-        <div className='input input-field col s12'>
+        {/* <div className='input input-field col s12'>
           <input type='text' name='paymentDeadline' className='datepicker' />
           <label htmlFor='paymentDeadline'>Date limite de paiement</label>
-        </div>
+        </div> */}
 
         <button
-          onClick={e => handleAddBatch(e)}
+          onClick={(e) => handleAddBatch(e)}
           className='waves-effect waves-light btn col s4'
         >
           +
