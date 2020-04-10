@@ -11,7 +11,12 @@ export const DueNotice = () => {
   const {
     // terms,
     batches,
-    utils: { getNewBalance, termOptionsMaker },
+    utils: {
+      getNewBalance,
+      getTotalPayments,
+      getRentTotalFromTo,
+      termOptionsMaker,
+    },
   } = useStoreState((state) => state.batch);
 
   const batch = batches.filter((batch) => batch.id === id)[0];
@@ -24,6 +29,8 @@ export const DueNotice = () => {
     rent,
     // beginDate, paymentDeadline
   } = batch;
+
+  const payments = batch.payments ? batch.payments : [];
 
   const lessor = lessors.filter((lessor) => lessor.id === lid)[0];
   const tenant = tenants.filter((tenant) => tenant.id === tid)[0];
@@ -44,8 +51,17 @@ export const DueNotice = () => {
 
   const terms = termOptionsMaker(beginDate);
 
+  function dateMinus1month(date) {
+    date = date.split('/');
+    date[1] = parseInt(date[1], 10) - 1;
+    date[1] = date[1] < 10 ? '0' + date[1] : date[1];
+
+    return date.join('/');
+  }
+
   const [dates, setDates] = useState({
-    docDate: terms[0].docDate,
+    // docDate: terms[0].docDate,
+    docDate: dateMinus1month(terms[0].docDate),
     termFrom: terms[0].termFrom,
     termTo: terms[0].termTo,
   });
@@ -53,9 +69,11 @@ export const DueNotice = () => {
   const newBalance = getNewBalance({
     payments: batch.payments,
     rent: rent + charge,
-    balance: 0, //balance,
-    balanceDate: beginDate,
-    termTo: dates.termTo.replace('-', '/').replace('-', '/'), // termTo 31-05-2020
+    beginDate,
+
+    termTo: dates.docDate, // doc date exemple 10/02/2020
+
+    // termTo: dates.termTo.replace('-', '/').replace('-', '/'), // termTo 31-05-2020
   });
 
   const dueNoticeBalance = newBalance - rent - charge;
@@ -68,7 +86,28 @@ export const DueNotice = () => {
   const handleTermChange = (e) => {
     const value = JSON.parse(e.target.value);
 
-    setDates(value);
+    setDates({ ...value, docDate: dateMinus1month(value.docDate) });
+
+    let anteriorPayments = getTotalPayments(
+      payments,
+      '01/01/2000',
+      value.docDate
+    );
+
+    let termTo = value.termTo;
+
+    termTo = dateMinus1month(termTo); // minus 1 month the month of the document
+
+    const anteriorRents = getRentTotalFromTo(
+      rent + charge,
+      0,
+      beginDate,
+      termTo
+    );
+
+    const anteriorBalance = anteriorPayments - anteriorRents;
+
+    setCsBalance(anteriorBalance);
   };
 
   return (

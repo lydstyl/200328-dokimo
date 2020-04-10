@@ -23,7 +23,7 @@ function frDateToDateObj(frDate) {
   return date;
 }
 
-function filterPaymentFromTo(payments, balanceDate, docDate) {
+export function filterPaymentFromTo(payments, balanceDate, docDate) {
   return payments.filter((payment) => {
     let paymentDate = payment.date;
 
@@ -39,7 +39,7 @@ function filterPaymentFromTo(payments, balanceDate, docDate) {
   });
 }
 
-function getRentTotalFromTo(rent, balance, balanceDate, termTo) {
+export function getRentTotalFromTo(rent, balance, balanceDate, termTo) {
   function getMonth(frDate) {
     return parseInt(frDate.split('/')[1], 10);
   }
@@ -54,7 +54,7 @@ function getRentTotalFromTo(rent, balance, balanceDate, termTo) {
   return balance + rents;
 }
 
-function getTotalPayments(payments, balanceDate, termTo) {
+export function getTotalPayments(payments, balanceDate, termTo) {
   payments = filterPaymentFromTo(payments, balanceDate, termTo);
 
   let totalPayments = null;
@@ -83,6 +83,9 @@ function getTotalPayments(payments, balanceDate, termTo) {
 }
 
 export function getNewBalance(o) {
+  o.balance = 0; // for now
+  o.balanceDate = o.beginDate;
+
   const totalRents = getRentTotalFromTo(
     o.rent,
     o.balance,

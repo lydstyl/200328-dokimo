@@ -1,7 +1,11 @@
 import { thunk, action } from 'easy-peasy';
 import { firestore } from '../../firebase/firebase';
 
-import { getNewBalance } from './getNewBalance';
+import {
+  getNewBalance,
+  getTotalPayments,
+  getRentTotalFromTo,
+} from './getNewBalance';
 import { termOptionsMaker } from './termOptionsMaker';
 
 import M from 'materialize-css/dist/js/materialize.min.js';
@@ -38,6 +42,8 @@ export default {
     },
 
     getNewBalance,
+    getTotalPayments,
+    getRentTotalFromTo,
     termOptionsMaker,
   },
 
