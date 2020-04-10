@@ -59,10 +59,7 @@ export const Batches = () => {
                         <Link to={`/lot/${batch.id}/editer`}>Éditer</Link>
                       </li> */}
 
-                      {/* <li>
-                        <i className='material-icons'>delete</i> Quittance
-                      </li>
-                      <li>Reçu partiel de loyer</li> */}
+                      {/* <li>Reçu partiel de loyer</li> */}
                     </ul>
                   </div>
                 </div>
