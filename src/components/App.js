@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { StoreProvider } from 'easy-peasy';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -24,15 +24,10 @@ import { Terms } from '../pages/Terms/Terms';
 import { Tenants } from '../pages/Tenants/Tenants';
 
 import 'materialize-css/dist/css/materialize.min.css';
-import M from 'materialize-css/dist/js/materialize.min.js';
 
 import './App.css';
 
 function App() {
-  useEffect(() => {
-    M.AutoInit();
-  }, []);
-
   return (
     <StoreProvider store={store}>
       <Router>

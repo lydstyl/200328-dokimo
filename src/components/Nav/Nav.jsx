@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import { Link, useHistory } from 'react-router-dom';
 
+import M from 'materialize-css/dist/js/materialize.min.js';
+
 export const Nav = () => {
   const history = useHistory();
 
@@ -23,6 +25,10 @@ export const Nav = () => {
 
     history.push('/login');
   };
+
+  useEffect(() => {
+    M.AutoInit();
+  }, []);
 
   useEffect(() => {
     onAuthStateChanged();
