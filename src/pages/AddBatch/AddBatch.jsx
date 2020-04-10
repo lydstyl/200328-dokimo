@@ -61,6 +61,10 @@ export const AddBatch = () => {
       batch[input.name] = input.value;
     });
 
+    batch.rent = parseFloat(batch.rent);
+    batch.charge = parseFloat(batch.charge);
+    batch.payments = [];
+
     firestoreAddBatch(batch);
 
     history.push('/lots');
