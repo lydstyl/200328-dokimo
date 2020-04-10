@@ -5,6 +5,7 @@ import {
   getNewBalance,
   getTotalPayments,
   getRentTotalFromTo,
+  dateMinus1month,
 } from './getNewBalance';
 import { termOptionsMaker } from './termOptionsMaker';
 
@@ -44,6 +45,7 @@ export default {
     getNewBalance,
     getTotalPayments,
     getRentTotalFromTo,
+    dateMinus1month,
     termOptionsMaker,
   },
 

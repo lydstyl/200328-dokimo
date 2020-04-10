@@ -9,21 +9,17 @@ export const DueNotice = () => {
   const { lessors } = useStoreState((state) => state.lessor);
   const { tenants } = useStoreState((state) => state.tenant);
   const {
-    // terms,
     batches,
-    utils: { getTotalPayments, getRentTotalFromTo, termOptionsMaker },
+    utils: {
+      getRentTotalFromTo,
+      getTotalPayments,
+      termOptionsMaker,
+      dateMinus1month,
+    },
   } = useStoreState((state) => state.batch);
 
   const batch = batches.filter((batch) => batch.id === id)[0];
-  const {
-    lid,
-    tid,
-    charge,
-    // balance, // must be editable
-    beginDate,
-    rent,
-    // beginDate, paymentDeadline
-  } = batch;
+  const { lid, tid, charge, beginDate, rent } = batch;
 
   const payments = batch.payments ? batch.payments : [];
 
@@ -46,14 +42,6 @@ export const DueNotice = () => {
 
   const terms = termOptionsMaker(beginDate);
 
-  function dateMinus1month(date) {
-    date = date.split('/');
-    date[1] = parseInt(date[1], 10) - 1;
-    date[1] = date[1] < 10 ? '0' + date[1] : date[1];
-
-    return date.join('/');
-  }
-
   const [dates, setDates] = useState({
     docDate: dateMinus1month(terms[0].docDate),
     termFrom: terms[0].termFrom,
@@ -69,7 +57,6 @@ export const DueNotice = () => {
       '01/01/2000',
       docDate
       // 'func',
-      // getTotalPayments
     );
 
     termTo = dateMinus1month(termTo); // minus 1 month the month of the document
@@ -88,7 +75,7 @@ export const DueNotice = () => {
     return anteriorBalance;
   }
 
-  const [csBalance, setCsBalance] = useState(
+  const [anteriorBalance, setAnteriorBalance] = useState(
     getAnteriorBalance(dates.docDate, dates.termTo)
   ); // component state balance
 
@@ -97,16 +84,8 @@ export const DueNotice = () => {
 
     setDates({ ...value, docDate: dateMinus1month(value.docDate) });
 
-    setCsBalance(getAnteriorBalance(value.docDate, value.termTo));
+    setAnteriorBalance(getAnteriorBalance(value.docDate, value.termTo));
   };
-
-  // console.log('csBalance', csBalance); // initial 500 puis 500 (500 - 0)   selectChange 250 puis 250 (500 - 250) why ????
-
-  let anteriorBalance = null;
-
-  // useEffect(() => {
-  //   anteriorBalance = getAnteriorBalance(dates.docDate, dates.termTo);
-  // }, []);
 
   return (
     <div className='container'>
@@ -131,6 +110,11 @@ export const DueNotice = () => {
           </div>
         </div>
       </form>
+
+      {/* <div className='row json'>
+        <pre>{JSON.stringify(dates)}</pre>
+        <pre>{JSON.stringify(payments)}</pre>
+      </div> */}
 
       <div className=' due-notice'>
         <div className='row sender'>
@@ -170,10 +154,10 @@ export const DueNotice = () => {
           </p>
 
           <ul>
-            <li>Solde antérieur: {anteriorBalance || csBalance}</li>
+            <li>Solde antérieur: {anteriorBalance}</li>
             <li>Loyer nu : {rent}</li>
             <li>Charges: {charge}</li>
-            <li>Total à payer : {csBalance + rent + charge} €</li>
+            <li>Total à payer : {anteriorBalance + rent + charge} €</li>
           </ul>
         </div>
 

@@ -129,3 +129,11 @@ export function getNewBalance(o) {
 // });
 
 // console.log(newBalance);
+
+export function dateMinus1month(date) {
+  date = date.split('/');
+  date[1] = parseInt(date[1], 10) - 1;
+  date[1] = date[1] < 10 ? '0' + date[1] : date[1];
+
+  return date.join('/');
+}
