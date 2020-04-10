@@ -47,6 +47,7 @@ export const DueNotice = () => {
     termFrom: terms[0].termFrom,
     termTo: terms[0].termTo,
   });
+  const [showDoc, setShowDoc] = useState(false);
 
   function getAnteriorBalance(docDate, termTo) {
     let anteriorPayments = getTotalPayments(payments, '01/01/2000', docDate);
@@ -85,6 +86,8 @@ export const DueNotice = () => {
     setDates({ ...value, docDate: dateMinus1month(value.docDate) });
 
     setAnteriorBalance(getAnteriorBalance(value.docDate, value.termTo));
+
+    setShowDoc(true);
   };
 
   return (
@@ -100,6 +103,7 @@ export const DueNotice = () => {
                 name='term'
                 style={{ display: 'block' }}
               >
+                <option value={null}>Choisissez le terme</option>
                 {terms.map((term) => (
                   <option key={term.termFrom} value={JSON.stringify(term)}>
                     {`${term.termFrom} ${term.termTo}`}
@@ -111,63 +115,60 @@ export const DueNotice = () => {
         </div>
       </form>
 
-      {/* <div className='row json'>
-        <pre>{JSON.stringify(dates)}</pre>
-        <pre>{JSON.stringify(payments)}</pre>
-      </div> */}
+      {showDoc && (
+        <div className=' due-notice'>
+          <div className='row sender'>
+            <p>
+              {companyName
+                ? companyName
+                : managerFirstName + ' ' + managerLastName}
+            </p>
+            <p>{address1}</p>
+            {address2 && <p>{address2}</p>}
+            <p>
+              {postalCode} {townName}
+            </p>
+          </div>
 
-      <div className=' due-notice'>
-        <div className='row sender'>
-          <p>
-            {companyName
-              ? companyName
-              : managerFirstName + ' ' + managerLastName}
-          </p>
-          <p>{address1}</p>
-          {address2 && <p>{address2}</p>}
-          <p>
-            {postalCode} {townName}
-          </p>
+          <div className='row recipient'>
+            <p>
+              {civility} {firstName} {lastName}
+            </p>
+            <p>{batch.address1}</p>
+            <p>{batch.address2}</p>
+            <p>
+              {batch.postalCode} {batch.townName}
+            </p>
+          </div>
+
+          <div className='row where-when'>
+            à <span>{docPlace}</span>, le <span>{dates && dates.docDate}</span>
+          </div>
+
+          <h1 className='row'>Avis d'échéance</h1>
+
+          <div className='row amount-to-pay'>
+            <p>
+              Somme à payer sur le terme du {dates && dates.termFrom} au{' '}
+              {dates && dates.termTo}.
+            </p>
+
+            <ul>
+              <li>Solde antérieur: {anteriorBalance}</li>
+              <li>Loyer nu : {rent}</li>
+              <li>Charges: {charge}</li>
+              <li>Total à payer : {anteriorBalance + rent + charge} €</li>
+            </ul>
+          </div>
+
+          <div className='row footer'>
+            <p>Cet avis ne peut en aucun cas faire office de quittance.</p>
+            <p>
+              Le gérant de {companyName}, {managerFirstName} {managerLastName}
+            </p>
+          </div>
         </div>
-
-        <div className='row recipient'>
-          <p>
-            {civility} {firstName} {lastName}
-          </p>
-          <p>{batch.address1}</p>
-          <p>{batch.address2}</p>
-          <p>
-            {batch.postalCode} {batch.townName}
-          </p>
-        </div>
-
-        <div className='row where-when'>
-          à <span>{docPlace}</span>, le <span>{dates && dates.docDate}</span>
-        </div>
-
-        <h1 className='row'>Avis d'échéance</h1>
-
-        <div className='row amount-to-pay'>
-          <p>
-            Somme à payer sur le terme du {dates && dates.termFrom} au{' '}
-            {dates && dates.termTo}.
-          </p>
-
-          <ul>
-            <li>Solde antérieur: {anteriorBalance}</li>
-            <li>Loyer nu : {rent}</li>
-            <li>Charges: {charge}</li>
-            <li>Total à payer : {anteriorBalance + rent + charge} €</li>
-          </ul>
-        </div>
-
-        <div className='row footer'>
-          <p>Cet avis ne peut en aucun cas faire office de quittance.</p>
-          <p>
-            Le gérant de {companyName}, {managerFirstName} {managerLastName}
-          </p>
-        </div>
-      </div>
+      )}
     </div>
   );
 };
