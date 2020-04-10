@@ -53,8 +53,6 @@ export const PaymentReceipt = () => {
   };
 
   const handleDeletePayment = (id) => {
-    console.log(id);
-
     firestoreDeletePayment({ batch, paymentId: id });
   };
 

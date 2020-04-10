@@ -197,6 +197,8 @@ export default {
 
     actions.firestoreUpdateBatch(newBatch);
 
+    actions.delPayment({ bid: newBatch.id, pid: payload.paymentId });
+
     actions.setLoading(false);
     console.log('after2'); // fix The specified value "10/04/2020" does not conform to the required format, "yyyy-MM-dd".
   }),
@@ -239,8 +241,6 @@ export default {
 
   // Payment
   addPayment: action((state, payload) => {
-    console.log(payload); // {bid: "cRAuH60aUd2OXPIVxmAX", date: "08/04/2020", amount: "55"}
-
     state.batches.forEach((batch) => {
       if (batch.id === payload.bid) {
         // add to payments list
@@ -262,6 +262,26 @@ export default {
           html: `Paiment ajouté au store, nouvelle balance : ${batch.balance}`,
         });
       }
+    });
+  }),
+
+  delPayment: action((state, payload) => {
+    const { bid, pid } = payload;
+
+    console.log(bid, pid);
+
+    state.batches = state.batches.map((batch) => {
+      if (batch.id === bid) {
+        const newBatch = { ...batch };
+        newBatch.payments = newBatch.payments.filter(
+          (payment) => payment.id !== pid
+        );
+
+        console.log('nn', newBatch);
+
+        return newBatch;
+      }
+      return batch;
     });
   }),
 };
