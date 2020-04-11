@@ -60,12 +60,13 @@ export const DueNotice = () => {
       // 'func',
     );
 
-    termTo = dateMinus1month(termTo); // minus 1 month the month of the document
+    //termTo = dateMinus1month(termTo); // minus 1 month the month of the document
 
     const anteriorRents = getRentTotalFromTo(
       rent + charge,
       0,
       beginDate,
+      // dateMinus1month(beginDate),
       termTo
     );
 
@@ -81,7 +82,11 @@ export const DueNotice = () => {
   ); // component state balance
 
   const handleTermChange = (e) => {
-    const value = JSON.parse(e.target.value);
+    let value = e.target.value;
+    if (value === 'no term') {
+      return;
+    }
+    value = JSON.parse(value);
 
     setDates({ ...value, docDate: dateMinus1month(value.docDate) });
 
@@ -103,7 +108,7 @@ export const DueNotice = () => {
                 name='term'
                 style={{ display: 'block' }}
               >
-                <option value={null}>Choisissez le terme</option>
+                <option value={'no term'}>Choisissez le terme</option>
                 {terms.map((term) => (
                   <option key={term.termFrom} value={JSON.stringify(term)}>
                     {`${term.termFrom} ${term.termTo}`}

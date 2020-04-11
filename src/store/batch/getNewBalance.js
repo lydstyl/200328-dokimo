@@ -39,15 +39,27 @@ export function filterPaymentFromTo(payments, balanceDate, docDate) {
   });
 }
 
+function nbOfMonth(from, to) {
+  let tmp = from.split('/');
+  const fromYYYY = parseInt(tmp[2], 10);
+  const fromMM = parseInt(tmp[1], 10);
+
+  tmp = to.split('/');
+  const toYYYY = parseInt(tmp[2], 10);
+  const toMM = parseInt(tmp[1], 10);
+
+  const YYYYDif = toYYYY - fromYYYY;
+  console.log(YYYYDif);
+
+  const MMDif = YYYYDif * 12 + toMM - fromMM;
+
+  return MMDif;
+}
+
 export function getRentTotalFromTo(rent, balance, balanceDate, termTo) {
-  function getMonth(frDate) {
-    return parseInt(frDate.split('/')[1], 10);
-  }
+  const rentNumber = nbOfMonth(balanceDate, termTo);
 
-  balanceDate = getMonth(balanceDate);
-  termTo = getMonth(termTo);
-
-  const rentNumber = termTo - balanceDate + 1;
+  // console.log(balanceDate, termTo, 'rentNumber', rentNumber); ///////////////////
 
   const rents = rentNumber * rent;
 
@@ -134,6 +146,13 @@ export function dateMinus1month(date) {
   date = date.split('/');
   date[1] = parseInt(date[1], 10) - 1;
   date[1] = date[1] < 10 ? '0' + date[1] : date[1];
+
+  if (date[1] === '00') {
+    date[1] = 12;
+    date[2] = parseInt(date[2], 10) - 1;
+  }
+
+  console.log(date);
 
   return date.join('/');
 }
