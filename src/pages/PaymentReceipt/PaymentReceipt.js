@@ -34,13 +34,18 @@ export const PaymentReceipt = () => {
     setPaymentDate(e.target.value);
   };
 
+  let tooOldDate = dateMinus1month(batch.beginDate).split('/');
+  tooOldDate[0] = '10';
+  tooOldDate = new Date(
+    tooOldDate[2],
+    parseInt(tooOldDate[1], 10) - 1,
+    tooOldDate[0]
+  );
+
+  const now = new Date();
+
   const handleSavePayment = (e) => {
     e.preventDefault();
-
-    console.log('begin', batch.beginDate);
-    let tooOldDate = dateMinus1month(batch.beginDate).split('/');
-    tooOldDate[0] = '10';
-    tooOldDate = new Date(tooOldDate[2], tooOldDate[1], tooOldDate[0]);
 
     let date = paymentDate.split('-');
 
@@ -49,8 +54,6 @@ export const PaymentReceipt = () => {
       parseInt(date[1], 10) - 1,
       date[2]
     );
-
-    const now = new Date();
 
     if (paymentDateObj < tooOldDate) {
       M.toast({
@@ -94,6 +97,12 @@ export const PaymentReceipt = () => {
     <div>
       <h1>Réception de paiement</h1>
 
+      <p>La date du début de la location est le {batch.beginDate}.</p>
+      <p>
+        La date du paiement doit être comprise entre {tooOldDate.toString()} et{' '}
+        {now.toString()}
+      </p>
+
       <form>
         <input
           onChange={handleDateChange}
@@ -116,10 +125,12 @@ export const PaymentReceipt = () => {
         {batch.payments.map((payment) => (
           <li key={payment.id}>
             <button onClick={() => handleDeletePayment(payment.id)}>X</button>{' '}
-            {payment.date} {payment.amount}
+            {payment.date} {payment.amount} lienVersReçuPartielOuQuittance
           </li>
         ))}
       </ul>
+
+      <pre>{JSON.stringify(batch.payments, null, 4)}</pre>
     </div>
   );
 };
