@@ -52,16 +52,6 @@ export const DueNotice = () => {
   function getAnteriorBalance(docDate, termTo) {
     let anteriorPayments = getTotalPayments(payments, '01/01/2000', docDate);
 
-    console.log(
-      'fix ici anteriorPayments 0 initial au lieu de 250, anteriorPayments',
-      payments,
-      '01/01/2000',
-      docDate
-      // 'func',
-    );
-
-    //termTo = dateMinus1month(termTo); // minus 1 month the month of the document
-
     const anteriorRents = getRentTotalFromTo(
       rent + charge,
       0,
@@ -71,8 +61,6 @@ export const DueNotice = () => {
     );
 
     const anteriorBalance = anteriorRents - anteriorPayments;
-
-    console.log(`${anteriorBalance} = ${anteriorRents} - ${anteriorPayments}`);
 
     return anteriorBalance;
   }

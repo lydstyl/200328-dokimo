@@ -67,7 +67,11 @@ export function getRentTotalFromTo(rent, balance, balanceDate, termTo) {
 }
 
 export function getTotalPayments(payments, balanceDate, termTo) {
-  payments = filterPaymentFromTo(payments, balanceDate, termTo);
+  payments = filterPaymentFromTo(
+    payments,
+    balanceDate,
+    dateMinus1month(termTo)
+  );
 
   let totalPayments = null;
 
