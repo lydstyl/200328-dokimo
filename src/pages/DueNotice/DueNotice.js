@@ -109,56 +109,59 @@ export const DueNotice = () => {
       </form>
 
       {showDoc && (
-        <div className=' due-notice'>
-          <div className='row sender'>
-            <p>
-              {companyName
-                ? companyName
-                : managerFirstName + ' ' + managerLastName}
-            </p>
-            <p>{address1}</p>
-            {address2 && <p>{address2}</p>}
-            <p>
-              {postalCode} {townName}
-            </p>
-          </div>
+        <div className='row due-notice'>
+          <div className='col'>
+            <div className='row sender'>
+              <p>
+                {companyName
+                  ? companyName
+                  : managerFirstName + ' ' + managerLastName}
+              </p>
+              <p>{address1}</p>
+              {address2 && <p>{address2}</p>}
+              <p>
+                {postalCode} {townName}
+              </p>
+            </div>
 
-          <div className='row recipient'>
-            <p>
-              {civility} {firstName} {lastName}
-            </p>
-            <p>{batch.address1}</p>
-            <p>{batch.address2}</p>
-            <p>
-              {batch.postalCode} {batch.townName}
-            </p>
-          </div>
+            <div className='row recipient'>
+              <p>
+                {civility} {firstName} {lastName}
+              </p>
+              <p>{batch.address1}</p>
+              <p>{batch.address2}</p>
+              <p>
+                {batch.postalCode} {batch.townName}
+              </p>
+            </div>
 
-          <div className='row where-when'>
-            à <span>{docPlace}</span>, le <span>{dates && dates.docDate}</span>
-          </div>
+            <div className='row where-when'>
+              à <span>{docPlace}</span>, le{' '}
+              <span>{dates && dates.docDate}</span>
+            </div>
 
-          <h1 className='row'>Avis d'échéance</h1>
+            <h1 className='row'>Avis d'échéance</h1>
 
-          <div className='row amount-to-pay'>
-            <p>
-              Somme à payer sur le terme du {dates && dates.termFrom} au{' '}
-              {dates && dates.termTo}.
-            </p>
+            <div className='row amount-to-pay'>
+              <p>
+                Somme à payer sur le terme du {dates && dates.termFrom} au{' '}
+                {dates && dates.termTo}.
+              </p>
 
-            <ul>
-              <li>Solde antérieur: {anteriorBalance}</li>
-              <li>Loyer nu : {rent}</li>
-              <li>Charges: {charge}</li>
-              <li>Total à payer : {anteriorBalance + rent + charge} €</li>
-            </ul>
-          </div>
+              <ul>
+                <li>Solde antérieur: {anteriorBalance}</li>
+                <li>Loyer nu : {rent}</li>
+                <li>Charges: {charge}</li>
+                <li>Total à payer : {anteriorBalance + rent + charge} €</li>
+              </ul>
+            </div>
 
-          <div className='row footer'>
-            <p>Cet avis ne peut en aucun cas faire office de quittance.</p>
-            <p>
-              Le gérant de {companyName}, {managerFirstName} {managerLastName}
-            </p>
+            <div className='row footer'>
+              <p>Cet avis ne peut en aucun cas faire office de quittance.</p>
+              <p>
+                Le gérant de {companyName}, {managerFirstName} {managerLastName}
+              </p>
+            </div>
           </div>
         </div>
       )}
