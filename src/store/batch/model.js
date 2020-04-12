@@ -9,6 +9,8 @@ import {
 } from './getNewBalance';
 import { termOptionsMaker } from './termOptionsMaker';
 
+import { mapBalanceToPayments } from './mapBalanceToPayments';
+
 import M from 'materialize-css/dist/js/materialize.min.js';
 
 export default {
@@ -47,6 +49,7 @@ export default {
     getRentTotalFromTo,
     dateMinus1month,
     termOptionsMaker,
+    mapBalanceToPayments,
   },
 
   // THUNKS

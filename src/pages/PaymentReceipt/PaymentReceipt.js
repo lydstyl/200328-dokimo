@@ -9,7 +9,7 @@ export const PaymentReceipt = () => {
   const { id } = useParams(); // batch id
   const {
     batches,
-    utils: { dateMinus1month },
+    utils: { dateMinus1month, mapBalanceToPayments },
   } = useStoreState((state) => state.batch);
   const batch = batches.filter((batch) => batch.id === id)[0];
 
@@ -34,7 +34,10 @@ export const PaymentReceipt = () => {
     setPaymentDate(e.target.value);
   };
 
-  let tooOldDate = dateMinus1month(batch.beginDate).split('/');
+  const { beginDate, rent, charge } = batch;
+  let payments = batch.payments;
+
+  let tooOldDate = dateMinus1month(beginDate).split('/');
   tooOldDate[0] = '10';
   tooOldDate = new Date(
     tooOldDate[2],
@@ -71,20 +74,35 @@ export const PaymentReceipt = () => {
 
     date = [date[2], date[1], date[0]].join('/');
 
-    const payment = { bid: id, date, amount };
-
     // add to payments list
-    if (!batch.payments) {
-      batch.payments = [];
+    if (!payments) {
+      payments = [];
     }
-    batch.payments.push({
-      id: date + Math.random() * 1000000000000000000,
+
+    const pid = date + Math.random() * 1000000000000000000;
+    payments.push({
+      id: pid,
       date,
       amount,
     });
 
     // update balance
     batch.balance -= amount;
+
+    payments = mapBalanceToPayments({
+      beginDate,
+      chargeAndRent: charge + rent,
+      payments,
+    });
+
+    batch.payments = payments;
+
+    // add bid to every payements
+    batch.payments.map((payment) => {
+      payment.bid = id;
+    });
+
+    const payment = batch.payments.filter((payment) => payment.id === pid);
 
     firestoreAddPayment({ batch, payment });
   };
@@ -97,7 +115,7 @@ export const PaymentReceipt = () => {
     <div>
       <h1>Réception de paiement</h1>
 
-      <p>La date du début de la location est le {batch.beginDate}.</p>
+      <p>La date du début de la location est le {beginDate}.</p>
       <p>
         La date du paiement doit être comprise entre {tooOldDate.toString()} et{' '}
         {now.toString()}
@@ -122,15 +140,15 @@ export const PaymentReceipt = () => {
       </form>
 
       <ul>
-        {batch.payments.map((payment) => (
+        {payments.map((payment) => (
           <li key={payment.id}>
             <button onClick={() => handleDeletePayment(payment.id)}>X</button>{' '}
-            {payment.date} {payment.amount} lienVersReçuPartielOuQuittance
+            {payment.date} {payment.amount} {payment.document.type}
           </li>
         ))}
       </ul>
 
-      <pre>{JSON.stringify(batch.payments, null, 4)}</pre>
+      <pre>{JSON.stringify(payments, null, 4)}</pre>
     </div>
   );
 };
