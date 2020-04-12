@@ -100,6 +100,7 @@ export const PaymentReceipt = () => {
     // add bid to every payements
     batch.payments.map((payment) => {
       payment.bid = id;
+      return payment;
     });
 
     const payment = batch.payments.filter((payment) => payment.id === pid);

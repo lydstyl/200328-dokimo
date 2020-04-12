@@ -1,8 +1,3 @@
-function frDateToObj(frDate) {
-  frDate = Date.split('/');
-  return new Date(frDate);
-}
-
 function nbOfMonth(from, to) {
   let tmp = from.split('/');
   const fromYYYY = parseInt(tmp[2], 10);
