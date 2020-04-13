@@ -18,10 +18,9 @@ import { AddBatch } from '../pages/AddBatch/AddBatch';
 import { BatchDetail } from '../pages/BatchDetail/BatchDetail';
 import { DueNotice } from '../pages/DueNotice/DueNotice';
 import { PaymentReceipt } from '../pages/PaymentReceipt/PaymentReceipt';
-
 import { Terms } from '../pages/Terms/Terms';
-
 import { Tenants } from '../pages/Tenants/Tenants';
+import { PaymentDocument } from '../pages/PaymentDocument/PaymentDocument';
 
 import 'materialize-css/dist/css/materialize.min.css';
 
@@ -76,6 +75,9 @@ function App() {
               <PaymentReceipt />
             </PrivateRoute>
 
+            <PrivateRoute path='/lot/:bid/recu/:id'>
+              <PaymentDocument />
+            </PrivateRoute>
             <PrivateRoute path='/lot/:id'>
               <BatchDetail />
             </PrivateRoute>

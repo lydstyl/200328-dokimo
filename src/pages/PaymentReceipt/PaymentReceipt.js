@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 import M from 'materialize-css/dist/js/materialize.min.js';
 
@@ -79,7 +79,8 @@ export const PaymentReceipt = () => {
       payments = [];
     }
 
-    const pid = date + Math.random() * 1000000000000000000;
+    const pid =
+      date.replace(/\//g, '-') + '-' + Math.random() * 1000000000000000000;
     payments.push({
       id: pid,
       date,
@@ -144,7 +145,10 @@ export const PaymentReceipt = () => {
         {payments.map((payment) => (
           <li key={payment.id}>
             <button onClick={() => handleDeletePayment(payment.id)}>X</button>{' '}
-            {payment.date} {payment.amount} {payment.document.type}
+            {payment.date} {payment.amount}{' '}
+            <Link to={`/lot/${payment.bid}/recu/${payment.id}`}>
+              {payment.document.type}
+            </Link>
           </li>
         ))}
       </ul>
