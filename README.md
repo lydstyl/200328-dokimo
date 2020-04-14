@@ -1,17 +1,14 @@
-Real Estate Manager
+#DOKIMO
 
-Create receipts and other documents
+Create receipts and other documents for your tenant(s).
 
-todo
+DOKIMO vous permet d'éditer des documents immobiliers pour vos locataires tels que l'avis d'échéance, la quittance de loyer, le reçu partiel de paiement...
 
-- mise en forme avis
-- mise en forme quittance
-- mise en forme reçu partiel
+To do:
 
 - fix disable del lessor or tenant when a batch depend on it (Toast or no button when batch depends)
 - batch green indicator if term already paid and red if not
+- loading animation everywhere
 
-- DOKIMO vous permet d'imprimer des documents pour vos locataires tel que l'avis d'échéance, la quittance de loyer, le reçu partiel de paiement, etc.
-
-- rent augmentation letter --> last indicator and when when create a batch
-- regularization of chargescompteurs eau --> ou faire un programme à part en Node
+- rent change letter --> last indicator and when when create a batch
+- regularization of charges, water counter --> or do this appart with node.js

@@ -79,7 +79,7 @@ export function mapBalanceToPayments(options) {
       };
     } else {
       payment.document = {
-        type: 'Reçu partiel de paiement',
+        type: 'Reçu partiel de loyer',
       };
     }
 

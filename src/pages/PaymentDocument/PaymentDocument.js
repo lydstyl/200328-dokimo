@@ -29,32 +29,46 @@ export const PaymentDocument = () => {
   const { civility, firstName, lastName } = tenant;
 
   return (
-    <>
+    <div className='payment-doc'>
       <div className='row'>
-        <h1 className='col'>{type}</h1>
-        <p className='col s12'>Période: {term}</p>
-        <p className='col'>
-          Adresse du bien immobilier loué: {batchAddress1} {batchAddress2}{' '}
-          {batchPostalCode} {batch.townName}
+        <h1 className='col s12 center-align'>{type}</h1>
+        <p className='col s12 center-align'>
+          <b>Période:</b> {term}
+        </p>
+        <p className='col s12 center-align'>
+          <b>Adresse du bien immobilier loué:</b> {batchAddress1}{' '}
+          {batchAddress2} {batchPostalCode} {batch.townName}
         </p>
       </div>
 
       <div className='row table'>
-        <div className='col'>
-          <p>Propriétaire</p>
-          <p>
-            {companyName
-              ? companyName
-              : managerLastName + ' ' + managerFirstName}
-          </p>
-
-          <p>Locataire</p>
-          <p>
-            {civility} {firstName} {lastName}
-          </p>
-
-          <p>Total des loyer et charges reçus</p>
-          <p>{amount} €</p>
+        <div className='col s12'>
+          <table className=''>
+            <thead>
+              <tr>
+                <th>
+                  <b>Propriétaire</b>
+                  <p>
+                    {companyName
+                      ? companyName.toUpperCase()
+                      : managerLastName + ' ' + managerFirstName}
+                  </p>
+                </th>
+                <th>
+                  Locataire{' '}
+                  <p>
+                    {civility} {firstName} {lastName}
+                  </p>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Total loyer et charges reçus</td>
+                <td>{amount} €</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
@@ -64,9 +78,9 @@ export const PaymentDocument = () => {
             <>
               <p>
                 Je soussigné {managerFirstName} {managerLastName} gérant de{' '}
-                {companyName} propriétaire du logement désigné ci-dessus,
-                déclare avoir reçu de la part du locataire l’ensemble des sommes
-                mentionnées à titre du loyer et des charges.
+                {companyName.toUpperCase()} propriétaire du logement désigné
+                ci-dessus, déclare avoir reçu de la part du locataire l’ensemble
+                des sommes mentionnées à titre du loyer et des charges.
               </p>
               <p>
                 Cette quittance annule tous les reçus qui auraient pu être
@@ -80,21 +94,22 @@ export const PaymentDocument = () => {
             <>
               <p>
                 Je soussigné {managerFirstName} {managerLastName} gérant de{' '}
-                {companyName} propriétaire du logement désigné ci-dessus,
-                déclare avoir reçu de la part du locataire l’ensemble des sommes
-                mentionnées à titre de paiement partiel du loyer et des charges.
+                {companyName.toUpperCase()} propriétaire du logement désigné
+                ci-dessus, déclare avoir reçu de la part du locataire l’ensemble
+                des sommes mentionnées à titre de paiement partiel du loyer et
+                des charges.
               </p>
               <p>Ce reçu ne peut en aucun cas servir de quittance de loyer.</p>
             </>
           )}
 
           <p>
-            Fait à {lessor.townName} le {date}
+            Fait à {lessor.townName}, le {date}
           </p>
 
-          <p>Le bailleur</p>
+          <p className='right-align'>Le bailleur</p>
         </div>
       </div>
-    </>
+    </div>
   );
 };

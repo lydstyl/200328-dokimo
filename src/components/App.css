@@ -38,6 +38,10 @@ h1 {
   margin-top: 80px;
 }
 
+.footer {
+  margin-top: 80px;
+}
+
 .due-notice ul li {
   display: flex;
   justify-content: space-between;
@@ -45,6 +49,15 @@ h1 {
   list-style-type: disc;
 }
 
-.footer {
-  margin-top: 80px;
+.payment-doc table {
+  width: 100%;
+  margin: auto;
+}
+
+.payment {
+  text-align: justify;
+}
+
+.payment p {
+  margin-top: 40px;
 }
