@@ -13,15 +13,38 @@ h1 {
   }
 }
 
-.recipient,
-.where-when {
-  margin-left: 60%;
+.sender {
+  margin-top: 46px;
 }
 
+.sender p,
+.recipient p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.recipient,
 .where-when {
-  margin-top: 100px;
+  margin-left: 50%;
+}
+
+.recipient {
+  margin-top: 70px;
+  /* border: 1px dotted; */
+}
+
+.where-when,
+.doc-title {
+  margin-top: 80px;
 }
 
 .due-notice ul li {
+  display: flex;
+  justify-content: space-between;
+  width: 300px;
   list-style-type: disc;
+}
+
+.footer {
+  margin-top: 80px;
 }

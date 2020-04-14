@@ -110,49 +110,71 @@ export const DueNotice = () => {
 
       {showDoc && (
         <div className='row due-notice'>
-          <div className='col'>
+          <div className='col s12'>
             <div className='row sender'>
-              <p>
-                {companyName
-                  ? companyName
-                  : managerFirstName + ' ' + managerLastName}
-              </p>
-              <p>{address1}</p>
-              {address2 && <p>{address2}</p>}
-              <p>
-                {postalCode} {townName}
-              </p>
+              <div className='col'>
+                <p>
+                  {companyName
+                    ? companyName
+                    : managerFirstName + ' ' + managerLastName}
+                </p>
+                <p>{address1}</p>
+                {address2 && <p>{address2}</p>}
+                <p>
+                  {postalCode} {townName}
+                </p>
+              </div>
             </div>
 
-            <div className='row recipient'>
-              <p>
-                {civility} {firstName} {lastName}
-              </p>
-              <p>{batch.address1}</p>
-              <p>{batch.address2}</p>
-              <p>
-                {batch.postalCode} {batch.townName}
-              </p>
+            <div className='row'>
+              <div className='col recipient'>
+                <p>
+                  {civility} {firstName} {lastName}
+                </p>
+                <p>{batch.address1}</p>
+                <p>{batch.address2}</p>
+                <p>
+                  {batch.postalCode} {batch.townName}
+                </p>
+              </div>
             </div>
 
-            <div className='row where-when'>
-              à <span>{docPlace}</span>, le{' '}
-              <span>{dates && dates.docDate}</span>
+            <div className='row'>
+              <div className='col where-when'>
+                à <span>{docPlace}</span>, le{' '}
+                <span>{dates && dates.docDate}</span>
+              </div>
             </div>
 
-            <h1 className='row'>Avis d'échéance</h1>
+            <div className='row'>
+              <div className='col s12 doc-title'>
+                <h1>Avis d'échéance</h1>
+                <p>
+                  Somme à payer sur le terme du {dates && dates.termFrom} au{' '}
+                  {dates && dates.termTo}:
+                </p>
+              </div>
+            </div>
 
             <div className='row amount-to-pay'>
-              <p>
-                Somme à payer sur le terme du {dates && dates.termFrom} au{' '}
-                {dates && dates.termTo}.
-              </p>
+              <ul className='col'>
+                <li>
+                  <span>Solde antérieur:</span>
 
-              <ul>
-                <li>Solde antérieur: {anteriorBalance} €</li>
-                <li>Loyer nu : {rent} €</li>
-                <li>Charges: {charge} €</li>
-                <li>Total à payer : {anteriorBalance + rent + charge} €</li>
+                  <span className='amount'>{anteriorBalance} €</span>
+                </li>
+                <li>
+                  Loyer nu : <span className='amount'>{rent} €</span>
+                </li>
+                <li>
+                  Charges: <span className='amount'>{charge} €</span>
+                </li>
+                <li>
+                  Total à payer :{' '}
+                  <span className='amount'>
+                    {anteriorBalance + rent + charge} €
+                  </span>
+                </li>
               </ul>
             </div>
 
