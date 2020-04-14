@@ -149,9 +149,9 @@ export const DueNotice = () => {
               </p>
 
               <ul>
-                <li>Solde antérieur: {anteriorBalance}</li>
-                <li>Loyer nu : {rent}</li>
-                <li>Charges: {charge}</li>
+                <li>Solde antérieur: {anteriorBalance} €</li>
+                <li>Loyer nu : {rent} €</li>
+                <li>Charges: {charge} €</li>
                 <li>Total à payer : {anteriorBalance + rent + charge} €</li>
               </ul>
             </div>
@@ -159,7 +159,8 @@ export const DueNotice = () => {
             <div className='row footer'>
               <p>Cet avis ne peut en aucun cas faire office de quittance.</p>
               <p>
-                Le gérant de {companyName}, {managerFirstName} {managerLastName}
+                {companyName && `Le gérant de ${companyName},`}{' '}
+                {managerFirstName} {managerLastName}
               </p>
             </div>
           </div>

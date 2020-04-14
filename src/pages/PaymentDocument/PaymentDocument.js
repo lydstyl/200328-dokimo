@@ -12,7 +12,6 @@ export const PaymentDocument = () => {
     address1: batchAddress1,
     address2: batchAddress2,
     postalCode: batchPostalCode,
-    townName: batchTownName,
   } = batch;
 
   const payment = batch.payments.filter((payment) => payment.id === id)[0];
@@ -36,16 +35,18 @@ export const PaymentDocument = () => {
         <p className='col s12'>Période: {term}</p>
         <p className='col'>
           Adresse du bien immobilier loué: {batchAddress1} {batchAddress2}{' '}
-          {batchPostalCode} {batchTownName}
+          {batchPostalCode} {batch.townName}
         </p>
       </div>
 
       <div className='row table'>
         <div className='col'>
           <p>Propriétaire</p>
-          <p>{companyName}</p>
-          {/* <p>{managerFirstName}</p>
-          <p>{managerLastName}</p> */}
+          <p>
+            {companyName
+              ? companyName
+              : managerLastName + ' ' + managerFirstName}
+          </p>
 
           <p>Locataire</p>
           <p>
@@ -59,14 +60,37 @@ export const PaymentDocument = () => {
 
       <div className='row payment'>
         <div className='col'>
-          <p>
-            Je soussigné {managerFirstName} {managerLastName} gérant de{' '}
-            {companyName} propriétaire du logement désigné ci-dessus, déclare
-            avoir reçu de la part du locataire l’ensemble des sommes mentionnées
-            à titre de paiement partiel du loyer des charges.
-          </p>
+          {type === 'Quittance de loyer' ? (
+            <>
+              <p>
+                Je soussigné {managerFirstName} {managerLastName} gérant de{' '}
+                {companyName} propriétaire du logement désigné ci-dessus,
+                déclare avoir reçu de la part du locataire l’ensemble des sommes
+                mentionnées à titre du loyer et des charges.
+              </p>
+              <p>
+                Cette quittance annule tous les reçus qui auraient pu être
+                donnés pour acomptes versés au titre du loyer et des charges
+                pour l’échéance correspondante. Le paiement de la présente
+                quittance ne présume pas du paiement des termes précédents. A
+                conserver 3 ans après échéance du bail.
+              </p>
+            </>
+          ) : (
+            <>
+              <p>
+                Je soussigné {managerFirstName} {managerLastName} gérant de{' '}
+                {companyName} propriétaire du logement désigné ci-dessus,
+                déclare avoir reçu de la part du locataire l’ensemble des sommes
+                mentionnées à titre de paiement partiel du loyer et des charges.
+              </p>
+              <p>Ce reçu ne peut en aucun cas servir de quittance de loyer.</p>
+            </>
+          )}
 
-          <p>Fait à Raismes le {date}</p>
+          <p>
+            Fait à {lessor.townName} le {date}
+          </p>
 
           <p>Le bailleur</p>
         </div>

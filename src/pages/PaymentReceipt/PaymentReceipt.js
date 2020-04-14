@@ -142,15 +142,19 @@ export const PaymentReceipt = () => {
       </form>
 
       <ul>
-        {payments.map((payment) => (
-          <li key={payment.id}>
-            <button onClick={() => handleDeletePayment(payment.id)}>X</button>{' '}
-            {payment.date} {payment.amount}{' '}
-            <Link to={`/lot/${payment.bid}/recu/${payment.id}`}>
-              {payment.document.type}
-            </Link>
-          </li>
-        ))}
+        {payments
+          .sort((a, b) => {
+            return b.dateObj - a.dateObj;
+          })
+          .map((payment) => (
+            <li key={payment.id}>
+              <button onClick={() => handleDeletePayment(payment.id)}>X</button>{' '}
+              {payment.date} {payment.amount}{' '}
+              <Link to={`/lot/${payment.bid}/recu/${payment.id}`}>
+                {payment.document.type}
+              </Link>
+            </li>
+          ))}
       </ul>
 
       <pre>{JSON.stringify(payments, null, 4)}</pre>
