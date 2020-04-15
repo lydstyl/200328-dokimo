@@ -56,22 +56,38 @@ export const AddBatch = () => {
     e.preventDefault();
 
     const inputs = document.querySelectorAll('form [name]');
+
     const batch = { uid: user.uid, balance: 0 };
+
+    let isSubmitable = true;
+
     inputs.forEach((input) => {
       batch[input.name] = input.value;
+
+      if (input.name !== 'address2' && !input.value) {
+        isSubmitable = false;
+      }
     });
 
-    batch.rent = parseFloat(batch.rent);
-    batch.charge = parseFloat(batch.charge);
-    batch.payments = [];
+    if (isSubmitable) {
+      batch.rent = parseFloat(batch.rent);
+      batch.charge = parseFloat(batch.charge);
 
-    firestoreAddBatch(batch);
+      batch.payments = [];
 
-    history.push('/lots');
+      firestoreAddBatch(batch);
+
+      history.push('/lots');
+    } else {
+      M.toast({
+        html: `Il manque une information indispensable dans le formulaire pour ajouter ce lot`,
+      });
+    }
   };
 
   useEffect(() => {
     var elems = document.querySelectorAll('.datepicker');
+
     const options = {
       format: 'dd/mm/yyyy',
       defaultDate: new Date(),
@@ -85,14 +101,22 @@ export const AddBatch = () => {
 
   return (
     <div>
-      <h1 className='row'>Ajouter un lot / une location</h1>
+      <div className='row'>
+        <h1 className='col s12'>Ajouter un lot / une location</h1>
+      </div>
 
       <form className='row'>
-        <LessorSelect />
+        <div className='col s12'>
+          <LessorSelect />
+          <TenantSelect />
+        </div>
 
-        <TenantSelect />
+        <Input name='name' size='s6' />
+        <div className='input input-field col s6'>
+          <input type='text' name='beginDate' className='datepicker' />
+          <label htmlFor='beginDate'>Date de début</label>
+        </div>
 
-        <Input name='name' size='s12' />
         <Input name='address1' size='s12' />
         <Input name='address2' size='s12' />
         <Input name='postalCode' size='s6' />
@@ -101,22 +125,14 @@ export const AddBatch = () => {
         <Input name='rent' size='s6' />
         <Input name='charge' size='s6' />
 
-        <div className='input input-field col s12'>
-          <input type='text' name='beginDate' className='datepicker' />
-          <label htmlFor='beginDate'>Date de début</label>
+        <div className='col s12'>
+          <button
+            onClick={(e) => handleAddBatch(e)}
+            className='waves-effect waves-light btn s4'
+          >
+            +
+          </button>
         </div>
-
-        {/* <div className='input input-field col s12'>
-          <input type='text' name='paymentDeadline' className='datepicker' />
-          <label htmlFor='paymentDeadline'>Date limite de paiement</label>
-        </div> */}
-
-        <button
-          onClick={(e) => handleAddBatch(e)}
-          className='waves-effect waves-light btn col s4'
-        >
-          +
-        </button>
       </form>
     </div>
   );

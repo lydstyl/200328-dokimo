@@ -6,7 +6,6 @@ DOKIMO vous permet d'éditer des documents immobiliers pour vos locataires tels 
 
 To do:
 
-- toasts if incorect formulaire completion
 - batch green indicator if term already paid and red if not // to add when
 - loading animation everywhere
 - forgot password

@@ -45,7 +45,9 @@ export const Tenants = () => {
     firestoreAddTenant(tenant);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = (e, id) => {
+    e.preventDefault();
+
     const tenantBatches = batches.filter((batch) => batch.tid === id);
 
     if (tenantBatches.length) {
@@ -124,9 +126,9 @@ export const Tenants = () => {
 
                   <ul className='card-action'>
                     <li>
-                      <button onClick={() => handleDelete(tenant.id)}>
+                      <a onClick={(e) => handleDelete(e, tenant.id)} href='!#'>
                         <i className='material-icons'>delete</i>
-                      </button>
+                      </a>
                     </li>
                   </ul>
                 </div>

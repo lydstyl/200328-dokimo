@@ -9,26 +9,29 @@ export const Batches = () => {
 
   return (
     <>
-      <h1 className='row'>Lots</h1>
+      <div className='row'>
+        <h1 className='col s12'>Lots</h1>
+      </div>
 
       {!lessors.length ? (
         <p className='row'>
-          <Link to='/bailleurs'>
+          <h1 className='col s12'>Lots</h1>
+
+          <Link className='col s12' to='/bailleurs'>
             Vous devez d'abord ajouter un bailleurs pour pouvoir ajouter un lot
           </Link>
         </p>
       ) : (
         <>
           <div className='row'>
-            <Link to='/ajouter-lot'>Ajouter un lot</Link>
+            <Link className='col s12' to='/ajouter-lot'>
+              Ajouter un lot
+            </Link>
           </div>
 
           <ul className='row'>
             {batches.map((batch) => (
-              <li
-                key={batch.id}
-                className='card-content white-text col s12 m6 l4'
-              >
+              <li key={batch.id} className='card-content white-text col s12 m6'>
                 <div className='card blue-grey darken-1'>
                   <div className='card-content white-text'>
                     <span className='card-title'>
@@ -55,11 +58,6 @@ export const Batches = () => {
                           Réception paiement
                         </Link>
                       </li>
-                      {/* <li>
-                        <Link to={`/lot/${batch.id}/editer`}>Éditer</Link>
-                      </li> */}
-
-                      {/* <li>Reçu partiel de loyer</li> */}
                     </ul>
                   </div>
                 </div>

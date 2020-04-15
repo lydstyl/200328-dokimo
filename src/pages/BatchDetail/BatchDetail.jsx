@@ -12,7 +12,9 @@ export const BatchDetail = () => {
 
   const history = useHistory();
 
-  const handleDelBatch = () => {
+  const handleDelBatch = (e) => {
+    e.preventDefault();
+
     firestoreDelBatch(id);
 
     history.push('/lots');
@@ -20,11 +22,10 @@ export const BatchDetail = () => {
 
   return (
     <div className='container'>
+      <a onClick={(e) => handleDelBatch(e)} href='!#'>
+        <i className='material-icons'>delete</i> Supprimer ce lot
+      </a>
       <pre>{JSON.stringify(batch, null, 4)}</pre>
-
-      <button onClick={handleDelBatch}>
-        <i className='material-icons'>delete</i>
-      </button>
     </div>
   );
 };
