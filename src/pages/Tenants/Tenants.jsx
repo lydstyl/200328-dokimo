@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import M from 'materialize-css/dist/js/materialize.min.js';
 
@@ -6,10 +6,11 @@ import { Input } from '../../components/Input/Input';
 import { Preloader } from '../../components/Preloader/Preloader';
 
 export const Tenants = () => {
+  const [isSubmitable, setIsSubmitable] = useState(false);
+
   const {
     user: { uid },
   } = useStoreState((state) => state.user);
-
   const { tenants, loading } = useStoreState((state) => state.tenant);
   const { batches } = useStoreState((state) => state.batch);
 
@@ -18,6 +19,15 @@ export const Tenants = () => {
     firestoreGetTenants,
     firestoreDelTenant,
   } = useStoreActions((actions) => actions.tenant);
+
+  const handleChangeLastName = (e) => {
+    const { value } = e.target;
+    if (value) {
+      setIsSubmitable(true);
+    } else {
+      setIsSubmitable(false);
+    }
+  };
 
   const handleAdd = (e) => {
     e.preventDefault();
@@ -53,7 +63,9 @@ export const Tenants = () => {
 
   return (
     <>
-      <h1 className='row'>Locataires</h1>
+      <div className='row'>
+        <h1 className='col s12'>Locataires</h1>
+      </div>
 
       <form className='row'>
         {/* <Input name='civility' size='s12' /> */}
@@ -72,14 +84,25 @@ export const Tenants = () => {
         </div>
 
         <Input name='firstName' size='s12' />
-        <Input name='lastName' size='s12' />
 
-        <button
-          onClick={(e) => handleAdd(e)}
-          className='waves-effect waves-light btn col s4'
-        >
-          +
-        </button>
+        <div className={`input input-field col s12`}>
+          <input
+            onChange={handleChangeLastName}
+            name='lastName'
+            type='text'
+            className='validate'
+          />
+          <label htmlFor='last_name'>Nom de famille</label>
+        </div>
+
+        {isSubmitable && (
+          <button
+            onClick={(e) => handleAdd(e)}
+            className='waves-effect waves-light btn col s4'
+          >
+            +
+          </button>
+        )}
       </form>
 
       {loading && <Preloader />}
