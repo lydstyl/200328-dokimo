@@ -38,8 +38,6 @@ export const DueNotice = () => {
 
   const { civility, firstName, lastName } = tenant;
 
-  const docPlace = 'Raismes';
-
   const terms = termOptionsMaker(beginDate);
 
   const [dates, setDates] = useState({
@@ -141,7 +139,7 @@ export const DueNotice = () => {
 
             <div className='row'>
               <div className='col where-when'>
-                à <span>{docPlace}</span>, le{' '}
+                à <span>{townName}</span>, le{' '}
                 <span>{dates && dates.docDate}</span>
               </div>
             </div>
