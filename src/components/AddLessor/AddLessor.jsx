@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import { useHistory } from 'react-router-dom';
+import M from 'materialize-css/dist/js/materialize.min.js';
 
 import { Preloader } from '../Preloader/Preloader';
 import { Input } from '../Input/Input';
@@ -9,35 +10,55 @@ export const AddLessor = () => {
   const [type, setType] = useState(null);
 
   const {
-    user: { uid }
-  } = useStoreState(state => state.user);
+    user: { uid },
+  } = useStoreState((state) => state.user);
 
-  const { loading } = useStoreState(state => state.lessor);
+  const { loading } = useStoreState((state) => state.lessor);
 
-  const { firestoreAddLessor } = useStoreActions(actions => actions.lessor);
+  const { firestoreAddLessor } = useStoreActions((actions) => actions.lessor);
 
   const history = useHistory();
 
-  const handleChangeType = e => {
-    setType(e.target.value);
+  const handleChangeType = (e) => {
+    const { value } = e.target;
+
+    setType(value);
   };
 
-  const handleAddLessor = e => {
+  const handleAddLessor = (e) => {
     e.preventDefault();
 
     const inputs = document.querySelectorAll('.input input');
 
     const lessor = {};
 
-    inputs.forEach(node => {
+    let isSubmitable = true;
+
+    inputs.forEach((node) => {
       lessor[node.name] = node.value;
+
+      if (
+        node.name !== 'address2' &&
+        node.name !== 'managerFirstName' &&
+        !node.value
+      ) {
+        isSubmitable = false;
+      }
     });
 
-    lessor['uid'] = uid;
+    if (isSubmitable) {
+      lessor['uid'] = uid;
 
-    firestoreAddLessor(lessor);
+      firestoreAddLessor(lessor);
 
-    history.push('/bailleurs');
+      history.push('/bailleurs');
+    } else {
+      console.log(lessor);
+
+      M.toast({
+        html: `Vous ne pouvez pas ajouter ce bailleur car il manque des informations indispensables dans le formulaire`,
+      });
+    }
   };
 
   return (
@@ -93,7 +114,7 @@ export const AddLessor = () => {
               <Input name='townName' size='s4' />
 
               <button
-                onClick={e => handleAddLessor(e)}
+                onClick={(e) => handleAddLessor(e)}
                 className='waves-effect waves-light btn col s4'
               >
                 +
