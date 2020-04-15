@@ -1,8 +1,10 @@
 import React from 'react';
-import { useStoreActions } from 'easy-peasy';
+import { useStoreState, useStoreActions } from 'easy-peasy';
+import M from 'materialize-css/dist/js/materialize.min.js';
 
 export const LessorCard = ({ lessor }) => {
-  const { firestoreDelLessor } = useStoreActions(actions => actions.lessor);
+  const { batches } = useStoreState((state) => state.batch);
+  const { firestoreDelLessor } = useStoreActions((actions) => actions.lessor);
 
   const {
     id,
@@ -12,13 +14,21 @@ export const LessorCard = ({ lessor }) => {
     address1,
     address2,
     postalCode,
-    townName
+    townName,
   } = lessor;
 
-  const handleDelete = e => {
+  const handleDelete = (e) => {
     e.preventDefault();
 
-    firestoreDelLessor(id);
+    const lessorBatches = batches.filter((batch) => batch.lid === id);
+
+    if (lessorBatches.length) {
+      M.toast({
+        html: `Vous devez d'abord supprimer les lots de ce bailleur pour pouvoir le supprimer`,
+      });
+    } else {
+      firestoreDelLessor(id);
+    }
   };
 
   return (

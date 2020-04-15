@@ -6,10 +6,10 @@ DOKIMO vous permet d'éditer des documents immobiliers pour vos locataires tels 
 
 To do:
 
-- fix disable del lessor or tenant when a batch depend on it (Toast or no button when batch depends)
 - batch green indicator if term already paid and red if not // to add when
 - loading animation everywhere
 - forgot password
+- toasts if incorect formulaire completion
 - css
 - video
 - db security

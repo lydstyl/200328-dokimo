@@ -1,40 +1,50 @@
 import React, { useEffect } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
+import M from 'materialize-css/dist/js/materialize.min.js';
 
 import { Input } from '../../components/Input/Input';
 import { Preloader } from '../../components/Preloader/Preloader';
 
 export const Tenants = () => {
   const {
-    user: { uid }
-  } = useStoreState(state => state.user);
+    user: { uid },
+  } = useStoreState((state) => state.user);
 
-  const { tenants, loading } = useStoreState(state => state.tenant);
+  const { tenants, loading } = useStoreState((state) => state.tenant);
+  const { batches } = useStoreState((state) => state.batch);
 
   const {
     firestoreAddTenant,
     firestoreGetTenants,
-    firestoreDelTenant
-  } = useStoreActions(actions => actions.tenant);
+    firestoreDelTenant,
+  } = useStoreActions((actions) => actions.tenant);
 
-  const handleAdd = e => {
+  const handleAdd = (e) => {
     e.preventDefault();
 
     const tenant = {
       // id: null,
-      uid
+      uid,
     };
 
     const inputs = document.querySelectorAll('form [name]');
-    inputs.forEach(input => {
+    inputs.forEach((input) => {
       tenant[input.name] = input.value;
     });
 
     firestoreAddTenant(tenant);
   };
 
-  const handleDelete = id => {
-    firestoreDelTenant(id);
+  const handleDelete = (id) => {
+    const tenantBatches = batches.filter((batch) => batch.tid === id);
+
+    if (tenantBatches.length) {
+      M.toast({
+        html: `Vous devez d'abord supprimer les lots loués par ce locataire pour pouvoir le supprimer`,
+      });
+    } else {
+      firestoreDelTenant(id);
+    }
   };
 
   useEffect(() => {
@@ -65,7 +75,7 @@ export const Tenants = () => {
         <Input name='lastName' size='s12' />
 
         <button
-          onClick={e => handleAdd(e)}
+          onClick={(e) => handleAdd(e)}
           className='waves-effect waves-light btn col s4'
         >
           +
@@ -76,7 +86,7 @@ export const Tenants = () => {
 
       {!loading && tenants.length !== 0 && (
         <ul className='row'>
-          {tenants.map(tenant => (
+          {tenants.map((tenant) => (
             <li
               key={tenant.id}
               className='card-content white-text col s12 m6 l4'
