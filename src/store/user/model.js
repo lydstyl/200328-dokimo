@@ -60,6 +60,23 @@ export default {
     actions.setIsAuthenticated(true); // 👈 dispatch local actions to update state
   }),
 
+  sendPasswordResetEmail: thunk(async (actions, payload) => {
+    var emailAddress = payload;
+
+    auth
+      .sendPasswordResetEmail(emailAddress)
+      .then(function () {
+        // Email sent.
+        M.toast({ html: 'Un e-mail de réinitialisation vous a été envoyé.' });
+      })
+      .catch(function (error) {
+        // An error happened.
+        M.toast({
+          html: error.message,
+        });
+      });
+  }),
+
   // ACTIONS
   setUser: action((state, payload) => {
     state.user = payload;

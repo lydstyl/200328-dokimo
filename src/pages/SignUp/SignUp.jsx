@@ -1,25 +1,23 @@
 import React, { useRef } from 'react';
-
 import { useStoreActions } from 'easy-peasy';
-
 import { useHistory, Link } from 'react-router-dom';
 
 export const SignUp = () => {
   const history = useHistory();
 
   const createUserWithEmailAndPassword = useStoreActions(
-    actions => actions.user.createUserWithEmailAndPassword
+    (actions) => actions.user.createUserWithEmailAndPassword
   );
 
   const emailInput = useRef(null);
   const passwordInput = useRef(null);
 
-  const handleSignUp = e => {
+  const handleSignUp = (e) => {
     e.preventDefault();
 
     createUserWithEmailAndPassword({
       email: emailInput.current.value,
-      password: passwordInput.current.value
+      password: passwordInput.current.value,
     });
 
     history.push('/bailleurs');
@@ -28,7 +26,7 @@ export const SignUp = () => {
   return (
     <form className='row'>
       <div className='input-field col s12'>
-        <h1>SignUp</h1>
+        <h1>Créer un compte</h1>
       </div>
 
       <div className='input-field col s12 m6'>
@@ -52,11 +50,11 @@ export const SignUp = () => {
           href='!#'
           className='waves-effect waves-light btn'
         >
-          <i className='material-icons left'>cloud</i>button
+          <i className='material-icons left'>cloud</i>Créer un compte
         </a>
       </div>
 
-      <p>
+      <p className='col s12'>
         <Link to='/login'>ou se connecter</Link>
       </p>
     </form>
