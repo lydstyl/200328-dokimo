@@ -117,11 +117,11 @@ export const PaymentReceipt = () => {
     <div>
       <h1>Réception de paiement</h1>
 
-      <p>La date du début de la location est le {beginDate}.</p>
+      {/* <p>La date du début de la location est le {beginDate}.</p>
       <p>
         La date du paiement doit être comprise entre {tooOldDate.toString()} et{' '}
         {now.toString()}
-      </p>
+      </p> */}
 
       <form>
         <input
@@ -148,7 +148,9 @@ export const PaymentReceipt = () => {
           })
           .map((payment) => (
             <li key={payment.id}>
-              <button onClick={() => handleDeletePayment(payment.id)}>X</button>{' '}
+              <button onClick={() => handleDeletePayment(payment.id)}>
+                <i className='material-icons'>delete</i>
+              </button>{' '}
               {payment.date} {payment.amount}{' '}
               <Link to={`/lot/${payment.bid}/recu/${payment.id}`}>
                 {payment.document.type}
@@ -157,7 +159,7 @@ export const PaymentReceipt = () => {
           ))}
       </ul>
 
-      <pre>{JSON.stringify(payments, null, 4)}</pre>
+      {/* <pre>{JSON.stringify(payments, null, 4)}</pre> */}
     </div>
   );
 };

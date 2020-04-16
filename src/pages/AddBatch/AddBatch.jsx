@@ -130,7 +130,9 @@ export const AddBatch = () => {
             onClick={(e) => handleAddBatch(e)}
             className='waves-effect waves-light btn s4'
           >
-            +
+            Ajouter ce lot
+            <i className='material-icons left'>add_circle_outline</i>
+            {/* <i className='material-icons left'>home</i> */}
           </button>
         </div>
       </form>

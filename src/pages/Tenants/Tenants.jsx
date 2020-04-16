@@ -102,7 +102,8 @@ export const Tenants = () => {
             onClick={(e) => handleAdd(e)}
             className='waves-effect waves-light btn col s4'
           >
-            +
+            Ajouter ce locataire
+            <i className='material-icons left'>person_add</i>
           </button>
         )}
       </form>

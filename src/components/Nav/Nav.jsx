@@ -80,7 +80,7 @@ export const Nav = () => {
                   className='material-icons'
                   style={{ marginLeft: '10px', cursor: 'pointer' }}
                 >
-                  face
+                  directions_run
                 </i>
               </li>
             )}
@@ -111,7 +111,7 @@ export const Nav = () => {
                 className='material-icons'
                 style={{ marginLeft: '10px', cursor: 'pointer' }}
               >
-                face
+                directions_run
               </i>
             </a>
           </li>

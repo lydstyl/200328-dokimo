@@ -26,12 +26,12 @@ export default {
 
         actions.setUser(user); // 👈 dispatch local actions to update state
         actions.setIsAuthenticated(true); // 👈 dispatch local actions to update state
-        M.toast({ html: `user connected` });
+        M.toast({ html: `Utilisateur connecté` });
       } else {
         // User is signed out.
         actions.setIsAuthenticated(false); // 👈 dispatch local actions to update state
 
-        M.toast({ html: 'no user' });
+        M.toast({ html: 'Utilisateur déconnecté' });
       }
     });
   }),
@@ -40,10 +40,10 @@ export default {
     auth
       .createUserWithEmailAndPassword(payload.email, payload.password)
       .catch(function (error) {
-        M.toast({ html: error.message });
+        M.toast({ html: 'Erreur: ' + error.message });
       });
 
-    M.toast({ html: 'createUserWithEmailAndPassword' });
+    M.toast({ html: 'Utilisateur créé' });
 
     actions.setIsAuthenticated(true); // 👈 dispatch local actions to update state
   }),
@@ -52,10 +52,10 @@ export default {
     auth
       .signInWithEmailAndPassword(payload.email, payload.password)
       .catch(function (error) {
-        M.toast({ html: error.message });
+        M.toast({ html: 'Erreur: ' + error.message });
       });
 
-    M.toast({ html: 'signInWithEmailAndPassword' });
+    M.toast({ html: 'Connection avec e-mail et mot de passe' });
 
     actions.setIsAuthenticated(true); // 👈 dispatch local actions to update state
   }),
@@ -72,7 +72,7 @@ export default {
       .catch(function (error) {
         // An error happened.
         M.toast({
-          html: error.message,
+          html: 'Erreur: ' + error.message,
         });
       });
   }),

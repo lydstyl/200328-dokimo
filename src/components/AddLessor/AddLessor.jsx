@@ -117,7 +117,8 @@ export const AddLessor = () => {
                 onClick={(e) => handleAddLessor(e)}
                 className='waves-effect waves-light btn col s4'
               >
-                +
+                Ajouter ce bailleur
+                <i className='material-icons left'>person_add</i>
               </button>
             </div>
           </div>

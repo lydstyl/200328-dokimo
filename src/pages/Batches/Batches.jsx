@@ -13,12 +13,11 @@ export const Batches = () => {
         <h1 className='col s12'>Lots</h1>
       </div>
 
-      {!lessors.length ? (
+      {!lessors.length || !tenants.length ? (
         <p className='row'>
-          <h1 className='col s12'>Lots</h1>
-
           <Link className='col s12' to='/bailleurs'>
-            Vous devez d'abord ajouter un bailleurs pour pouvoir ajouter un lot
+            Vous devez d'abord ajouter un bailleurs et un locataire pour pouvoir
+            ajouter un lot
           </Link>
         </p>
       ) : (
@@ -42,12 +41,7 @@ export const Batches = () => {
                       }
                     </span>
 
-                    <p>body</p>
-
                     <ul className='card-action'>
-                      <li>
-                        <Link to={`/lot/${batch.id}`}>Détail</Link>
-                      </li>
                       <li>
                         <Link to={`/lot/${batch.id}/avis-echeance`}>
                           Avis d'échéance
@@ -56,6 +50,12 @@ export const Batches = () => {
                       <li>
                         <Link to={`/lot/${batch.id}/reception-paiement`}>
                           Réception paiement
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to={`/lot/${batch.id}`}>
+                          {/* Voir le détail ou  */}
+                          Supprimer
                         </Link>
                       </li>
                     </ul>

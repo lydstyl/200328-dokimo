@@ -22,10 +22,15 @@ export const BatchDetail = () => {
 
   return (
     <div className='container'>
-      <a onClick={(e) => handleDelBatch(e)} href='!#'>
-        <i className='material-icons'>delete</i> Supprimer ce lot
-      </a>
-      <pre>{JSON.stringify(batch, null, 4)}</pre>
+      <div className='row'>
+        <h1 className='col s12'>{batch.name}</h1>
+        <div className='col s12'>
+          <a onClick={(e) => handleDelBatch(e)} href='!#'>
+            <i className='material-icons'>delete</i> Supprimer ce lot
+          </a>
+          {/* <pre>{JSON.stringify(batch, null, 4)}</pre> */}
+        </div>
+      </div>
     </div>
   );
 };

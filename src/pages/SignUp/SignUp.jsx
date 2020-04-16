@@ -50,7 +50,7 @@ export const SignUp = () => {
           href='!#'
           className='waves-effect waves-light btn'
         >
-          <i className='material-icons left'>cloud</i>Créer un compte
+          <i className='material-icons left'>input</i>Créer un compte
         </a>
       </div>
 

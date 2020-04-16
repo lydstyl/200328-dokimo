@@ -73,7 +73,7 @@ export const Login = () => {
           href='!#'
           className='waves-effect waves-light btn'
         >
-          <i className='material-icons left'>cloud</i>Se connecter
+          <i className='material-icons left'>input</i>Se connecter
         </a>
       </div>
 
