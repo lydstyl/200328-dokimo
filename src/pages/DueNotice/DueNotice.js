@@ -81,6 +81,17 @@ export const DueNotice = () => {
     setShowDoc(true);
   };
 
+  const handlChangeDocDate = (evt) => {
+    evt.preventDefault();
+
+    let date = document.querySelector('#date').value.split('-');
+    date = [date[2], date[1], date[0]].join('/');
+
+    setDates({ ...dates, docDate: date });
+
+    setAnteriorBalance(getAnteriorBalance(date, dates.termTo));
+  };
+
   return (
     <div className='container'>
       <form className='row no-print'>
@@ -103,6 +114,16 @@ export const DueNotice = () => {
               </select>
             </div>
           </div>
+        </div>
+
+        <div className='col s6'>
+          <label htmlFor=''>Changer la date du document</label>
+          <input id='date' type='date' />
+          <input
+            onClick={handlChangeDocDate}
+            type='submit'
+            value='Changer la date du document'
+          />
         </div>
       </form>
 
@@ -157,7 +178,7 @@ export const DueNotice = () => {
             <div className='row amount-to-pay'>
               <ul className='col'>
                 <li>
-                  <span>Solde antérieur:</span>
+                  <span>Solde antérieur :</span>
 
                   <span className='amount'>{anteriorBalance} €</span>
                 </li>
@@ -165,7 +186,7 @@ export const DueNotice = () => {
                   Loyer nu : <span className='amount'>{rent} €</span>
                 </li>
                 <li>
-                  Charges: <span className='amount'>{charge} €</span>
+                  Charges : <span className='amount'>{charge} €</span>
                 </li>
                 <li>
                   Total à payer :{' '}
