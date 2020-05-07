@@ -30,7 +30,7 @@ export const Batches = () => {
 
           <ul className='row'>
             {batches.map((batch) => (
-              <li key={batch.id} className='card-content white-text col s12 m6'>
+              <li key={batch.id} className='card-content white-text col s12 m4'>
                 <div className='card blue-grey darken-1'>
                   <div className='card-content white-text'>
                     <span className='card-title'>

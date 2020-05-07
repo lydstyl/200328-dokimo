@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
-
 import { useParams, Link } from 'react-router-dom';
-
 import M from 'materialize-css/dist/js/materialize.min.js';
 
 export const PaymentReceipt = () => {

@@ -2,6 +2,8 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useStoreState } from 'easy-peasy';
 
+import { amount as funAmount } from '../../utils/utils';
+
 export const PaymentDocument = () => {
   const { bid, id } = useParams();
   const { batches } = useStoreState((state) => state.batch);
@@ -65,7 +67,7 @@ export const PaymentDocument = () => {
             <tbody>
               <tr>
                 <td>Total loyer et charges reçus</td>
-                <td>{amount} €</td>
+                <td>{funAmount(amount)} €</td>
               </tr>
             </tbody>
           </table>
