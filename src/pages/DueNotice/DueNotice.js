@@ -170,7 +170,7 @@ export const DueNotice = () => {
                 <li>
                   Total à payer :{' '}
                   <span className='amount'>
-                    {anteriorBalance + rent + charge} €
+                    {(anteriorBalance + rent + charge).toFixed(2)} €
                   </span>
                 </li>
               </ul>

@@ -30,7 +30,13 @@ export const SignUp = () => {
       </div>
 
       <div className='input-field col s12 m6'>
-        <input ref={emailInput} id='email' type='email' className='validate' />
+        <input
+          ref={emailInput}
+          id='email'
+          type='email'
+          className='validate'
+          autoComplete='username'
+        />
         <label htmlFor='email'>Email</label>
       </div>
 
@@ -40,6 +46,7 @@ export const SignUp = () => {
           id='password'
           type='password'
           className='validate'
+          autoComplete='current-password'
         />
         <label htmlFor='password'>Password</label>
       </div>

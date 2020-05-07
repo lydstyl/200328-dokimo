@@ -58,12 +58,22 @@ export const Login = () => {
       </div>
 
       <div className='input-field col s12 m6'>
-        <input id='email' type='email' className='validate' />
+        <input
+          id='email'
+          type='email'
+          className='validate'
+          autoComplete='username'
+        />
         <label htmlFor='email'>Email</label>
       </div>
 
       <div className='input-field col s12 m6'>
-        <input id='password' type='password' className='validate' />
+        <input
+          id='password'
+          type='password'
+          className='validate'
+          autoComplete='current-password'
+        />
         <label htmlFor='password'>Password</label>
       </div>
 

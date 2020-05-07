@@ -117,12 +117,6 @@ export const PaymentReceipt = () => {
     <div>
       <h1>Réception de paiement</h1>
 
-      {/* <p>La date du début de la location est le {beginDate}.</p>
-      <p>
-        La date du paiement doit être comprise entre {tooOldDate.toString()} et{' '}
-        {now.toString()}
-      </p> */}
-
       <form>
         <input
           onChange={handleDateChange}
@@ -135,6 +129,8 @@ export const PaymentReceipt = () => {
           onChange={(e) => setAmount(parseFloat(e.target.value))}
           type='number'
           name='amount'
+          step='100'
+          placeholder='543,21'
           value={amount}
         />
 
