@@ -30,7 +30,6 @@ h1 {
 
 .recipient {
   margin-top: 70px;
-  /* border: 1px dotted; */
 }
 
 .where-when,
@@ -45,7 +44,7 @@ h1 {
 .due-notice ul li {
   display: flex;
   justify-content: space-between;
-  width: 300px;
+  max-width: 300px;
   list-style-type: disc;
 }
 

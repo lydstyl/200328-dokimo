@@ -3,6 +3,31 @@ import { useStoreState } from 'easy-peasy';
 
 import { useParams } from 'react-router-dom';
 
+function amount(a) {
+  a = a + '';
+  a = a.split('.');
+
+  if (a[1]) {
+    if (a[1].length === 1) {
+      a[1] = a[1] + '0';
+    }
+
+    if (a[0].length > 3) {
+      let left = a[0];
+
+      left.split('');
+
+      a[0] = left;
+    }
+  } else {
+    return a.join('') + ',00';
+  }
+
+  a = a.join(',');
+
+  return a;
+}
+
 export const DueNotice = () => {
   const { id } = useParams();
 
@@ -95,7 +120,7 @@ export const DueNotice = () => {
   return (
     <div className='container'>
       <form className='row no-print'>
-        <div className='col s6'>
+        <div className='col m6'>
           <div className='input-fiel'>
             <div>
               <label>Terme</label>
@@ -116,7 +141,7 @@ export const DueNotice = () => {
           </div>
         </div>
 
-        <div className='col s6'>
+        <div className='col m6'>
           <label htmlFor=''>Changer la date du document</label>
           <input id='date' type='date' />
           <input
@@ -176,22 +201,22 @@ export const DueNotice = () => {
             </div>
 
             <div className='row amount-to-pay'>
-              <ul className='col'>
+              <ul className='col s12'>
                 <li>
                   <span>Solde antérieur :</span>
 
-                  <span className='amount'>{anteriorBalance} €</span>
+                  <span className='amount'>{amount(anteriorBalance)} €</span>
                 </li>
                 <li>
-                  Loyer nu : <span className='amount'>{rent} €</span>
+                  Loyer nu : <span className='amount'>{amount(rent)} €</span>
                 </li>
                 <li>
-                  Charges : <span className='amount'>{charge} €</span>
+                  Charges : <span className='amount'>{amount(charge)} €</span>
                 </li>
                 <li>
                   Total à payer :{' '}
                   <span className='amount'>
-                    {(anteriorBalance + rent + charge).toFixed(2)} €
+                    {amount(anteriorBalance + rent + charge)} €
                   </span>
                 </li>
               </ul>
