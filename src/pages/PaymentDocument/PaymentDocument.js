@@ -94,11 +94,11 @@ export const PaymentDocument = () => {
           ) : (
             <>
               <p>
-                Je soussigné {managerFirstName} {managerLastName} gérant de{' '}
-                {companyName.toUpperCase()} propriétaire du logement désigné
-                ci-dessus, déclare avoir reçu de la part du locataire l’ensemble
-                des sommes mentionnées à titre de paiement partiel du loyer et
-                des charges.
+                Je soussigné {managerFirstName} {managerLastName}
+                {companyName && `, gérant de ${companyName.toUpperCase()}`},
+                propriétaire du logement désigné ci-dessus, déclare avoir reçu
+                de la part du locataire l’ensemble des sommes mentionnées à
+                titre de paiement partiel du loyer et des charges.
               </p>
               <p>Ce reçu ne peut en aucun cas servir de quittance de loyer.</p>
             </>
