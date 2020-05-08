@@ -73,7 +73,7 @@ export const PaymentDocument = () => {
                 <td>
                   {type === 'Quittance de loyer'
                     ? funAmount(rent + charge)
-                    : funAmount(amount)}
+                    : funAmount(amount)}{' '}
                   €
                 </td>
               </tr>
