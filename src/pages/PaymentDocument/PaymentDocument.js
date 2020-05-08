@@ -14,12 +14,15 @@ export const PaymentDocument = () => {
     address1: batchAddress1,
     address2: batchAddress2,
     postalCode: batchPostalCode,
+    rent,
+    charge,
   } = batch;
 
   const payment = batch.payments.filter((payment) => payment.id === id)[0];
   const {
     document: { type, term, amount },
     date,
+    balance,
   } = payment;
 
   const { lessors } = useStoreState((state) => state.lessor);
@@ -67,8 +70,19 @@ export const PaymentDocument = () => {
             <tbody>
               <tr>
                 <td>Total loyer et charges reçus</td>
-                <td>{funAmount(amount)} €</td>
+                <td>
+                  {type === 'Quittance de loyer'
+                    ? funAmount(rent + charge)
+                    : funAmount(amount)}
+                  €
+                </td>
               </tr>
+              {type === 'Quittance de loyer' && balance < 0 && (
+                <tr>
+                  <td>Total du trop perçu à ce jour</td>
+                  <td>{funAmount(balance * -1)} €</td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
