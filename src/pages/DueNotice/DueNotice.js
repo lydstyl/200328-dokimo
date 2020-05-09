@@ -70,8 +70,6 @@ export const DueNotice = () => {
     dates.docDate
   );
 
-  console.log(dates);
-
   return (
     <div className='container'>
       <form className='row no-print'>

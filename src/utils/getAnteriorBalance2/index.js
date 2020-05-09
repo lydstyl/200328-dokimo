@@ -21,11 +21,11 @@ export const getAnteriorBalance2 = (batch, termDate, docDate) => {
 
   const anteriorBalance = rentsAndChargesSum - paymentsSum;
 
-  console.log('essential', essentials);
+  // console.log('essential', essentials);
 
-  console.log(
-    `anteriorBalance from  v2 anteriorBalance ${anteriorBalance}, termDate ${termDate}, docDate ${docDate}`
-  );
+  // console.log(
+  //   `anteriorBalance from  v2 anteriorBalance ${anteriorBalance}, termDate ${termDate}, docDate ${docDate}`
+  // );
 
   return anteriorBalance;
 };
