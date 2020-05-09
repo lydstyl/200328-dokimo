@@ -1,4 +1,4 @@
-const convertFrDateToJSDate = (frDate) => {
+export const convertFrDateToJSDate = (frDate) => {
   frDate = frDate.split('/');
   const DD = frDate[0];
   const indexMM = frDate[1] - 1;
@@ -10,4 +10,4 @@ const convertFrDateToJSDate = (frDate) => {
   return JSDate;
 };
 
-console.log(convertFrDateToJSDate('21/04/2020'));
+// console.log(convertFrDateToJSDate('21/04/2020'));
