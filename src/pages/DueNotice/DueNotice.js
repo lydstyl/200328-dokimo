@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 
 import { amount } from '../../utils/utils';
 import { getAnteriorBalance2 } from '../../utils/getAnteriorBalance2/index.js';
+import { convertFrDateToJSDate } from '../../utils/getAnteriorBalance2/convertFrDateToJSDate.js';
 
 export const DueNotice = () => {
   const { id } = useParams();
@@ -64,11 +65,59 @@ export const DueNotice = () => {
     setDates({ ...dates, docDate });
   };
 
-  const anteriorBalance2 = getAnteriorBalance2(
-    batch,
-    dates.termFrom,
-    dates.docDate
-  );
+  const termAndDocMonthSame = (termDate, docDate) => {
+    if (termDate.split('/')[1] === docDate.split('/')[1]) {
+      return true;
+    }
+
+    return false;
+  };
+
+  const lastPaymentDateBeforeDocDate = (batch, docDate) => {
+    const { payments } = batch;
+
+    const lastPaymentDate = convertFrDateToJSDate(
+      payments[payments.length - 1].date
+    );
+
+    docDate = convertFrDateToJSDate(docDate);
+
+    if (lastPaymentDate <= docDate) {
+      return true;
+    }
+
+    return false;
+  };
+
+  let anteriorBalance2 = 0;
+  if (
+    termAndDocMonthSame(dates.termFrom, dates.docDate) &&
+    lastPaymentDateBeforeDocDate(batch, dates.docDate)
+  ) {
+    // create lastDayOflastMonth to fix bug
+    let lastDayOflastMonth = dates.docDate.split('/');
+    const lastMonthIndex = lastDayOflastMonth[1] - 2;
+    lastDayOflastMonth = new Date(lastDayOflastMonth[2], lastMonthIndex + 1, 0);
+    lastDayOflastMonth = [
+      lastDayOflastMonth.getDate(),
+      lastDayOflastMonth.getMonth(),
+      lastDayOflastMonth.getFullYear(),
+    ].join('/');
+
+    anteriorBalance2 = getAnteriorBalance2(
+      batch,
+      dates.termFrom,
+      lastDayOflastMonth // ok event if like 30/3/2020 instead of 30/03/2020
+    );
+
+    console.log('anteriorBalance2 same month', anteriorBalance2);
+  } else {
+    anteriorBalance2 = getAnteriorBalance2(
+      batch,
+      dates.termFrom,
+      dates.docDate
+    );
+  }
 
   return (
     <div className='container'>
