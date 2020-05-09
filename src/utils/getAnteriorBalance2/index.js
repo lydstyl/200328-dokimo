@@ -1,13 +1,12 @@
 // - FIX BUG AVIS LE CHANGEMENT MANUEL DE LA DATE DU DOC NE CHANGE PAS LE SOLDE ANTERIEUR
 
-import { getEssential } from './getEssential.mjs';
-import { sendAlertIfDocDateGreaterThenTermToDate } from './sendAlertIfDocDateGreaterThenTermToDate.mjs';
-import { termNbBetweenBeginDateAndDocDate } from './termNbBetweenBeginDateAndDocDate.mjs';
-import { paymentsSumBeforeDocDate } from './paymentsSumBeforeDocDate.mjs';
+import { getEssential } from './getEssential.js';
+import { sendAlertIfDocDateGreaterThenTermToDate } from './sendAlertIfDocDateGreaterThenTermToDate.js';
+import { termNbBetweenBeginDateAndDocDate } from './termNbBetweenBeginDateAndDocDate.js';
+import { paymentsSumBeforeDocDate } from './paymentsSumBeforeDocDate.js';
 
 export const getAnteriorBalance2 = (batch, termDate, docDate) => {
   const essentials = getEssential(batch, termDate, docDate); // only keep essentials informations so it is easier to code
-  console.log('essential', essentials);
 
   if (sendAlertIfDocDateGreaterThenTermToDate(essentials)) {
     return 0;
@@ -21,6 +20,10 @@ export const getAnteriorBalance2 = (batch, termDate, docDate) => {
   const paymentsSum = paymentsSumBeforeDocDate(essentials);
 
   const anteriorBalance = rentsAndChargesSum - paymentsSum;
+
+  console.log('essential', essentials);
+
+  console.log(`anteriorBalance ${anteriorBalance}`);
 
   return anteriorBalance;
 };

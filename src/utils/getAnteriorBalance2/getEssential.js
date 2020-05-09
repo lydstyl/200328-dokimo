@@ -1,5 +1,5 @@
-import { convertFrDateToJSDate } from './convertFrDateToJSDate.mjs';
-import { getTermToDateJS } from './getTermToDateJS.mjs';
+import { convertFrDateToJSDate } from './convertFrDateToJSDate.js';
+import { getTermToDateJS } from './getTermToDateJS.js';
 
 export const getEssential = (batch, termDate, docDate) => {
   const { beginDate, rent, charge } = batch;
