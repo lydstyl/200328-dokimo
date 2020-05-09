@@ -43,10 +43,6 @@ export const DueNotice = () => {
   });
   const [showDoc, setShowDoc] = useState(false);
 
-  const [anteriorBalance, setAnteriorBalance] = useState(
-    getAnteriorBalance2(batch, dates.termFrom, dates.docDate)
-  );
-
   const handleTermChange = (e) => {
     let value = e.target.value;
     if (value === 'no term') {
@@ -55,19 +51,6 @@ export const DueNotice = () => {
     value = JSON.parse(value);
 
     setDates({ ...value, docDate: dateMinus1month(value.docDate) });
-
-    const anteriorBalance = getAnteriorBalance2(
-      batch,
-      dates.termFrom,
-      value.docDate
-    );
-    console.log(
-      'xxxxxx SET anteriorBalance   xxxxxxxxx',
-      anteriorBalance,
-      `dates.termFrom ${dates.termFrom},
-    value.docDate ${value.docDate}`
-    );
-    setAnteriorBalance(anteriorBalance);
 
     setShowDoc(true);
   };
@@ -78,10 +61,16 @@ export const DueNotice = () => {
     let docDate = document.querySelector('#date').value.split('-');
     docDate = [docDate[2], docDate[1], docDate[0]].join('/');
 
-    const anteriorBalance = getAnteriorBalance2(batch, dates.termFrom, docDate);
-    console.log('yyyyyy SET anteriorBalance   yyyyyy', anteriorBalance);
-    setAnteriorBalance(anteriorBalance);
+    setDates({ ...dates, docDate });
   };
+
+  const anteriorBalance2 = getAnteriorBalance2(
+    batch,
+    dates.termFrom,
+    dates.docDate
+  );
+
+  console.log(dates);
 
   return (
     <div className='container'>
@@ -171,12 +160,7 @@ export const DueNotice = () => {
                 <li>
                   <span>Solde antérieur :</span>
 
-                  <span className='amount'>
-                    {amount(
-                      getAnteriorBalance2(batch, dates.termFrom, dates.docDate)
-                    )}{' '}
-                    €
-                  </span>
+                  <span className='amount'>{amount(anteriorBalance2)} €</span>
                 </li>
                 <li>
                   Loyer nu : <span className='amount'>{amount(rent)} €</span>
@@ -187,16 +171,7 @@ export const DueNotice = () => {
                 <li>
                   Total à payer :{' '}
                   <span className='amount'>
-                    {amount(
-                      getAnteriorBalance2(
-                        batch,
-                        dates.termFrom,
-                        dates.docDate
-                      ) +
-                        rent +
-                        charge
-                    )}{' '}
-                    €
+                    {amount(anteriorBalance2 + rent + charge)} €
                   </span>
                 </li>
               </ul>
