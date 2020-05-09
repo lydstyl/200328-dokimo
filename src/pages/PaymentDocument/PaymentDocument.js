@@ -116,6 +116,7 @@ export const PaymentDocument = () => {
                 de la part du locataire l’ensemble des sommes mentionnées à
                 titre de paiement partiel du loyer et des charges.
               </p>
+              <p>Ce reçu annule et remplace les précédents reçus.</p>
               <p>Ce reçu ne peut en aucun cas servir de quittance de loyer.</p>
             </>
           )}
