@@ -4,6 +4,7 @@ import { useStoreState } from 'easy-peasy';
 import { useParams } from 'react-router-dom';
 
 import { amount } from '../../utils/utils';
+import { getAnteriorBalance2 } from '../../utils/getAnteriorBalance2/index.js';
 
 export const DueNotice = () => {
   const { id } = useParams();
@@ -12,18 +13,11 @@ export const DueNotice = () => {
   const { tenants } = useStoreState((state) => state.tenant);
   const {
     batches,
-    utils: {
-      getRentTotalFromTo,
-      getTotalPayments,
-      termOptionsMaker,
-      dateMinus1month,
-    },
+    utils: { termOptionsMaker, dateMinus1month },
   } = useStoreState((state) => state.batch);
 
   const batch = batches.filter((batch) => batch.id === id)[0];
   const { lid, tid, charge, beginDate, rent } = batch;
-
-  const payments = batch.payments ? batch.payments : [];
 
   const lessor = lessors.filter((lessor) => lessor.id === lid)[0];
   const tenant = tenants.filter((tenant) => tenant.id === tid)[0];
@@ -49,25 +43,9 @@ export const DueNotice = () => {
   });
   const [showDoc, setShowDoc] = useState(false);
 
-  function getAnteriorBalance(docDate, termTo) {
-    let anteriorPayments = getTotalPayments(payments, '01/01/2000', docDate);
-
-    const anteriorRents = getRentTotalFromTo(
-      rent + charge,
-      0,
-      beginDate,
-      // dateMinus1month(beginDate),
-      termTo
-    );
-
-    const anteriorBalance = anteriorRents - anteriorPayments;
-
-    return anteriorBalance;
-  }
-
   const [anteriorBalance, setAnteriorBalance] = useState(
-    getAnteriorBalance(dates.docDate, dates.termTo)
-  ); // component state balance
+    getAnteriorBalance2(batch, dates.termFrom, dates.docDate)
+  );
 
   const handleTermChange = (e) => {
     let value = e.target.value;
@@ -78,7 +56,18 @@ export const DueNotice = () => {
 
     setDates({ ...value, docDate: dateMinus1month(value.docDate) });
 
-    setAnteriorBalance(getAnteriorBalance(value.docDate, value.termTo));
+    const anteriorBalance = getAnteriorBalance2(
+      batch,
+      dates.termFrom,
+      value.docDate
+    );
+    console.log(
+      'xxxxxx SET anteriorBalance   xxxxxxxxx',
+      anteriorBalance,
+      `dates.termFrom ${dates.termFrom},
+    value.docDate ${value.docDate}`
+    );
+    setAnteriorBalance(anteriorBalance);
 
     setShowDoc(true);
   };
@@ -86,12 +75,12 @@ export const DueNotice = () => {
   const handlChangeDocDate = (evt) => {
     evt.preventDefault();
 
-    let date = document.querySelector('#date').value.split('-');
-    date = [date[2], date[1], date[0]].join('/');
+    let docDate = document.querySelector('#date').value.split('-');
+    docDate = [docDate[2], docDate[1], docDate[0]].join('/');
 
-    setDates({ ...dates, docDate: date });
-
-    setAnteriorBalance(getAnteriorBalance(date, dates.termTo));
+    const anteriorBalance = getAnteriorBalance2(batch, dates.termFrom, docDate);
+    console.log('yyyyyy SET anteriorBalance   yyyyyy', anteriorBalance);
+    setAnteriorBalance(anteriorBalance);
   };
 
   return (
@@ -182,7 +171,12 @@ export const DueNotice = () => {
                 <li>
                   <span>Solde antérieur :</span>
 
-                  <span className='amount'>{amount(anteriorBalance)} €</span>
+                  <span className='amount'>
+                    {amount(
+                      getAnteriorBalance2(batch, dates.termFrom, dates.docDate)
+                    )}{' '}
+                    €
+                  </span>
                 </li>
                 <li>
                   Loyer nu : <span className='amount'>{amount(rent)} €</span>
@@ -193,7 +187,16 @@ export const DueNotice = () => {
                 <li>
                   Total à payer :{' '}
                   <span className='amount'>
-                    {amount(anteriorBalance + rent + charge)} €
+                    {amount(
+                      getAnteriorBalance2(
+                        batch,
+                        dates.termFrom,
+                        dates.docDate
+                      ) +
+                        rent +
+                        charge
+                    )}{' '}
+                    €
                   </span>
                 </li>
               </ul>
