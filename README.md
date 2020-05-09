@@ -8,7 +8,7 @@ https://dokimo.netlify.app
 
 To do:
 
-- FIX BUG AVIS LE CHANGEMENT MANUELLE DE LA DATE DU DOC NE CHANGE PAS LE SOLDE ANTERIEUR
+- FIX BUG AVIS LE CHANGEMENT MANUEL DE LA DATE DU DOC NE CHANGE PAS LE SOLDE ANTERIEUR
 
 - register basic PWA
 - batch green indicator if term already paid and red if not // to add when
