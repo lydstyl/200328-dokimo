@@ -1,6 +1,24 @@
 // - FIX BUG AVIS LE CHANGEMENT MANUELLE DE LA DATE DU DOC NE CHANGE PAS LE SOLDE ANTERIEUR
 const convertFrDateToJSDate = (frDate) => {
-  return frDate;
+  frDate = frDate.split('/');
+  const DD = frDate[0];
+  const indexMM = frDate[1] - 1;
+
+  const YYYY = frDate[2];
+
+  const JSDate = new Date(YYYY, indexMM, DD);
+
+  return JSDate;
+};
+
+const getTermToDateJS = (frDate) => {
+  frDate = frDate.split('/');
+  const month = frDate[1] - 1;
+  const YYYY = frDate[2];
+
+  var termToDateJS = new Date(YYYY, month + 1, 0);
+
+  return termToDateJS;
 };
 
 const getEssential = (batch, termDate, docDate) => {
@@ -26,6 +44,7 @@ const getEssential = (batch, termDate, docDate) => {
     payments,
     termDate,
     termDateJS: convertFrDateToJSDate(termDate),
+    termToDateJS: getTermToDateJS(termDate),
     docDate,
     docDateJS: convertFrDateToJSDate(docDate),
   };
