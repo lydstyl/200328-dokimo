@@ -1,68 +1,12 @@
 // - FIX BUG AVIS LE CHANGEMENT MANUELLE DE LA DATE DU DOC NE CHANGE PAS LE SOLDE ANTERIEUR
 
-import { convertFrDateToJSDate } from './convertFrDateToJSDate.mjs';
-
-const getTermToDateJS = (frDate) => {
-  frDate = frDate.split('/');
-  const month = frDate[1] - 1;
-  const YYYY = frDate[2];
-
-  var termToDateJS = new Date(YYYY, month + 1, 0);
-
-  return termToDateJS;
-};
-
-const getEssential = (batch, termDate, docDate) => {
-  const { beginDate, rent, charge } = batch;
-  let payments = [...batch.payments];
-
-  payments = payments.map((p) => {
-    const { amount, date, cumulPaymentsAmount } = p;
-
-    return {
-      date,
-      paymentDateJS: convertFrDateToJSDate(date),
-      amount,
-      cumulPaymentsAmount,
-    };
-  });
-
-  const essential = {
-    beginDate,
-    beinDateJS: convertFrDateToJSDate(beginDate),
-    rent,
-    charge,
-    payments,
-    termDate,
-    termDateJS: convertFrDateToJSDate(termDate),
-    termToDateJS: getTermToDateJS(termDate),
-    docDate,
-    docDateJS: convertFrDateToJSDate(docDate),
-  };
-
-  return essential;
-};
-
-const sendAlertIfDocDateGreaterThenTermToDate = (essentials) => {
-  if (!'xx') {
-    console.log("Document date can't be greter then term to date");
-    return true;
-  }
-  return false;
-};
-
-const termNbBetweenBeginDateAndDocDate = (essentials) => {
-  return 0;
-};
-
-const paymentsBeforeDocDate = (essentials) => {
-  return 0;
-};
+import { getEssential } from './getEssential.mjs';
+import { sendAlertIfDocDateGreaterThenTermToDate } from './sendAlertIfDocDateGreaterThenTermToDate.mjs';
+import { termNbBetweenBeginDateAndDocDate } from './termNbBetweenBeginDateAndDocDate.mjs';
+import { paymentsBeforeDocDate } from './paymentsBeforeDocDate.mjs';
 
 const getAnteriorBalance2 = (batch, termDate, docDate) => {
-  // only keep essentials informations so it is easier to code
-  const essentials = getEssential(batch, termDate, docDate);
-
+  const essentials = getEssential(batch, termDate, docDate); // only keep essentials informations so it is easier to code
   console.log('essential', essentials);
 
   if (sendAlertIfDocDateGreaterThenTermToDate(essentials)) {
@@ -142,4 +86,4 @@ const termDate = '01/04/2020'; // term = 'du 01/04/2020 au 30/04/2020';
 const docDate = '10/03/2020'; // tester docDate = '24/03/2020'
 
 const anteriorBalance = getAnteriorBalance2(batch, termDate, docDate);
-console.log('anteriorBalance', anteriorBalance);
+// console.log('anteriorBalance', anteriorBalance);
