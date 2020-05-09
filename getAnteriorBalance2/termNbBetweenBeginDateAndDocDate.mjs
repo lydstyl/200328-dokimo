@@ -6,7 +6,7 @@ export const termNbBetweenBeginDateAndDocDate = (essentials) => {
 
   const yearNb = beginDate.YYYY - docDate.YYYY;
 
-  const monthNb = beginDate.MM - docDate.MM;
+  const monthNb = docDate.MM - beginDate.MM;
 
   const termNb = yearNb * 12 + monthNb + 1;
 

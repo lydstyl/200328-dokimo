@@ -5,7 +5,7 @@ import { sendAlertIfDocDateGreaterThenTermToDate } from './sendAlertIfDocDateGre
 import { termNbBetweenBeginDateAndDocDate } from './termNbBetweenBeginDateAndDocDate.mjs';
 import { paymentsSumBeforeDocDate } from './paymentsSumBeforeDocDate.mjs';
 
-const getAnteriorBalance2 = (batch, termDate, docDate) => {
+export const getAnteriorBalance2 = (batch, termDate, docDate) => {
   const essentials = getEssential(batch, termDate, docDate); // only keep essentials informations so it is easier to code
   console.log('essential', essentials);
 
@@ -15,9 +15,12 @@ const getAnteriorBalance2 = (batch, termDate, docDate) => {
 
   const { rent, charge } = essentials;
 
-  const anteriorBalance =
-    termNbBetweenBeginDateAndDocDate(essentials) * (rent + charge) -
-    paymentsSumBeforeDocDate(essentials);
+  const rentsAndChargesSum =
+    termNbBetweenBeginDateAndDocDate(essentials) * (rent + charge);
+
+  const paymentsSum = paymentsSumBeforeDocDate(essentials);
+
+  const anteriorBalance = rentsAndChargesSum - paymentsSum;
 
   return anteriorBalance;
 };
@@ -85,7 +88,7 @@ const batch = {
 };
 
 const termDate = '01/04/2020'; // term = 'du 01/04/2020 au 30/04/2020';
-const docDate = '10/03/2020'; // tester docDate = '24/03/2020'
+const docDate = '20/04/2020';
 
 const anteriorBalance = getAnteriorBalance2(batch, termDate, docDate);
-console.log('anteriorBalance', anteriorBalance);
+console.log(`anteriorBalance ${anteriorBalance}`);
