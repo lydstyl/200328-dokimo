@@ -11,6 +11,8 @@ To do:
 - bug avis d'échéance quand trop perçu exemple Leduc (quittance avec trop perçu ok)
 
 - register basic PWA
+- evo sort batches by tenant name
+- evo search input to filter batches
 - batch green indicator if term already paid and red if not // to add when
 - create collection properties & rentals instead of batches to be able to add expenses & calculate the profitability
 - rent change letter with last indicator and batch begin date
