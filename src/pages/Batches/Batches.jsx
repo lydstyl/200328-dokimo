@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useStoreState } from "easy-peasy";
 import { Link } from "react-router-dom";
 
@@ -25,6 +25,14 @@ export const Batches = () => {
       }
     });
 
+  const [filteredBatches, setFilteredBatches] = useState(batches);
+
+  const handleChange = (evt) => {
+    setFilteredBatches(
+      batches.filter((b) => b.tenantLastName.startsWith(evt.target.value))
+    );
+  };
+
   return (
     <>
       <div className="row">
@@ -46,8 +54,14 @@ export const Batches = () => {
             </Link>
           </div>
 
+          <input
+            onChange={handleChange}
+            type="text"
+            placeholder="Nom de famille du locataire"
+          />
+
           <ul className="row">
-            {batches.map((batch) => (
+            {filteredBatches.map((batch) => (
               <li key={batch.id} className="card-content white-text col s12 m4">
                 <div className="card blue-grey darken-1">
                   <div className="card-content white-text">
