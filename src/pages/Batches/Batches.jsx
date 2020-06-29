@@ -5,7 +5,25 @@ import { Link } from "react-router-dom";
 export const Batches = () => {
   const { lessors } = useStoreState((state) => state.lessor);
   const { tenants } = useStoreState((state) => state.tenant);
-  const { batches } = useStoreState((state) => state.batch);
+  let { batches } = useStoreState((state) => state.batch);
+
+  batches = batches
+    .map((b) => {
+      const { lastName } = tenants.filter((t) => t.id === b.tid)[0];
+
+      b.tenantLastName = lastName;
+
+      return b;
+    })
+    .sort((a, b) => {
+      if (a.tenantLastName < b.tenantLastName) {
+        return -1;
+      } else if (a.tenantLastName > b.tenantLastName) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
 
   return (
     <>
@@ -36,11 +54,7 @@ export const Batches = () => {
                     <span className="green">ok</span>
                     <span className="red">!!</span>
                     <span className="card-title">
-                      {batch.name}{" "}
-                      {
-                        tenants.filter((tenant) => tenant.id === batch.tid)[0]
-                          .lastName
-                      }
+                      {batch.name} {batch.tenantLastName}
                     </span>
 
                     <ul className="card-action">
