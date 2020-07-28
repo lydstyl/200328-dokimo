@@ -2,6 +2,7 @@ dependencies:
   '@testing-library/jest-dom': 4.2.4
   '@testing-library/react': 9.5.0_react-dom@16.13.1+react@16.13.1
   '@testing-library/user-event': 7.2.1
+  date-format: 3.0.0
   easy-peasy: 3.3.1_react@16.13.1
   firebase: 7.17.1
   materialize-css: 1.0.0
@@ -4099,6 +4100,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-YTWYI9se1P55u58gL5GkQHW4P6VJBJ5iBT+B5a7i2Tjadhv52paJG0qHX4A0OR6/t52odI64KP2YvFpkDOi3eQ==
+  /date-format/3.0.0:
+    dev: false
+    engines:
+      node: '>=4.0'
+    resolution:
+      integrity: sha512-eyTcpKOcamdhWJXj56DpQMo1ylSQpcGtGKXcU0Tb97+K56/CF5amAqqqNj0+KvA0iw2ynxtHWFsPDSClCxe48w==
   /debounce/1.2.0:
     dev: false
     resolution:
@@ -12099,6 +12106,7 @@ specifiers:
   '@testing-library/jest-dom': ^4.2.4
   '@testing-library/react': ^9.5.0
   '@testing-library/user-event': ^7.2.1
+  date-format: ^3.0.0
   easy-peasy: ^3.3.0
   firebase: ^7.13.1
   materialize-css: ^1.0.0-rc.2
