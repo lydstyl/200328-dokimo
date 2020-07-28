@@ -1,27 +1,27 @@
-import React, { useState } from 'react';
-import { useStoreState } from 'easy-peasy';
+import React, { useState } from 'react'
+import { useStoreState } from 'easy-peasy'
+import { useParams } from 'react-router-dom'
+import format from 'date-format'
 
-import { useParams } from 'react-router-dom';
-
-import { amount } from '../../utils/utils';
-import { getAnteriorBalance2 } from '../../utils/getAnteriorBalance2/index.js';
-import { convertFrDateToJSDate } from '../../utils/getAnteriorBalance2/convertFrDateToJSDate.js';
+import { amount } from '../../utils/utils'
+import { getAnteriorBalance2 } from '../../utils/getAnteriorBalance2/index.js'
+import { convertFrDateToJSDate } from '../../utils/getAnteriorBalance2/convertFrDateToJSDate.js'
 
 export const DueNotice = () => {
-  const { id } = useParams();
+  const { id } = useParams()
 
-  const { lessors } = useStoreState((state) => state.lessor);
-  const { tenants } = useStoreState((state) => state.tenant);
+  const { lessors } = useStoreState((state) => state.lessor)
+  const { tenants } = useStoreState((state) => state.tenant)
   const {
     batches,
     utils: { termOptionsMaker, dateMinus1month },
-  } = useStoreState((state) => state.batch);
+  } = useStoreState((state) => state.batch)
 
-  const batch = batches.filter((batch) => batch.id === id)[0];
-  const { lid, tid, charge, beginDate, rent } = batch;
+  const batch = batches.filter((batch) => batch.id === id)[0]
+  const { lid, tid, charge, beginDate, rent } = batch
 
-  const lessor = lessors.filter((lessor) => lessor.id === lid)[0];
-  const tenant = tenants.filter((tenant) => tenant.id === tid)[0];
+  const lessor = lessors.filter((lessor) => lessor.id === lid)[0]
+  const tenant = tenants.filter((tenant) => tenant.id === tid)[0]
 
   const {
     companyName,
@@ -31,92 +31,98 @@ export const DueNotice = () => {
     address2,
     postalCode,
     townName,
-  } = lessor;
+  } = lessor
 
-  const { civility, firstName, lastName } = tenant;
+  const { civility, firstName, lastName } = tenant
 
-  const terms = termOptionsMaker(beginDate);
+  const terms = termOptionsMaker(beginDate)
 
   const [dates, setDates] = useState({
-    docDate: dateMinus1month(terms[0].docDate),
+    // docDate: dateMinus1month(terms[0].docDate),
+    inputDocDate: format.asString('yyyy-MM-dd', new Date()),
+    docDate: format.asString('dd/MM/yyyy', new Date()),
     termFrom: terms[0].termFrom,
     termTo: terms[0].termTo,
-  });
-  const [showDoc, setShowDoc] = useState(false);
+  })
+  const [showDoc, setShowDoc] = useState(true)
 
   const handleTermChange = (e) => {
-    let value = e.target.value;
+    let value = e.target.value
     if (value === 'no term') {
-      return;
+      return
     }
-    value = JSON.parse(value);
+    value = JSON.parse(value)
 
-    setDates({ ...value, docDate: dateMinus1month(value.docDate) });
+    setDates({ ...value, docDate: dateMinus1month(value.docDate) })
 
-    setShowDoc(true);
-  };
+    setShowDoc(true)
+  }
 
-  const handlChangeDocDate = (evt) => {
-    evt.preventDefault();
+  const handleChangeInputDocDate = (evt) => {
+    evt.preventDefault()
 
-    let docDate = document.querySelector('#date').value.split('-');
-    docDate = [docDate[2], docDate[1], docDate[0]].join('/');
+    console.log(evt.target.value)
 
-    setDates({ ...dates, docDate });
-  };
+    setDates({ ...dates, inputDocDate: evt.target.value })
+  }
+
+  const handleChangeButtonDocDate = (evt) => {
+    evt.preventDefault()
+
+    let docDate = document.querySelector('#date').value.split('-')
+    docDate = [docDate[2], docDate[1], docDate[0]].join('/')
+
+    setDates({ ...dates, docDate })
+  }
 
   const termAndDocMonthSame = (termDate, docDate) => {
     if (termDate.split('/')[1] === docDate.split('/')[1]) {
-      return true;
+      return true
     }
 
-    return false;
-  };
+    return false
+  }
 
   const lastPaymentDateBeforeDocDate = (batch, docDate) => {
-    const { payments } = batch;
+    const { payments } = batch
 
     const lastPaymentDate = convertFrDateToJSDate(
       payments[payments.length - 1].date
-    );
+    )
 
-    docDate = convertFrDateToJSDate(docDate);
+    docDate = convertFrDateToJSDate(docDate)
 
     if (lastPaymentDate <= docDate) {
-      return true;
+      return true
     }
 
-    return false;
-  };
+    return false
+  }
 
-  let anteriorBalance2 = 0;
+  let anteriorBalance2 = 0
   if (
     termAndDocMonthSame(dates.termFrom, dates.docDate) &&
     lastPaymentDateBeforeDocDate(batch, dates.docDate)
   ) {
     // create lastDayOflastMonth to fix bug
-    let lastDayOflastMonth = dates.docDate.split('/');
-    const lastMonthIndex = lastDayOflastMonth[1] - 2;
-    lastDayOflastMonth = new Date(lastDayOflastMonth[2], lastMonthIndex + 1, 0);
+    let lastDayOflastMonth = dates.docDate.split('/')
+    const lastMonthIndex = lastDayOflastMonth[1] - 2
+    lastDayOflastMonth = new Date(lastDayOflastMonth[2], lastMonthIndex + 1, 0)
     lastDayOflastMonth = [
       lastDayOflastMonth.getDate(),
       lastDayOflastMonth.getMonth(),
       lastDayOflastMonth.getFullYear(),
-    ].join('/');
+    ].join('/')
 
     anteriorBalance2 = getAnteriorBalance2(
       batch,
       dates.termFrom,
       lastDayOflastMonth // ok event if like 30/3/2020 instead of 30/03/2020
-    );
+    )
 
-    console.log('anteriorBalance2 same month', anteriorBalance2);
+    console.log('anteriorBalance2 same month', anteriorBalance2)
   } else {
-    anteriorBalance2 = getAnteriorBalance2(
-      batch,
-      dates.termFrom,
-      dates.docDate
-    );
+    anteriorBalance2 = getAnteriorBalance2(batch, dates.termFrom, dates.docDate)
   }
 
   return (
@@ -132,7 +138,7 @@ export const DueNotice = () => {
                 name='term'
                 style={{ display: 'block' }}
               >
-                <option value={'no term'}>Choisissez le terme</option>
+                {/* <option value={'no term'}>Choisissez le terme</option> */}
                 {terms.map((term) => (
                   <option key={term.termFrom} value={JSON.stringify(term)}>
                     {`${term.termFrom} ${term.termTo}`}
@@ -145,9 +151,15 @@ export const DueNotice = () => {
 
         <div className='col m6'>
           <label htmlFor=''>Changer la date du document</label>
-          <input id='date' type='date' />
           <input
-            onClick={handlChangeDocDate}
+            onChange={handleChangeInputDocDate}
+            id='date'
+            type='date'
+            // value='2020-07-28'
+            value={dates.inputDocDate}
+          />
+          <input
+            onClick={handleChangeButtonDocDate}
             type='submit'
             value='Changer la date du document'
           />
@@ -235,5 +247,5 @@ export const DueNotice = () => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}
