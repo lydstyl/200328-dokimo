@@ -16,7 +16,7 @@ export const BatchCard = ({ batch }) => {
   const diffIMS = dateNow.getTime() - lastPaymentDate.getTime()
 
   // To calculate the no. of days between two dates
-  const diffInDays = Math.round(diffIMS / (1000 * 3600 * 24))
+  const diffInDays = Math.floor(diffIMS / (1000 * 3600 * 24))
 
   return (
     <li className='card-content white-text col s12 m4'>
