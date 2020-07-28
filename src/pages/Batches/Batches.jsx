@@ -67,7 +67,7 @@ export const Batches = () => {
 
           <ul className='row'>
             {filteredBatches.map((batch) => (
-              <BatchCard batch={batch} />
+              <BatchCard key={batch.id} batch={batch} />
             ))}
           </ul>
         </>

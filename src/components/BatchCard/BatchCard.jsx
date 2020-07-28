@@ -2,12 +2,32 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 export const BatchCard = ({ batch }) => {
+  let lastPaymentDate = batch.payments[batch.payments.length - 1].date
+
+  lastPaymentDate = lastPaymentDate.split('/')
+
+  lastPaymentDate = new Date(
+    `${lastPaymentDate[2]}-${lastPaymentDate[1]}-${lastPaymentDate[0]}`
+  )
+
+  const dateNow = new Date()
+
+  // To calculate the time difference of two dates
+  const diffIMS = dateNow.getTime() - lastPaymentDate.getTime()
+
+  // To calculate the no. of days between two dates
+  const diffInDays = Math.round(diffIMS / (1000 * 3600 * 24))
+
   return (
-    <li key={batch.id} className='card-content white-text col s12 m4'>
+    <li className='card-content white-text col s12 m4'>
       <div className='card blue-grey darken-1'>
         <div className='card-content white-text'>
-          <span className='green'>ok</span>
-          <span className='red'>!!</span>
+          <span
+            style={{ color: 'black' }}
+            className={diffInDays >= 30 ? 'badge red' : 'badge green'}
+          >
+            J-{diffInDays}
+          </span>
           <span className='card-title'>
             {batch.name} {batch.tenantLastName}
           </span>
