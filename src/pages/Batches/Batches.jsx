@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useStoreState } from 'easy-peasy'
 import { Link } from 'react-router-dom'
+import { BatchCard } from '../../components/BatchCard/BatchCard'
 
 export const Batches = () => {
   const { lessors } = useStoreState((state) => state.lessor)
@@ -66,36 +67,7 @@ export const Batches = () => {
 
           <ul className='row'>
             {filteredBatches.map((batch) => (
-              <li key={batch.id} className='card-content white-text col s12 m4'>
-                <div className='card blue-grey darken-1'>
-                  <div className='card-content white-text'>
-                    <span className='green'>ok</span>
-                    <span className='red'>!!</span>
-                    <span className='card-title'>
-                      {batch.name} {batch.tenantLastName}
-                    </span>
-
-                    <ul className='card-action'>
-                      <li>
-                        <Link to={`/lot/${batch.id}/avis-echeance`}>
-                          Avis d'échéance
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to={`/lot/${batch.id}/reception-paiement`}>
-                          Réception paiement
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to={`/lot/${batch.id}`}>
-                          {/* Voir le détail ou  */}
-                          Supprimer
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </li>
+              <BatchCard batch={batch} />
             ))}
           </ul>
         </>
