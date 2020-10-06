@@ -26,7 +26,7 @@ export const PaymentReceipt = () => {
   }
 
   const [paymentDate, setPaymentDate] = useState(getNowFrDate()) // todo by default get now date valid exemple value : '2020-04-06'
-  const [amount, setAmount] = useState(0)
+  const [amount, setAmount] = useState('')
 
   const handleDateChange = (e) => {
     setPaymentDate(e.target.value)
@@ -100,7 +100,6 @@ export const PaymentReceipt = () => {
 
     const payment = batch.payments.filter((payment) => payment.id === pid)
 
-    // console.log('handleSavePayment -> payment', payment)
     firestoreAddPayment({ batch, payment })
   }
 
@@ -124,7 +123,7 @@ export const PaymentReceipt = () => {
           onChange={(e) => setAmount(parseFloat(e.target.value))}
           type='number'
           name='amount'
-          step='100'
+          step='0.01'
           placeholder='543,21'
           value={amount}
         />
@@ -149,8 +148,6 @@ export const PaymentReceipt = () => {
             </li>
           ))}
       </ul>
-
-      {/* <pre>{JSON.stringify(payments, null, 4)}</pre> */}
     </div>
   )
 }
