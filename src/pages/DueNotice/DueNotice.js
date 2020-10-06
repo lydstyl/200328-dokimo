@@ -99,31 +99,46 @@ export const DueNotice = () => {
     return false
   }
 
-  let anteriorBalance2 = 0
-  if (
-    termAndDocMonthSame(dates.termFrom, dates.docDate) &&
-    lastPaymentDateBeforeDocDate(batch, dates.docDate)
-  ) {
-    // create lastDayOflastMonth to fix bug
-    let lastDayOflastMonth = dates.docDate.split('/')
-    const lastMonthIndex = lastDayOflastMonth[1] - 2
-    lastDayOflastMonth = new Date(lastDayOflastMonth[2], lastMonthIndex + 1, 0)
-    lastDayOflastMonth = [
-      lastDayOflastMonth.getDate(),
-      lastDayOflastMonth.getMonth(),
-      lastDayOflastMonth.getFullYear(),
-    ].join('/')
+  const makeAnteriorBalance2 = () => {
+    let anteriorBalance2 = 0
+    if (
+      termAndDocMonthSame(dates.termFrom, dates.docDate) &&
+      lastPaymentDateBeforeDocDate(batch, dates.docDate)
+    ) {
+      // create lastDayOflastMonth to fix bug
+      let lastDayOflastMonth = dates.docDate.split('/')
+      const lastMonthIndex = lastDayOflastMonth[1] - 2
+      lastDayOflastMonth = new Date(
+        lastDayOflastMonth[2],
+        lastMonthIndex + 1,
+        0
+      )
+      lastDayOflastMonth = [
+        lastDayOflastMonth.getDate(),
+        lastDayOflastMonth.getMonth(),
+        lastDayOflastMonth.getFullYear(),
+      ].join('/')
 
-    anteriorBalance2 = getAnteriorBalance2(
-      batch,
-      dates.termFrom,
-      lastDayOflastMonth // ok event if like 30/3/2020 instead of 30/03/2020
-    )
+      anteriorBalance2 = getAnteriorBalance2(
+        batch,
+        dates.termFrom,
+        lastDayOflastMonth // ok event if like 30/3/2020 instead of 30/03/2020
+      )
+    } else {
+      anteriorBalance2 = getAnteriorBalance2(
+        batch,
+        dates.termFrom,
+        dates.docDate
+      ) // to do round 2 decimals
+    }
 
-    console.log('anteriorBalance2 same month', anteriorBalance2)
-  } else {
-    anteriorBalance2 = getAnteriorBalance2(batch, dates.termFrom, dates.docDate)
+    anteriorBalance2 = parseFloat(anteriorBalance2).toFixed(2)
+    anteriorBalance2 = parseFloat(anteriorBalance2)
+
+    return anteriorBalance2
   }
+
+  const anteriorBalance2 = makeAnteriorBalance2()
 
   return (
     <div className='container'>
