@@ -1,13 +1,13 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import { useStoreState } from 'easy-peasy';
+import React from 'react'
+import { useParams } from 'react-router-dom'
+import { useStoreState } from 'easy-peasy'
 
-import { amount as funAmount } from '../../utils/utils';
+import { amount as funAmount } from '../../utils/utils'
 
 export const PaymentDocument = () => {
-  const { bid, id } = useParams();
-  const { batches } = useStoreState((state) => state.batch);
-  const batch = batches.filter((batch) => batch.id === bid)[0];
+  const { bid, id } = useParams()
+  const { batches } = useStoreState((state) => state.batch)
+  const batch = batches.filter((batch) => batch.id === bid)[0]
   const {
     lid,
     tid,
@@ -16,22 +16,23 @@ export const PaymentDocument = () => {
     postalCode: batchPostalCode,
     rent,
     charge,
-  } = batch;
+  } = batch
 
-  const payment = batch.payments.filter((payment) => payment.id === id)[0];
+  const payment = batch.payments.filter((payment) => payment.id === id)[0]
+
   const {
     document: { type, term, amount },
     date,
     balance,
-  } = payment;
+  } = payment
 
-  const { lessors } = useStoreState((state) => state.lessor);
-  const lessor = lessors.filter((lessor) => lessor.id === lid)[0];
-  const { companyName, managerFirstName, managerLastName } = lessor;
+  const { lessors } = useStoreState((state) => state.lessor)
+  const lessor = lessors.filter((lessor) => lessor.id === lid)[0]
+  const { companyName, managerFirstName, managerLastName } = lessor
 
-  const { tenants } = useStoreState((state) => state.tenant);
-  const tenant = tenants.filter((tenant) => tenant.id === tid)[0];
-  const { civility, firstName, lastName } = tenant;
+  const { tenants } = useStoreState((state) => state.tenant)
+  const tenant = tenants.filter((tenant) => tenant.id === tid)[0]
+  const { civility, firstName, lastName } = tenant
 
   return (
     <div className='payment-doc'>
@@ -129,5 +130,5 @@ export const PaymentDocument = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

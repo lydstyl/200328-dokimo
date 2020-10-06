@@ -1,29 +1,29 @@
 // - FIX BUG AVIS LE CHANGEMENT MANUEL DE LA DATE DU DOC NE CHANGE PAS LE SOLDE ANTERIEUR
 
-import { getEssential } from './getEssential.mjs';
-import { sendAlertIfDocDateGreaterThenTermToDate } from './sendAlertIfDocDateGreaterThenTermToDate.mjs';
-import { termNbBetweenBeginDateAndDocDate } from './termNbBetweenBeginDateAndDocDate.mjs';
-import { paymentsSumBeforeDocDate } from './paymentsSumBeforeDocDate.mjs';
+import { getEssential } from './getEssential.mjs'
+import { sendAlertIfDocDateGreaterThenTermToDate } from './sendAlertIfDocDateGreaterThenTermToDate.mjs'
+import { termNbBetweenBeginDateAndDocDate } from './termNbBetweenBeginDateAndDocDate.mjs'
+import { paymentsSumBeforeDocDate } from './paymentsSumBeforeDocDate.mjs'
 
 export const getAnteriorBalance2 = (batch, termDate, docDate) => {
-  const essentials = getEssential(batch, termDate, docDate); // only keep essentials informations so it is easier to code
-  console.log('essential', essentials);
+  const essentials = getEssential(batch, termDate, docDate) // only keep essentials informations so it is easier to code
+  console.log('essential', essentials)
 
   if (sendAlertIfDocDateGreaterThenTermToDate(essentials)) {
-    return 0;
+    return 0
   }
 
-  const { rent, charge } = essentials;
+  const { rent, charge } = essentials
 
   const rentsAndChargesSum =
-    termNbBetweenBeginDateAndDocDate(essentials) * (rent + charge);
+    termNbBetweenBeginDateAndDocDate(essentials) * (rent + charge)
 
-  const paymentsSum = paymentsSumBeforeDocDate(essentials);
+  const paymentsSum = paymentsSumBeforeDocDate(essentials)
 
-  const anteriorBalance = rentsAndChargesSum - paymentsSum;
+  const anteriorBalance = rentsAndChargesSum - paymentsSum
 
-  return anteriorBalance;
-};
+  return anteriorBalance
+}
 
 const batch = {
   address1: 'test add1',
@@ -85,10 +85,9 @@ const batch = {
   tid: '0eaOQVkcDRAwuVkmhVKp',
   townName: 'TEST Town',
   uid: 'WzRRklCv1nMUhCJOW3xN4oP5Ls23',
-};
+}
 
-const termDate = '01/04/2020'; // term = 'du 01/04/2020 au 30/04/2020';
-const docDate = '20/04/2020';
+const termDate = '01/04/2020' // term = 'du 01/04/2020 au 30/04/2020';
+const docDate = '20/04/2020'
 
-const anteriorBalance = getAnteriorBalance2(batch, termDate, docDate);
-console.log(`anteriorBalance ${anteriorBalance}`);
+const anteriorBalance = getAnteriorBalance2(batch, termDate, docDate)

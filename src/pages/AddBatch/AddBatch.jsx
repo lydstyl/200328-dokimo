@@ -1,19 +1,19 @@
-import React, { useEffect } from 'react';
-import { useStoreState, useStoreActions } from 'easy-peasy';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect } from 'react'
+import { useStoreState, useStoreActions } from 'easy-peasy'
+import { useHistory } from 'react-router-dom'
 
-import { Input } from '../../components/Input/Input';
+import { Input } from '../../components/Input/Input'
 
-import M from 'materialize-css/dist/js/materialize.min.js';
+import M from 'materialize-css/dist/js/materialize.min.js'
 
 export const AddBatch = () => {
-  const { user } = useStoreState((state) => state.user);
-  const { lessors } = useStoreState((state) => state.lessor);
-  const { tenants } = useStoreState((state) => state.tenant);
+  const { user } = useStoreState((state) => state.user)
+  const { lessors } = useStoreState((state) => state.lessor)
+  const { tenants } = useStoreState((state) => state.tenant)
 
-  const { firestoreAddBatch } = useStoreActions((actions) => actions.batch);
+  const { firestoreAddBatch } = useStoreActions((actions) => actions.batch)
 
-  const history = useHistory();
+  const history = useHistory()
 
   const LessorSelect = () => {
     return (
@@ -31,8 +31,8 @@ export const AddBatch = () => {
           </select>
         </div>
       </div>
-    );
-  };
+    )
+  }
 
   const TenantSelect = () => {
     return (
@@ -49,44 +49,41 @@ export const AddBatch = () => {
           </select>
         </div>
       </div>
-    );
-  };
+    )
+  }
 
   const handleAddBatch = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const inputs = document.querySelectorAll('form [name]');
+    const inputs = document.querySelectorAll('form [name]')
 
-    const batch = { uid: user.uid, balance: 0 };
+    const batch = { uid: user.uid, balance: 0 }
 
-    let isSubmitable = true;
+    let isSubmitable = true
 
     inputs.forEach((input) => {
-      batch[input.name] = input.value;
+      batch[input.name] = input.value
 
       if (input.name !== 'address2' && !input.value) {
-        isSubmitable = false;
+        isSubmitable = false
       }
-    });
+    })
 
     if (isSubmitable) {
-      batch.rent = parseFloat(batch.rent);
-      batch.charge = parseFloat(batch.charge);
-
-      batch.payments = [];
-
-      firestoreAddBatch(batch);
-
-      history.push('/lots');
+      batch.rent = parseFloat(batch.rent)
+      batch.charge = parseFloat(batch.charge)
+      batch.payments = []
+      firestoreAddBatch(batch)
+      history.push('/lots')
     } else {
       M.toast({
         html: `Il manque une information indispensable dans le formulaire pour ajouter ce lot`,
-      });
+      })
     }
-  };
+  }
 
   useEffect(() => {
-    var elems = document.querySelectorAll('.datepicker');
+    var elems = document.querySelectorAll('.datepicker')
 
     const options = {
       format: 'dd/mm/yyyy',
@@ -94,10 +91,10 @@ export const AddBatch = () => {
       setDefaultDate: true,
       firstDay: 1,
       yearRange: 2,
-    };
-    // var instances = M.Datepicker.init(elems, options);
-    M.Datepicker.init(elems, options);
-  }, []);
+    }
+
+    M.Datepicker.init(elems, options)
+  }, [])
 
   return (
     <div>
@@ -122,8 +119,19 @@ export const AddBatch = () => {
         <Input name='postalCode' size='s6' />
         <Input name='townName' size='s6' />
 
-        <Input name='rent' size='s6' />
-        <Input name='charge' size='s6' />
+        <div className='input input-field col s6'>
+          <input name='rent' type='number' className='validate' step='.01' />
+          <label for='last_name' className=''>
+            charge
+          </label>
+        </div>
+
+        <div className='input input-field col s6'>
+          <input name='charge' type='number' className='validate' step='.01' />
+          <label for='last_name' className=''>
+            charge
+          </label>
+        </div>
 
         <div className='col s12'>
           <button
@@ -132,10 +140,9 @@ export const AddBatch = () => {
           >
             Ajouter ce lot
             <i className='material-icons left'>add_circle_outline</i>
-            {/* <i className='material-icons left'>home</i> */}
           </button>
         </div>
       </form>
     </div>
-  );
-};
+  )
+}
