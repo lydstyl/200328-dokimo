@@ -1,67 +1,67 @@
-import React, { useState, useEffect } from 'react';
-import { useStoreState, useStoreActions } from 'easy-peasy';
-import M from 'materialize-css/dist/js/materialize.min.js';
+import React, { useState, useEffect } from 'react'
+import { useStoreState, useStoreActions } from 'easy-peasy'
+import M from 'materialize-css/dist/js/materialize.min.js'
 
-import { Input } from '../../components/Input/Input';
-import { Preloader } from '../../components/Preloader/Preloader';
+import { Input } from '../../components/Input/Input'
+import { Preloader } from '../../components/Preloader/Preloader'
 
 export const Tenants = () => {
-  const [isSubmitable, setIsSubmitable] = useState(false);
+  const [isSubmitable, setIsSubmitable] = useState(false)
 
   const {
     user: { uid },
-  } = useStoreState((state) => state.user);
-  const { tenants, loading } = useStoreState((state) => state.tenant);
-  const { batches } = useStoreState((state) => state.batch);
+  } = useStoreState((state) => state.user)
+  const { tenants, loading } = useStoreState((state) => state.tenant)
+  const { batches } = useStoreState((state) => state.batch)
 
   const {
     firestoreAddTenant,
     firestoreGetTenants,
     firestoreDelTenant,
-  } = useStoreActions((actions) => actions.tenant);
+  } = useStoreActions((actions) => actions.tenant)
 
   const handleChangeLastName = (e) => {
-    const { value } = e.target;
+    const { value } = e.target
     if (value) {
-      setIsSubmitable(true);
+      setIsSubmitable(true)
     } else {
-      setIsSubmitable(false);
+      setIsSubmitable(false)
     }
-  };
+  }
 
   const handleAdd = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     const tenant = {
       // id: null,
       uid,
-    };
+    }
 
-    const inputs = document.querySelectorAll('form [name]');
+    const inputs = document.querySelectorAll('form [name]')
     inputs.forEach((input) => {
-      tenant[input.name] = input.value;
-    });
+      tenant[input.name] = input.value
+    })
 
-    firestoreAddTenant(tenant);
-  };
+    firestoreAddTenant(tenant)
+  }
 
   const handleDelete = (e, id) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const tenantBatches = batches.filter((batch) => batch.tid === id);
+    const tenantBatches = batches.filter((batch) => batch.tid === id)
 
     if (tenantBatches.length) {
       M.toast({
         html: `Vous devez d'abord supprimer les lots loués par ce locataire pour pouvoir le supprimer`,
-      });
+      })
     } else {
-      firestoreDelTenant(id);
+      firestoreDelTenant(id)
     }
-  };
+  }
 
   useEffect(() => {
-    firestoreGetTenants(uid);
-  }, [firestoreGetTenants, uid]);
+    firestoreGetTenants(uid)
+  }, [firestoreGetTenants, uid])
 
   return (
     <>
@@ -111,12 +111,9 @@ export const Tenants = () => {
       {loading && <Preloader />}
 
       {!loading && tenants.length !== 0 && (
-        <ul className='row'>
+        <ul className='row cards'>
           {tenants.map((tenant) => (
-            <li
-              key={tenant.id}
-              className='card-content white-text col s12 m6 l4'
-            >
+            <li key={tenant.id} className='card-content white-text'>
               <div className='card blue-grey darken-1'>
                 <div className='card-content white-text'>
                   <span className='card-title'>
@@ -139,5 +136,5 @@ export const Tenants = () => {
         </ul>
       )}
     </>
-  );
-};
+  )
+}

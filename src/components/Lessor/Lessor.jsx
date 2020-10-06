@@ -1,25 +1,25 @@
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { useStoreState, useStoreActions } from 'easy-peasy';
+import React, { useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { useStoreState, useStoreActions } from 'easy-peasy'
 
-import { Preloader } from '../Preloader/Preloader';
-import { LessorCard } from '../LessorCard/LessorCard';
+import { Preloader } from '../Preloader/Preloader'
+import { LessorCard } from '../LessorCard/LessorCard'
 
 export const Lessor = () => {
-  const { user } = useStoreState(state => state.user);
+  const { user } = useStoreState((state) => state.user)
 
-  let uid = null;
+  let uid = null
   if (user) {
-    uid = user.uid;
+    uid = user.uid
   }
 
-  const { lessors, loading } = useStoreState(state => state.lessor);
+  const { lessors, loading } = useStoreState((state) => state.lessor)
 
-  const { firestoreGetLessors } = useStoreActions(actions => actions.lessor);
+  const { firestoreGetLessors } = useStoreActions((actions) => actions.lessor)
 
   useEffect(() => {
-    firestoreGetLessors(uid);
-  }, [uid, firestoreGetLessors]);
+    firestoreGetLessors(uid)
+  }, [uid, firestoreGetLessors])
 
   return (
     <>
@@ -31,8 +31,8 @@ export const Lessor = () => {
             <h1>Bailleurs</h1>
             <Link to='/add-lessor'>Ajouter un bailleur</Link>
 
-            <div className='row'>
-              {lessors.map(lessor => (
+            <div className='row cards'>
+              {lessors.map((lessor) => (
                 <LessorCard key={lessor.id} lessor={lessor} />
               ))}
             </div>
@@ -40,5 +40,5 @@ export const Lessor = () => {
         </div>
       )}
     </>
-  );
-};
+  )
+}
