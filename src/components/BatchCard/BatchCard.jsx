@@ -23,7 +23,7 @@ export const BatchCard = ({ batch }) => {
   }
 
   return (
-    <li className='card-content white-text col s12 m4'>
+    <li className='card-content white-text'>
       <div className='card blue-grey darken-1'>
         <div className='card-content white-text'>
           <span
@@ -38,12 +38,10 @@ export const BatchCard = ({ batch }) => {
 
           <ul className='card-action'>
             <li>
-              <Link to={`/lot/${batch.id}/avis-echeance`}>Avis d'échéance</Link>
+              <Link to={`/lot/${batch.id}/avis-echeance`}>Avis</Link>
             </li>
             <li>
-              <Link to={`/lot/${batch.id}/reception-paiement`}>
-                Réception paiement
-              </Link>
+              <Link to={`/lot/${batch.id}/reception-paiement`}>Paiement</Link>
             </li>
             <li>
               <Link to={`/lot/${batch.id}`}>Supprimer</Link>

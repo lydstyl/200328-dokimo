@@ -65,7 +65,7 @@ export const Batches = () => {
             placeholder='Nom de famille du locataire'
           />
 
-          <ul className='row'>
+          <ul className='row cards'>
             {filteredBatches.map((batch) => (
               <BatchCard key={batch.id} batch={batch} />
             ))}
