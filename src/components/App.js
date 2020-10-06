@@ -1,30 +1,29 @@
-import React from 'react';
-import { StoreProvider } from 'easy-peasy';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React from 'react'
+import { StoreProvider } from 'easy-peasy'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
-import store from '../store/store';
-import { Nav } from './Nav/Nav';
-import { Home } from '../pages/Home/Home';
-import { Login } from '../pages/Login/Login';
-import { SignUp } from '../pages/SignUp/SignUp';
+import store from '../store/store'
+import { Nav } from './Nav/Nav'
+import { Home } from '../pages/Home/Home'
+import { Login } from '../pages/Login/Login'
+import { SignUp } from '../pages/SignUp/SignUp'
 
-import { PrivateRoute } from './PrivateRoute/PrivateRoute';
+import { PrivateRoute } from './PrivateRoute/PrivateRoute'
 
-import { Lessor } from './Lessor/Lessor';
-import { AddLessor } from './AddLessor/AddLessor';
+import { Lessor } from './Lessor/Lessor'
+import { AddLessor } from './AddLessor/AddLessor'
 
-import { Batches } from '../pages/Batches/Batches';
-import { AddBatch } from '../pages/AddBatch/AddBatch';
-import { BatchDetail } from '../pages/BatchDetail/BatchDetail';
-import { DueNotice } from '../pages/DueNotice/DueNotice';
-import { PaymentReceipt } from '../pages/PaymentReceipt/PaymentReceipt';
-import { Terms } from '../pages/Terms/Terms';
-import { Tenants } from '../pages/Tenants/Tenants';
-import { PaymentDocument } from '../pages/PaymentDocument/PaymentDocument';
+import { Batches } from '../pages/Batches/Batches'
+import { AddBatch } from '../pages/AddBatch/AddBatch'
+import { BatchDetail } from '../pages/BatchDetail/BatchDetail'
+import { DueNotice } from '../pages/DueNotice/DueNotice'
+import { PaymentReceipt } from '../pages/PaymentReceipt/PaymentReceipt'
+import { Terms } from '../pages/Terms/Terms'
+import { Tenants } from '../pages/Tenants/Tenants'
+import { PaymentDocument } from '../pages/PaymentDocument/PaymentDocument'
 
-import 'materialize-css/dist/css/materialize.min.css';
-
-import './App.css';
+import 'materialize-css/dist/css/materialize.min.css'
+import './App.css'
 
 function App() {
   return (
@@ -85,7 +84,7 @@ function App() {
         </div>
       </Router>
     </StoreProvider>
-  );
+  )
 }
 
-export default App;
+export default App
