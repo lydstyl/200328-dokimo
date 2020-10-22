@@ -1,3 +1,5 @@
+import { max2Decimals } from '../../utils/max2Decimals'
+
 function nbOfMonth(from, to) {
   let tmp = from.split('/')
   const fromYYYY = parseInt(tmp[2], 10)
@@ -40,7 +42,12 @@ export function mapBalanceToPayments(options) {
   let cumulPaymentsAmount = 0
 
   options.payments = options.payments.map((payment) => {
-    cumulPaymentsAmount += payment.amount
+    let { amount } = payment
+    amount = max2Decimals(amount)
+
+    cumulPaymentsAmount = cumulPaymentsAmount + amount
+
+    cumulPaymentsAmount = max2Decimals(cumulPaymentsAmount)
 
     payment.cumulPaymentsAmount = cumulPaymentsAmount
     return payment
@@ -65,6 +72,8 @@ export function mapBalanceToPayments(options) {
     const monthNb = nbOfMonth(options.beginDate, payment.date) + 1
 
     payment.cumulRents = options.chargeAndRent * monthNb
+
+    payment.cumulRents = max2Decimals(payment.cumulRents)
 
     payment.balance = payment.cumulRents - payment.cumulPaymentsAmount
 

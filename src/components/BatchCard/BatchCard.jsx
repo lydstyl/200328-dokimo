@@ -38,10 +38,10 @@ export const BatchCard = ({ batch }) => {
 
           <ul className='card-action'>
             <li>
-              <Link to={`/lot/${batch.id}/avis-echeance`}>Avis</Link>
+              <Link to={`/lot/${batch.id}/reception-paiement`}>Paiement</Link>
             </li>
             <li>
-              <Link to={`/lot/${batch.id}/reception-paiement`}>Paiement</Link>
+              <Link to={`/lot/${batch.id}/avis-echeance`}>Avis</Link>
             </li>
             <li className='batch-card-delete'>
               <Link to={`/lot/${batch.id}`}>
