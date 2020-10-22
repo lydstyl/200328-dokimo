@@ -1,23 +1,25 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { useStoreState, useStoreActions } from 'easy-peasy'
 import { useHistory, Link } from 'react-router-dom'
 import M from 'materialize-css/dist/js/materialize.min.js'
-// import { auth } from '../../firebase/firebase'
 
 export const Login = () => {
-  // const { user } = useStoreState((state) => state.user)
-  // const { tenants } = useStoreState((state) => state.tenant)
-  // const { lessors } = useStoreState((state) => state.lessor)
-  const { batches } = useStoreState((state) => state.batch)
+  const { batches } = useStoreState(state => state.batch)
 
   const history = useHistory()
 
   const {
     signInWithEmailAndPassword,
     sendPasswordResetEmail,
-  } = useStoreActions((actions) => actions.user)
+  } = useStoreActions(actions => actions.user)
 
-  const handleLogin = (e) => {
+  const redirectAfterLogin = useCallback(() => {
+    if (batches.length) {
+      history.push('/lots')
+    }
+  }, [batches, history])
+
+  const handleLogin = e => {
     e.preventDefault()
 
     signInWithEmailAndPassword({
@@ -28,13 +30,7 @@ export const Login = () => {
     redirectAfterLogin()
   }
 
-  function validateEmail(email) {
-    // eslint-disable-next-line
-    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    return re.test(String(email).toLowerCase())
-  }
-
-  const handleResetPassword = (e) => {
+  const handleResetPassword = e => {
     e.preventDefault()
 
     const email = document.querySelector('[type=email]').value
@@ -46,17 +42,17 @@ export const Login = () => {
         html: "Merci d'indiquer un e-mail valide dans l'entrée ci-dessus",
       })
     }
-  }
 
-  function redirectAfterLogin() {
-    if (batches.length) {
-      history.push('/lots')
+    function validateEmail(email) {
+      // eslint-disable-next-line
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      return re.test(String(email).toLowerCase())
     }
   }
 
   useEffect(() => {
     redirectAfterLogin()
-  }, [batches])
+  }, [redirectAfterLogin, batches])
 
   return (
     <form className='row'>
