@@ -1,55 +1,62 @@
-import React from 'react';
-import { useStoreState, useStoreActions } from 'easy-peasy';
-import { useHistory, Link } from 'react-router-dom';
-import M from 'materialize-css/dist/js/materialize.min.js';
+import React, { useEffect } from 'react'
+import { useStoreState, useStoreActions } from 'easy-peasy'
+import { useHistory, Link } from 'react-router-dom'
+import M from 'materialize-css/dist/js/materialize.min.js'
+// import { auth } from '../../firebase/firebase'
 
 export const Login = () => {
-  const { user } = useStoreState((state) => state.user);
-  const { lessors } = useStoreState((state) => state.lessor);
+  // const { user } = useStoreState((state) => state.user)
+  // const { tenants } = useStoreState((state) => state.tenant)
+  // const { lessors } = useStoreState((state) => state.lessor)
+  const { batches } = useStoreState((state) => state.batch)
 
-  const history = useHistory();
+  const history = useHistory()
 
   const {
     signInWithEmailAndPassword,
     sendPasswordResetEmail,
-  } = useStoreActions((actions) => actions.user);
+  } = useStoreActions((actions) => actions.user)
 
   const handleLogin = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     signInWithEmailAndPassword({
       email: document.querySelector('#email').value,
       password: document.querySelector('#password').value,
-    });
+    })
 
-    if (user) {
-      if (lessors.length) {
-        history.push('/lots'); // TODO fix not working
-      } else {
-        history.push('/bailleurs');
-      }
-    }
-  };
+    redirectAfterLogin()
+  }
 
   function validateEmail(email) {
     // eslint-disable-next-line
-    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    return re.test(String(email).toLowerCase())
   }
 
   const handleResetPassword = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const email = document.querySelector('[type=email]').value;
+    const email = document.querySelector('[type=email]').value
 
     if (validateEmail(email)) {
-      sendPasswordResetEmail(email);
+      sendPasswordResetEmail(email)
     } else {
       M.toast({
         html: "Merci d'indiquer un e-mail valide dans l'entrée ci-dessus",
-      });
+      })
     }
-  };
+  }
+
+  function redirectAfterLogin() {
+    if (batches.length) {
+      history.push('/lots')
+    }
+  }
+
+  useEffect(() => {
+    redirectAfterLogin()
+  }, [batches])
 
   return (
     <form className='row'>
@@ -98,5 +105,5 @@ export const Login = () => {
         </p>
       </div>
     </form>
-  );
-};
+  )
+}
