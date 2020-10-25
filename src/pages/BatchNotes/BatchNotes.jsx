@@ -19,6 +19,8 @@ export const BatchNotes = () => {
         content: '',
       }
 
+      // TODO use firestore to set the note and get the id
+
       // note.id = id;
 
       dispatch({ type: actionTypes.ADD_NOTE, payload: note })
