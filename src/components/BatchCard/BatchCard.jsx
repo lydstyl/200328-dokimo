@@ -65,7 +65,7 @@ export const BatchCard = ({ batch }) => {
             </li>
 
             <li className='batch-card-delete'>
-              <Link to={`/lot/${batch.id}`}>
+              <Link to={`/lot/${batch.id}/supprimer`}>
                 <i className='material-icons'>delete</i>
               </Link>
             </li>

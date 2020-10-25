@@ -15,13 +15,14 @@ import { AddLessor } from './AddLessor/AddLessor'
 
 import { Batches } from '../pages/Batches/Batches'
 import { AddBatch } from '../pages/AddBatch/AddBatch'
-import { BatchDetail } from '../pages/BatchDetail/BatchDetail'
+import { BatchOther } from '../pages/BatchOther/BatchOther'
 import { DueNotice } from '../pages/DueNotice/DueNotice'
 import { PaymentReceipt } from '../pages/PaymentReceipt/PaymentReceipt'
 import { Terms } from '../pages/Terms/Terms'
 import { Tenants } from '../pages/Tenants/Tenants'
 import { PaymentDocument } from '../pages/PaymentDocument/PaymentDocument'
-import { BatchOther } from '../pages/BatchOther/BatchOther'
+import { BatchNotes } from '../pages/BatchNotes/BatchNotes'
+import { BatchRemove } from '../pages/BatchRemove/BatchRemove'
 
 import 'materialize-css/dist/css/materialize.min.css'
 import './App.css'
@@ -82,12 +83,16 @@ function App() {
               <PaymentDocument />
             </PrivateRoute>
 
-            <PrivateRoute path='/lot/:bid/autres'>
+            <PrivateRoute path='/lot/:id/autres'>
               <BatchOther />
             </PrivateRoute>
 
-            <PrivateRoute path='/lot/:id'>
-              <BatchDetail />
+            <PrivateRoute path='/lot/:bid/notes'>
+              <BatchNotes />
+            </PrivateRoute>
+
+            <PrivateRoute path='/lot/:id/supprimer'>
+              <BatchRemove />
             </PrivateRoute>
           </Switch>
         </div>
