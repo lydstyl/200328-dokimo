@@ -4,13 +4,13 @@ import { Link } from 'react-router-dom'
 import { BatchCard } from '../../components/BatchCard/BatchCard'
 
 export const Batches = () => {
-  const { lessors } = useStoreState((state) => state.lessor)
-  const { tenants } = useStoreState((state) => state.tenant)
-  let { batches } = useStoreState((state) => state.batch)
+  const { lessors } = useStoreState(state => state.lessor)
+  const { tenants } = useStoreState(state => state.tenant)
+  let { batches } = useStoreState(state => state.batch)
 
   batches = batches
-    .map((b) => {
-      const { lastName } = tenants.filter((t) => t.id === b.tid)[0]
+    .map(b => {
+      const { lastName } = tenants.filter(t => t.id === b.tid)[0]
 
       b.tenantLastName = lastName
 
@@ -28,9 +28,9 @@ export const Batches = () => {
 
   const [filteredBatches, setFilteredBatches] = useState(batches)
 
-  const handleChange = (evt) => {
+  const handleChange = evt => {
     setFilteredBatches(
-      batches.filter((b) =>
+      batches.filter(b =>
         b.tenantLastName
           .toUpperCase()
           .startsWith(evt.target.value.toUpperCase())
@@ -66,7 +66,7 @@ export const Batches = () => {
           />
 
           <ul className='row cards'>
-            {filteredBatches.map((batch) => (
+            {filteredBatches.map(batch => (
               <BatchCard key={batch.id} batch={batch} />
             ))}
           </ul>

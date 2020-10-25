@@ -21,6 +21,7 @@ import { PaymentReceipt } from '../pages/PaymentReceipt/PaymentReceipt'
 import { Terms } from '../pages/Terms/Terms'
 import { Tenants } from '../pages/Tenants/Tenants'
 import { PaymentDocument } from '../pages/PaymentDocument/PaymentDocument'
+import { BatchOther } from '../pages/BatchOther/BatchOther'
 
 import 'materialize-css/dist/css/materialize.min.css'
 import './App.css'
@@ -40,6 +41,7 @@ function App() {
             <Route exact path='/login'>
               <Login />
             </Route>
+
             <Route exact path='/sign-up'>
               <SignUp />
             </Route>
@@ -47,6 +49,7 @@ function App() {
             <PrivateRoute path='/bailleurs'>
               <Lessor />
             </PrivateRoute>
+
             <PrivateRoute path='/add-lessor'>
               <AddLessor />
             </PrivateRoute>
@@ -62,6 +65,7 @@ function App() {
             <PrivateRoute path='/lots'>
               <Batches />
             </PrivateRoute>
+
             <PrivateRoute path='/ajouter-lot'>
               <AddBatch />
             </PrivateRoute>
@@ -77,6 +81,11 @@ function App() {
             <PrivateRoute path='/lot/:bid/recu/:id'>
               <PaymentDocument />
             </PrivateRoute>
+
+            <PrivateRoute path='/lot/:bid/autres'>
+              <BatchOther />
+            </PrivateRoute>
+
             <PrivateRoute path='/lot/:id'>
               <BatchDetail />
             </PrivateRoute>

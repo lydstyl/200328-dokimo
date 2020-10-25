@@ -1,8 +1,8 @@
 import { batchUtils } from './batchUtils'
 import { batchesThunks } from './batchesThunks'
 import { termThunks } from './termThunks'
-import { allBatchActions } from './allBatchActions'
 import { paymentThunks } from './paymentThunks'
+import { allBatchActions } from './allBatchActions'
 
 export default {
   // INITIAL STATE
@@ -22,6 +22,8 @@ export default {
   ...termThunks,
 
   ...paymentThunks,
+
+  // ...batchRentReviewThunks,
 
   // ACTIONS
   ...allBatchActions,
