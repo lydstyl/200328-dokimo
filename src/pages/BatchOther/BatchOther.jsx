@@ -11,21 +11,19 @@ export const BatchOther = () => {
   const batch = batches.filter(batch => batch.id === id)[0]
 
   return (
-    <div className='container'>
-      <div className='row'>
-        <h1 className='col s12'>Autres actions de {batch.name}</h1>
-        <div className='col s12'>
-          <div>
-            <Link to={`/lot/${batch.id}/notes`}>Notes</Link>
-          </div>
+    <div className='row'>
+      <h1 className='col s12'>Autres actions de {batch.name}</h1>
+      <div className='col s12'>
+        <div>
+          <Link to={`/lot/${batch.id}/notes`}>Notes</Link>
+        </div>
 
-          {/* <div>
+        {/* <div>
             <Link to={`/lot/${batch.id}/révision`}>Révision de loyer</Link>
           </div> */}
 
-          <div>
-            <Link to={`/lot/${batch.id}/supprimer`}>Supprimer ce lot</Link>
-          </div>
+        <div>
+          <Link to={`/lot/${batch.id}/supprimer`}>Supprimer ce lot</Link>
         </div>
       </div>
     </div>

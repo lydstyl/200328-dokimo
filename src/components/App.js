@@ -87,7 +87,7 @@ function App() {
               <BatchOther />
             </PrivateRoute>
 
-            <PrivateRoute path='/lot/:bid/notes'>
+            <PrivateRoute path='/lot/:id/notes'>
               <BatchNotes />
             </PrivateRoute>
 
