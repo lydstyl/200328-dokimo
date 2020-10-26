@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom'
 const actionTypes = {
   SET_LOADING: 'SET_LOADING',
   ADD_NOTE: 'ADD_NOTE',
+  SET_NOTES: 'SET_NOTES',
   REMOVE_NOTE: 'REMOVE_NOTE',
 }
 
@@ -25,8 +26,15 @@ function reducer(state, action) {
       if (!newState.notes.find(n => n.id === action.payload.id)) {
         newState.notes.push(action.payload)
       } else {
-        console.log('Cette note existe déjà, id de la note', action.payload.id)
+        console.log('Id de la note déjà ajoutée, ', action.payload.id)
       }
+
+      newState.loading = false
+
+      return newState
+
+    case actionTypes.SET_NOTES:
+      newState.notes = action.payload
 
       newState.loading = false
 

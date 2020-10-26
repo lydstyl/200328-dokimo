@@ -35,7 +35,30 @@ export const BatchNotes = () => {
   }
 
   useEffect(() => {
-    // get notes from firestore sorted by date
+    ;(async _ => {
+      dispatch({ type: actionTypes.SET_LOADING, payload: true })
+
+      try {
+        const querySnapshot = await firestore
+          .collection('notes')
+          .where('bid', '==', bid)
+          .get()
+
+        const notes = []
+
+        querySnapshot.forEach(doc => {
+          notes.push({ ...doc.data(), id: doc.id })
+        })
+
+        // TODO sort notes by date
+
+        dispatch({ type: actionTypes.SET_NOTES, payload: notes })
+      } catch (error) {
+        console.log('BatchNotes -> error', error)
+
+        dispatch({ type: actionTypes.SET_LOADING, payload: false })
+      }
+    })()
   }, [])
 
   return (
