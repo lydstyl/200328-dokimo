@@ -8,7 +8,11 @@ export const Note = ({ note }) => {
 
   const noteContext = useContext(NoteContext)
 
-  const { actionTypes, state, dispatch } = noteContext
+  const {
+    actionTypes,
+    // state,
+    dispatch,
+  } = noteContext
 
   const removeNote = async _ => {
     dispatch({ type: actionTypes.SET_LOADING, payload: true })
@@ -29,11 +33,11 @@ export const Note = ({ note }) => {
   return (
     <div className='note'>
       <div className='head'>
-        <div className='date'></div>
+        <div className='date'>Date day.js {date.toString()}</div>
         <h2 className='title'>Titre {title}</h2>
       </div>
 
-      <div className='body'>{content}</div>
+      <div className='body'>Content {content}</div>
 
       <div className='foot'>
         <button>Sauver</button>

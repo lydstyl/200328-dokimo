@@ -12,8 +12,6 @@ export const BatchNotes = () => {
   const { id: bid, name } = batch
 
   const addNote = async _ => {
-    dispatch({ type: actionTypes.SET_LOADING, payload: true })
-
     try {
       const note = {
         bid,
@@ -60,7 +58,7 @@ export const BatchNotes = () => {
         dispatch({ type: actionTypes.SET_LOADING, payload: false })
       }
     })()
-  }, [])
+  }, [actionTypes.SET_LOADING, actionTypes.SET_NOTES, bid, dispatch])
 
   return (
     <div className='row other'>
