@@ -17,7 +17,7 @@ export const BatchNotes = () => {
         bid,
         batchName: batch.name,
         date: new Date().toString(),
-        title: state.notes.length + 1,
+        title: '',
         content: '',
       }
 
@@ -62,13 +62,15 @@ export const BatchNotes = () => {
 
   return (
     <div className='row other'>
-      <h1 className='col s12'>Notes à propos du lot {name}</h1>
+      <h1 className='col s9'>Notes à propos du lot {name}</h1>
 
-      <button onClick={addNote}>Ajouter une note</button>
+      <button className='col s3' onClick={addNote}>
+        Ajouter une note
+      </button>
 
-      <div className='notes'>
+      <div className='notes col s12'>
         {state.loading ? (
-          <p>Loading...</p>
+          <p className='row loading'>Loading...</p>
         ) : (
           <>
             {state.notes.length ? (
@@ -78,7 +80,7 @@ export const BatchNotes = () => {
                 ))}
               </>
             ) : (
-              <p>Il n'y a pas de note.</p>
+              <p className='row no-note'>Il n'y a pas de note.</p>
             )}
           </>
         )}

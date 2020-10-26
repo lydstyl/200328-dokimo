@@ -49,43 +49,53 @@ export const Note = ({ note }) => {
   }
 
   return (
-    <div className='note'>
-      <div className='head'>
-        <div className='date'>
-          <label htmlFor=''>Le</label>
-          <input
-            onChange={handleChange}
-            value={dayjs(date).format('YYYY-MM-DD')}
-            type='date'
-            name='date'
-          />
+    <div className='row note'>
+      <div className='col s12'>
+        <div className='row head'>
+          <div className='date'>
+            <label className='col s3'>Le</label>
+            <input
+              className='col s9'
+              onChange={handleChange}
+              value={dayjs(date).format('YYYY-MM-DD')}
+              type='date'
+              name='date'
+            />
+          </div>
+
+          <h2 className='title'>
+            <label className='col s3'>Titre</label>
+            <input
+              className='col s9'
+              onChange={handleChange}
+              value={title}
+              name='title'
+              type='text'
+            />
+          </h2>
         </div>
-        <h2 className='title'>
-          <label>Titre</label>
-          <input
+
+        <div className='row body'>
+          <label className='col s12'>Contenu</label>
+          <textarea
+            className='col s12'
             onChange={handleChange}
-            value={title}
-            name='title'
-            type='text'
-          />
-        </h2>
-      </div>
+            value={content}
+            name='content'
+            cols='30'
+            rows='10'
+          ></textarea>
+        </div>
 
-      <div className='body'>
-        <label>Contenu</label>
-        <textarea
-          onChange={handleChange}
-          value={content}
-          name='content'
-          cols='30'
-          rows='10'
-        ></textarea>
-      </div>
+        <div className='row foot'>
+          <button className='col s6' onClick={save}>
+            Sauver
+          </button>
 
-      <div className='foot'>
-        <button onClick={save}>Sauver</button>
-
-        <button onClick={removeNote}>Supprimer</button>
+          <button className='col s6' onClick={removeNote}>
+            Supprimer
+          </button>
+        </div>
       </div>
     </div>
   )
