@@ -16,7 +16,7 @@ export const BatchNotes = () => {
       const note = {
         bid,
         batchName: batch.name,
-        date: new Date(),
+        date: new Date().toString(),
         title: state.notes.length + 1,
         content: '',
       }

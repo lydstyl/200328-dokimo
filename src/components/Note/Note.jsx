@@ -1,4 +1,6 @@
 import React, { useContext } from 'react'
+import dayjs from 'dayjs'
+
 import { firestore } from '../../firebase/firebase'
 
 import { NoteContext } from '../../pages/BatchNotes/NoteContext'
@@ -33,7 +35,7 @@ export const Note = ({ note }) => {
   return (
     <div className='note'>
       <div className='head'>
-        <div className='date'>Date day.js {date.toString()}</div>
+        <div className='date'>Le {dayjs(date).format('DD/MM/YYYY')}</div>
         <h2 className='title'>Titre {title}</h2>
       </div>
 
