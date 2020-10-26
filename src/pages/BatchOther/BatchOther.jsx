@@ -18,9 +18,9 @@ export const BatchOther = () => {
           <Link to={`/lot/${batch.id}/notes`}>Notes</Link>
         </div>
 
-        {/* <div>
-            <Link to={`/lot/${batch.id}/révision`}>Révision de loyer</Link>
-          </div> */}
+        <div>
+          <Link to={`/lot/${batch.id}/révision`}>Révision de loyer</Link>
+        </div>
 
         <div>
           <Link to={`/lot/${batch.id}/supprimer`}>Supprimer ce lot</Link>
