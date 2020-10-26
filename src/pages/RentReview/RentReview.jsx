@@ -6,6 +6,7 @@ import { ReviewMailMaker } from './ReviewMailMaker'
 
 export const actionTypes = {
   SET_SENDER: 'SET_SENDER',
+  SET_RECIPIENT: 'SET_RECIPIENT',
 }
 
 const initialState = {
@@ -19,6 +20,11 @@ function reducer(state, action) {
   switch (action.type) {
     case actionTypes.SET_SENDER:
       newState.sender = action.payload
+
+      return newState
+
+    case actionTypes.SET_RECIPIENT:
+      newState.recipient = action.payload
 
       return newState
 
@@ -39,21 +45,6 @@ const RentReviewProvider = ({ children }) => {
     </RentReviewContext.Provider>
   )
 }
-
-// const Field = ({ name }) => {
-//   // const value = useContext(MyContext);
-
-//   // todo useContext to get the value like this state[name]
-
-//   // todo create action type like this `SET_${name.toCupperCase()}`
-
-//   return (
-//     <div className='field'>
-//       <label>{name}</label>
-//       <input type='text' name={name} />
-//     </div>
-//   )
-// }
 
 export const RentReview = () => {
   return (

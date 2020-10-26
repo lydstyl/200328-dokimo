@@ -1,11 +1,10 @@
 import React, { useContext } from 'react'
 
 import { actionTypes, RentReviewContext } from './RentReview'
+import { Field } from './Field'
 
 export const ReviewMailMaker = props => {
   const rentReviewContext = useContext(RentReviewContext)
-
-  // const [state, dispatch] = useReducer(reducer, initialState)
   const { state, dispatch } = rentReviewContext
 
   return (
@@ -21,22 +20,9 @@ export const ReviewMailMaker = props => {
         {state && (
           <div className='row'>
             <form className='col l3 form'>
-              <div className='field'>
-                <label>Sender</label>
-                <input
-                  value={state.sender}
-                  onChange={evt =>
-                    dispatch({
-                      type: actionTypes.SET_SENDER,
-                      payload: evt.target.value,
-                    })
-                  }
-                  type='text'
-                  name='sender'
-                />
-              </div>
+              <Field name={'sender'} />
 
-              {/* <Field /> */}
+              <Field name={'recipient'} />
             </form>
 
             <div className='col l9 mail'>
@@ -45,7 +31,7 @@ export const ReviewMailMaker = props => {
               </div>
 
               <div className='recipient-and-date'>
-                <p>| CIVILITÉ | | LOCATAIRE |</p>
+                <p>{state.recipient} | CIVILITÉ | | LOCATAIRE |</p>
 
                 <p>à Raismes, le | DATE_COURRIER |</p>
               </div>
