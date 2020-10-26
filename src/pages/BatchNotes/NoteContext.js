@@ -68,12 +68,7 @@ function reducer(state, action) {
       return newState
 
     case actionTypes.REMOVE_NOTE:
-      console.log('reducer -> newState.notes', newState.notes)
-
-      newState.notes.filter(n => n.id !== action.payload)
-      console.log('reducer -> action.payload', action.payload)
-
-      console.log('reducer -> newState.notes', newState.notes)
+      newState.notes = newState.notes.filter(n => n.id !== action.payload)
 
       newState.loading = false
 
