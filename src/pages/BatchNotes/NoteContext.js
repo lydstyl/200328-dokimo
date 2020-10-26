@@ -6,6 +6,7 @@ const actionTypes = {
   SET_LOADING: 'SET_LOADING',
   ADD_NOTE: 'ADD_NOTE',
   SET_NOTES: 'SET_NOTES',
+  SET_NOTE: 'SET_NOTE',
   REMOVE_NOTE: 'REMOVE_NOTE',
 }
 
@@ -62,6 +63,19 @@ function reducer(state, action) {
 
     case actionTypes.SET_NOTES:
       newState.notes = action.payload
+
+      newState.loading = false
+
+      return newState
+
+    case actionTypes.SET_NOTE:
+      newState.notes = newState.notes.map(n => {
+        if (n.id === action.payload.id) {
+          return action.payload
+        }
+
+        return n
+      })
 
       newState.loading = false
 
