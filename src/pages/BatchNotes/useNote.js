@@ -3,20 +3,33 @@ import { useStoreState } from 'easy-peasy'
 import { useParams } from 'react-router-dom'
 
 const actionTypes = {
+  SET_LOADING: 'SET_LOADING',
   ADD_NOTE: 'ADD_NOTE',
   REMOVE_NOTE: 'REMOVE_NOTE',
 }
 
 const initialState = {
   notes: [],
+  loading: false,
 }
 
 function reducer(state, action) {
   const newState = { ...state }
 
   switch (action.type) {
+    case actionTypes.SET_LOADING:
+      newState.loading = action.payload
+      return newState
+
     case actionTypes.ADD_NOTE:
-      newState.notes.push(action.payload)
+      if (!newState.notes.find(n => n.id === action.payload.id)) {
+        newState.notes.push(action.payload)
+      } else {
+        console.log('Cette note existe déjà, id de la note', action.payload.id)
+      }
+
+      newState.loading = false
+
       return newState
 
     case actionTypes.REMOVE_NOTE:

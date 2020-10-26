@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 
 import { useNote } from './useNote'
+import { firestore } from '../../firebase/firebase'
 
 export const BatchNotes = () => {
   const noteHook = useNote()
@@ -10,6 +11,8 @@ export const BatchNotes = () => {
   const { id: bid, name } = batch
 
   const addNote = async _ => {
+    dispatch({ type: actionTypes.SET_LOADING, payload: true })
+
     try {
       const note = {
         bid,
@@ -19,13 +22,15 @@ export const BatchNotes = () => {
         content: '',
       }
 
-      // TODO use firestore to set the note and get the id
+      const docRef = await firestore.collection('notes').add(note)
 
-      // note.id = id;
+      note.id = docRef.id
 
       dispatch({ type: actionTypes.ADD_NOTE, payload: note })
     } catch (error) {
       console.log('BatchNotes -> error', error)
+
+      dispatch({ type: actionTypes.SET_LOADING, payload: false })
     }
   }
 
@@ -39,7 +44,13 @@ export const BatchNotes = () => {
 
       <button onClick={addNote}>Ajouter une note</button>
 
-      <pre>{JSON.stringify(state, null, 4)}</pre>
+      <div className='notes'>
+        {state.loading ? (
+          <p>Loading...</p>
+        ) : (
+          <pre>{JSON.stringify(state, null, 4)}</pre>
+        )}
+      </div>
     </div>
   )
 }
