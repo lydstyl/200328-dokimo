@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 
 import { useNote } from './useNote'
 import { firestore } from '../../firebase/firebase'
+import { Note } from '../../components/Note/Note'
 
 export const BatchNotes = () => {
   const noteHook = useNote()
@@ -71,7 +72,17 @@ export const BatchNotes = () => {
         {state.loading ? (
           <p>Loading...</p>
         ) : (
-          <pre>{JSON.stringify(state, null, 4)}</pre>
+          <>
+            {state.notes.length ? (
+              <>
+                {state.notes.map(n => (
+                  <Note key={n.id} note={n} />
+                ))}
+              </>
+            ) : (
+              <p>Il n'y a pas de note.</p>
+            )}
+          </>
         )}
       </div>
     </div>
