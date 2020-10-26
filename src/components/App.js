@@ -23,6 +23,7 @@ import { Tenants } from '../pages/Tenants/Tenants'
 import { PaymentDocument } from '../pages/PaymentDocument/PaymentDocument'
 import { BatchNotes } from '../pages/BatchNotes/BatchNotes'
 import { BatchRemove } from '../pages/BatchRemove/BatchRemove'
+import { NoteContextProvider } from '../pages/BatchNotes/NoteContext'
 
 import 'materialize-css/dist/css/materialize.min.css'
 import './App.css'
@@ -88,7 +89,9 @@ function App() {
             </PrivateRoute>
 
             <PrivateRoute path='/lot/:id/notes'>
-              <BatchNotes />
+              <NoteContextProvider>
+                <BatchNotes />
+              </NoteContextProvider>
             </PrivateRoute>
 
             <PrivateRoute path='/lot/:id/supprimer'>

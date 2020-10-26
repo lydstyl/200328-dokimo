@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 
-import { useNote } from './useNote'
+import { NoteContext } from './NoteContext'
 import { firestore } from '../../firebase/firebase'
 import { Note } from '../../components/Note/Note'
 
 export const BatchNotes = () => {
-  const noteHook = useNote()
+  const noteContext = useContext(NoteContext)
 
-  const { batch, actionTypes, state, dispatch } = noteHook
+  const { batch, actionTypes, state, dispatch } = noteContext
 
   const { id: bid, name } = batch
 

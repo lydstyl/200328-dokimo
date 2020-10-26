@@ -1,9 +1,30 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { firestore } from '../../firebase/firebase'
+
+import { NoteContext } from '../../pages/BatchNotes/NoteContext'
 
 export const Note = ({ note }) => {
-  console.log('Note -> note', note)
+  const { id, date, title, content } = note
 
-  const { date, title, content } = note
+  const noteContext = useContext(NoteContext)
+
+  const { actionTypes, state, dispatch } = noteContext
+
+  const removeNote = async _ => {
+    dispatch({ type: actionTypes.SET_LOADING, payload: true })
+
+    try {
+      await firestore.collection('notes').doc(id).delete()
+
+      console.log('Note supprimée')
+
+      dispatch({ type: actionTypes.REMOVE_NOTE, payload: id })
+    } catch (error) {
+      console.log('Note -> error', error)
+
+      dispatch({ type: actionTypes.SET_LOADING, payload: false })
+    }
+  }
 
   return (
     <div className='note'>
@@ -16,7 +37,7 @@ export const Note = ({ note }) => {
 
       <div className='foot'>
         <button>Sauver</button>
-        <button>Supprimer</button>
+        <button onClick={removeNote}>Supprimer</button>
       </div>
     </div>
   )
