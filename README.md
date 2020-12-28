@@ -1,4 +1,4 @@
-#DOKIMO
+# DOKIMO
 
 Create receipts and other documents for your tenant(s).
 
@@ -6,9 +6,17 @@ DOKIMO vous permet d'éditer des documents immobiliers pour vos locataires tels 
 
 https://dokimo.netlify.app
 
-To do:
+## How to run in dev
+- clone this repo
+- copie the .env.exemple to .env
+- create a firebase project
+- change .env values with your firebase project settings
+- npm i
+- npm start
 
-- bug avis d'échéance quand trop perçu exemple Leduc (quittance avec trop perçu ok)
+## To do:
+
+- avis d'échéance bad date when new year
 
 - register basic PWA
 - batch green indicator if term already paid and red if not // to add when

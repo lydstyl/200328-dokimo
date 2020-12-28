@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
 
-import { actionTypes, RentReviewContext } from './RentReview'
+import { RentReviewContext } from './RentReview'
 import { Field } from './Field'
 
 export const ReviewMailMaker = props => {
   const rentReviewContext = useContext(RentReviewContext)
-  const { state, dispatch } = rentReviewContext
+  const { state } = rentReviewContext
 
   return (
     <div className='row ren-review'>
@@ -20,9 +20,9 @@ export const ReviewMailMaker = props => {
         {state && (
           <div className='row'>
             <form className='col l3 form'>
-              <Field name={'sender'} />
+              <Field name='sender' />
 
-              <Field name={'recipient'} />
+              <Field name='recipient' />
             </form>
 
             <div className='col l9 mail'>
