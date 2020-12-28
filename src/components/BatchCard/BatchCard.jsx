@@ -1,13 +1,21 @@
 import React from 'react'
+// import { useStoreState } from 'easy-peasy'
+
 import { Link } from 'react-router-dom'
 
 export const BatchCard = ({ batch }) => {
+  // const { batches } = useStoreState(state => state.batch)
+
+  // const batchId = batch.id
+
+  // batch = batches.find(batch => batch.id === batchId)
+
   let diffInDays = 0
   let badgeColor
 
   makeBadgeData()
 
-  function makeBadgeData() {
+  function makeBadgeData () {
     if (batch.payments[batch.payments.length - 1]) {
       let lastPaymentDate = batch.payments[batch.payments.length - 1].date
 

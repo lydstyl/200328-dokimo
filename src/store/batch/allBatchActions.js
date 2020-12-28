@@ -60,8 +60,17 @@ export const allBatchActions = {
         // update balance
         batch.balance -= amount
 
+        // const newBatch = { ...batch }
+
+        // state.batches.map(batch => {
+        //   if (batch.id === newBatch.id) {
+        //     return newBatch
+        //   }
+        //   return batch
+        // })
+
         M.toast({
-          html: `Paiment ajouté au store, nouvelle balance : ${batch.balance}`,
+          html: `Paiment ajouté au store, nouvelle balance : ${batch.balance}`
         })
       }
     })
@@ -81,5 +90,5 @@ export const allBatchActions = {
       }
       return batch
     })
-  }),
+  })
 }
