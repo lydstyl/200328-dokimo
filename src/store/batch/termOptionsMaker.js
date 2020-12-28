@@ -1,77 +1,82 @@
-function lastDayOfMonth(year, monthIndex) {
-  const date = new Date(year, monthIndex + 1, 0);
-  return date.getDate();
+function lastDayOfMonth (year, monthIndex) {
+  const date = new Date(year, monthIndex + 1, 0)
+  return date.getDate()
 }
 
-function getOption(yyyy, mm) {
-  const mm0 = mm < 10 ? "0" + mm : mm;
-  const option = {
-    docDate: [10, mm0, yyyy].join("/"),
-    termFrom: ["01", mm0, yyyy].join("/"),
-    termTo: [lastDayOfMonth(yyyy, mm - 1), mm0, yyyy].join("/"),
-  };
+export function termOptionsMaker (beginDate) {
+  const d = getDates(beginDate)
 
-  return option;
-}
+  let yyyy = d.nowYear
+  let mm = d.nowMonth
 
-export function termOptionsMaker(beginDate) {
-  const now = new Date();
-  const nowYear = now.getFullYear();
-  const nowMonth = now.getMonth() + 2;
+  const terms = []
 
-  beginDate = beginDate.split("/");
-  const beginYear = parseInt(beginDate[2], 10);
-  const beginMonth = parseInt(beginDate[1], 10);
+  if (d.nowYear === d.beginYear) { // 2020 === 2020
+    for (mm; mm >= d.beginMonth; mm--) {
+      const YYYY = getYYYY(mm, yyyy)
+      const MM = getMM(mm)
 
-  const terms = [];
-  let yyyy = nowYear;
-  let mm = nowMonth;
-
-  if (nowYear === beginYear) {
-    for (mm; mm >= beginMonth; mm--) {
-      terms.push(getOption(yyyy, mm));
+      terms.push(getOption(YYYY, MM))
     }
   } else {
     for (let i = 1; i <= 12; i++) {
       if (mm < 1) {
-        yyyy--;
-        mm = 12;
+        yyyy--
+        mm = 12
       }
 
-      if (yyyy === beginYear && mm < beginMonth) {
-        break;
+      if (yyyy === d.beginYear && mm < d.beginMonth) {
+        break
       }
 
-      terms.push(getOption(yyyy, mm));
+      terms.push(getOption(yyyy, mm))
 
-      mm--;
+      mm--
     }
   }
 
-  return terms;
+  return terms
 }
 
-// const beginDate = '01/02/2020';
-// // const beginDate = '01/11/2019';
+function getDates (beginDate) {
+  const now = new Date()
+  const nowYear = now.getFullYear()
+  const nowMonth = now.getMonth() + 2
 
-// const test = termOptionsMaker(beginDate);
-// console.log(test);
+  beginDate = beginDate.split('/')
+  const beginYear = parseInt(beginDate[2], 10)
+  const beginMonth = parseInt(beginDate[1], 10)
 
-// // termOptionsMaker return something like :
-// // [
-// //   {
-// //     docDate: '10-04-2020',
-// //     termFrom: '01-04-2020',
-// //     termTo: '30-04-2020'
-// //   },
-// //   {
-// //     docDate: '10-03-2020',
-// //     termFrom: '01-03-2020',
-// //     termTo: '31-03-2020'
-// //   },
-// //   {
-// //     docDate: '10-02-2020',
-// //     termFrom: '01-02-2020',
-// //     termTo: '29-02-2020'
-// //   }
-// // ]
+  return { now, nowYear, nowMonth, beginYear, beginMonth }
+}
+
+function getYYYY (mm, yyyy) {
+  if (mm > 12) {
+    let toAdd = (mm / 12) - 1
+
+    toAdd = Math.ceil(toAdd)
+
+    return yyyy + toAdd
+  } else {
+    return yyyy
+  }
+}
+
+function getMM (mm) {
+  if (mm === 13) {
+    return 1
+  } else {
+    return mm
+  }
+}
+
+function getOption (yyyy, mm) {
+  const mm0 = mm < 10 ? '0' + mm : mm
+  const option = {
+    docDate: [10, mm0, yyyy].join('/'),
+    termFrom: ['01', mm0, yyyy].join('/'),
+    termTo: [lastDayOfMonth(yyyy, mm - 1), mm0, yyyy].join('/')
+  }
+
+  return option
+}

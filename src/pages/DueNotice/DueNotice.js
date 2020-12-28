@@ -14,7 +14,7 @@ export const DueNotice = () => {
   const { tenants } = useStoreState((state) => state.tenant)
   const {
     batches,
-    utils: { termOptionsMaker, dateMinus1month },
+    utils: { termOptionsMaker, dateMinus1month }
   } = useStoreState((state) => state.batch)
 
   const batch = batches.filter((batch) => batch.id === id)[0]
@@ -30,7 +30,7 @@ export const DueNotice = () => {
     address1,
     address2,
     postalCode,
-    townName,
+    townName
   } = lessor
 
   const { civility, firstName, lastName } = tenant
@@ -42,7 +42,7 @@ export const DueNotice = () => {
     inputDocDate: format.asString('yyyy-MM-dd', new Date()),
     docDate: format.asString('dd/MM/yyyy', new Date()),
     termFrom: terms[0].termFrom,
-    termTo: terms[0].termTo,
+    termTo: terms[0].termTo
   })
   const [showDoc, setShowDoc] = useState(true)
 
@@ -60,8 +60,6 @@ export const DueNotice = () => {
 
   const handleChangeInputDocDate = (evt) => {
     evt.preventDefault()
-
-    console.log(evt.target.value)
 
     setDates({ ...dates, inputDocDate: evt.target.value })
   }
@@ -116,7 +114,7 @@ export const DueNotice = () => {
       lastDayOflastMonth = [
         lastDayOflastMonth.getDate(),
         lastDayOflastMonth.getMonth(),
-        lastDayOflastMonth.getFullYear(),
+        lastDayOflastMonth.getFullYear()
       ].join('/')
 
       anteriorBalance2 = getAnteriorBalance2(
@@ -187,9 +185,7 @@ export const DueNotice = () => {
             <div className='row sender'>
               <div className='col'>
                 <p>
-                  {companyName
-                    ? companyName
-                    : managerFirstName + ' ' + managerLastName}
+                  {companyName || managerFirstName + ' ' + managerLastName}
                 </p>
                 <p>{address1}</p>
                 {address2 && <p>{address2}</p>}
