@@ -122,7 +122,7 @@ export const AddBatch = () => {
         <div className='input input-field col s6'>
           <input name='rent' type='number' className='validate' step='.01' />
           <label for='last_name' className=''>
-            charge
+            loyer
           </label>
         </div>
 
