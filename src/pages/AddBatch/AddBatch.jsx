@@ -108,27 +108,27 @@ export const AddBatch = () => {
           <TenantSelect />
         </div>
 
-        <Input name='name' size='s6' />
+        <Input name='nom du lot' size='s6' />
         <div className='input input-field col s6'>
           <input type='text' name='beginDate' className='datepicker' />
           <label htmlFor='beginDate'>Date de début</label>
         </div>
 
-        <Input name='address1' size='s12' />
-        <Input name='address2' size='s12' />
-        <Input name='postalCode' size='s6' />
-        <Input name='townName' size='s6' />
+        <Input name='addresse1' size='s12' />
+        <Input name='addresse2' size='s12' />
+        <Input name='code postal' size='s6' />
+        <Input name='ville' size='s6' />
 
         <div className='input input-field col s6'>
           <input name='rent' type='number' className='validate' step='.01' />
-          <label for='last_name' className=''>
-            charge
+          <label for='rent' className=''>
+            loyer
           </label>
         </div>
 
         <div className='input input-field col s6'>
           <input name='charge' type='number' className='validate' step='.01' />
-          <label for='last_name' className=''>
+          <label for='charge' className=''>
             charge
           </label>
         </div>
