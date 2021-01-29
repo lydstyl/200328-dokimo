@@ -3,6 +3,16 @@ import { useStoreState, useStoreActions } from 'easy-peasy'
 import { useParams, Link } from 'react-router-dom'
 import M from 'materialize-css/dist/js/materialize.min.js'
 
+function getNowEnDate() {
+    const date = new Date()
+
+    const dd = date.getDate()
+    const mm = date.getMonth() + 1
+    const yyyy = date.getFullYear()
+
+    return [yyyy, mm < 10 ? '0' + mm : mm, dd < 10 ? '0' + dd : dd].join('-')
+}
+
 export const PaymentReceipt = () => {
   const { id } = useParams() // batch id
   const {
@@ -11,29 +21,22 @@ export const PaymentReceipt = () => {
   } = useStoreState((state) => state.batch)
   const batch = batches.filter((batch) => batch.id === id)[0]
 
+  const { beginDate, rent, charge } = batch
+  let payments = batch.payments
+
   const { firestoreAddPayment, firestoreDeletePayment } = useStoreActions(
     (actions) => actions.batch
   )
 
-  const getNowFrDate = () => {
-    const date = new Date()
 
-    const dd = date.getDate()
-    const mm = date.getMonth() + 1
-    const yyyy = date.getFullYear()
-
-    return [dd < 10 ? '0' + dd : dd, mm < 10 ? '0' + mm : mm, yyyy].join('/')
-  }
-
-  const [paymentDate, setPaymentDate] = useState(getNowFrDate()) // todo by default get now date valid exemple value : '2020-04-06'
-  const [amount, setAmount] = useState('')
+  const [paymentDate, setPaymentDate] = useState(getNowEnDate) 
+  
+  const [amount, setAmount] = useState(payments[payments.length - 1].amount)
 
   const handleDateChange = (e) => {
     setPaymentDate(e.target.value)
   }
 
-  const { beginDate, rent, charge } = batch
-  let payments = batch.payments
 
   let tooOldDate = dateMinus1month(beginDate).split('/')
   tooOldDate[0] = '10'
