@@ -121,14 +121,14 @@ export const AddBatch = () => {
 
         <div className='input input-field col s6'>
           <input name='rent' type='number' className='validate' step='.01' />
-          <label for='last_name' className=''>
+          <label htmlFor='last_name' className=''>
             loyer
           </label>
         </div>
 
         <div className='input input-field col s6'>
           <input name='charge' type='number' className='validate' step='.01' />
-          <label for='last_name' className=''>
+          <label htmlFor='last_name' className=''>
             charge
           </label>
         </div>
