@@ -120,7 +120,7 @@ export const DueNotice = () => {
       anteriorBalance2 = getAnteriorBalance2(
         batch,
         dates.termFrom,
-        lastDayOflastMonth // ok event if like 30/3/2020 instead of 30/03/2020
+        lastDayOflastMonth // ok even if like 30/3/2020 instead of 30/03/2020
       )
     } else {
       anteriorBalance2 = getAnteriorBalance2(
