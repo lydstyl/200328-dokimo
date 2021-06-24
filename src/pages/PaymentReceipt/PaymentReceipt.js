@@ -23,7 +23,6 @@ export const PaymentReceipt = () => {
 
   const { beginDate, rent, charge } = batch;
   let payments = batch.payments;
-  console.log("🚀 ~ PaymentReceipt ~ payments", payments);
 
   const { firestoreAddPayment, firestoreDeletePayment } = useStoreActions(
     (actions) => actions.batch
