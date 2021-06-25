@@ -19,7 +19,6 @@ export const PaymentDocument = () => {
   } = batch;
 
   const payment = batch.payments.filter((payment) => payment.id === id)[0];
-  console.log("🚀 ~ PaymentDocument ~ payment", payment);
 
   const {
     document: { type, term, amount },

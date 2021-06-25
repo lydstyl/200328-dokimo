@@ -83,7 +83,7 @@ export function mapBalanceToPayments(options) {
 
   // add type of document
   options.payments.map((payment) => {
-    if (payment.cumulRents == payment.cumulPaymentsAmount) {
+    if (payment.cumulRents === payment.cumulPaymentsAmount) {
       payment.document = {
         type: "Quittance de loyer",
       };
@@ -109,8 +109,6 @@ export function mapBalanceToPayments(options) {
 
     return payment;
   });
-
-  console.log("🚀 ~ options.payments", options.payments);
 
   return options.payments;
 }
