@@ -39,6 +39,7 @@ export function mapBalanceToPayments(options) {
     return a.dateObj - b.dateObj;
   });
 
+  // add cumulPaymentAmount
   let cumulPaymentsAmount = 0;
 
   options.payments = options.payments.map((payment) => {
@@ -46,7 +47,6 @@ export function mapBalanceToPayments(options) {
     amount = max2Decimals(amount);
 
     cumulPaymentsAmount = cumulPaymentsAmount + amount;
-
     cumulPaymentsAmount = max2Decimals(cumulPaymentsAmount);
 
     payment.cumulPaymentsAmount = cumulPaymentsAmount;
@@ -72,7 +72,6 @@ export function mapBalanceToPayments(options) {
     const monthNb = nbOfMonth(options.beginDate, payment.date) + 1;
 
     payment.cumulRents = options.chargeAndRent * monthNb;
-
     payment.cumulRents = max2Decimals(payment.cumulRents);
 
     payment.balance = max2Decimals(
@@ -92,22 +91,10 @@ export function mapBalanceToPayments(options) {
       payment.document = {
         type: "Reçu partiel de loyer",
       };
+      payment.restToPay = payment.cumulRents - payment.cumulPaymentsAmount;
     }
 
     payment.document.term = `du ${payment.term.from} au ${payment.term.to}`;
-
-    console.log(
-      "🚀 ~ options.payments.map ~ options.chargeAndRent",
-      options.chargeAndRent
-    );
-    console.log("🚀 ~ options.payments.map ~ payment.balance", payment.balance);
-    payment.document.amount = max2Decimals(
-      options.chargeAndRent - payment.balance
-    );
-    console.log(
-      "🚀 ~ options.payments.map ~ payment.document.amount",
-      payment.document.amount
-    );
 
     return payment;
   });
