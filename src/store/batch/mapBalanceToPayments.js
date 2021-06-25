@@ -83,15 +83,26 @@ export function mapBalanceToPayments(options) {
 
   // add type of document
   options.payments.map((payment) => {
-    if (payment.balance <= 0) {
+    if (payment.cumulRents == payment.cumulPaymentsAmount) {
       payment.document = {
         type: "Quittance de loyer",
       };
-    } else {
+    } else if (payment.cumulRents - payment.cumulPaymentsAmount > 0) {
       payment.document = {
         type: "Reçu partiel de loyer",
       };
-      payment.restToPay = payment.cumulRents - payment.cumulPaymentsAmount;
+
+      payment.restToPay = max2Decimals(
+        payment.cumulRents - payment.cumulPaymentsAmount
+      );
+    } else {
+      payment.document = {
+        type: "Trop perçu de loyer",
+      };
+
+      payment.toMuchPaid = max2Decimals(
+        payment.cumulPaymentsAmount - payment.cumulRents
+      );
     }
 
     payment.document.term = `du ${payment.term.from} au ${payment.term.to}`;

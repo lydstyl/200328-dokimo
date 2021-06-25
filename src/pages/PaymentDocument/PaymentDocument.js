@@ -61,7 +61,7 @@ export const PaymentDocument = () => {
                       : managerLastName + " " + managerFirstName}
                   </p>
                 </th>
-                <th>
+                <th className="right">
                   Locataire{" "}
                   <p>
                     {civility} {firstName} {lastName}
@@ -70,31 +70,44 @@ export const PaymentDocument = () => {
               </tr>
             </thead>
             <tbody>
-              {type === "Reçu partiel de loyer" && (
-                <>
-                  <tr>
-                    <td>Total loyer et charges reçus</td>
-                    <td>{payment.amount} €</td>
-                  </tr>
-                  <tr>
-                    <td>Rèste à payer</td>
-                    <td>{payment.restToPay} €</td>
-                  </tr>
-                </>
-              )}
-
               {type === "Quittance de loyer" && (
                 <tr>
                   <td>Total loyer et charges reçus</td>
-                  <td>{funAmount(rent + charge)} €</td>
+                  <td className="right">{funAmount(rent + charge)} €</td>
                 </tr>
               )}
 
               {type === "Quittance de loyer" && balance < 0 && (
                 <tr>
                   <td>Total du trop perçu à ce jour</td>
-                  <td>{funAmount(balance * -1)} €</td>
+                  <td className="right">{funAmount(balance * -1)} €</td>
                 </tr>
+              )}
+
+              {type === "Reçu partiel de loyer" && (
+                <>
+                  <tr>
+                    <td>Total loyer et charges reçus</td>
+                    <td className="right">{payment.amount} €</td>
+                  </tr>
+                  <tr>
+                    <td>Rèste à payer</td>
+                    <td className="right">{payment.restToPay} €</td>
+                  </tr>
+                </>
+              )}
+
+              {type === "Trop perçu de loyer" && (
+                <>
+                  <tr>
+                    <td>Total loyer et charges reçus</td>
+                    <td className="right">{payment.amount} €</td>
+                  </tr>
+                  <tr>
+                    <td>Trop perçu</td>
+                    <td className="right">{payment.toMuchPaid} €</td>
+                  </tr>
+                </>
               )}
             </tbody>
           </table>
@@ -103,7 +116,7 @@ export const PaymentDocument = () => {
 
       <div className="row payment">
         <div className="col">
-          {type === "Quittance de loyer" ? (
+          {type === "Quittance de loyer" && (
             <>
               <p>
                 Je soussigné {managerFirstName} {managerLastName}
@@ -112,6 +125,7 @@ export const PaymentDocument = () => {
                 de la part du locataire l’ensemble des sommes mentionnées à
                 titre du loyer et des charges.
               </p>
+
               <p>
                 Cette quittance annule tous les reçus qui auraient pu être
                 donnés pour acomptes versés au titre du loyer et des charges
@@ -120,7 +134,9 @@ export const PaymentDocument = () => {
                 conserver 3 ans après échéance du bail.
               </p>
             </>
-          ) : (
+          )}
+
+          {type === "Reçu partiel de loyer" && (
             <>
               <p>
                 Je soussigné {managerFirstName} {managerLastName}
@@ -129,8 +145,24 @@ export const PaymentDocument = () => {
                 de la part du locataire l’ensemble des sommes mentionnées à
                 titre de paiement partiel du loyer et des charges.
               </p>
+
               <p>Ce reçu annule et remplace les précédents reçus.</p>
+
               <p>Ce reçu ne peut en aucun cas servir de quittance de loyer.</p>
+            </>
+          )}
+
+          {type === "Trop perçu de loyer" && (
+            <>
+              <p>
+                Je soussigné {managerFirstName} {managerLastName}
+                {companyName && `, gérant de ${companyName.toUpperCase()}`},
+                propriétaire du logement désigné ci-dessus, déclare avoir reçu
+                de la part du locataire l’ensemble des sommes mentionnées à
+                titre de paiement du loyer et des charges.
+              </p>
+
+              <p>Ce reçu annule et remplace les précédents reçus.</p>
             </>
           )}
 

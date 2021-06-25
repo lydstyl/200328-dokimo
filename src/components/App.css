@@ -53,6 +53,10 @@ h1 {
   margin: auto;
 }
 
+.payment-doc .right {
+  text-align: right;
+}
+
 .payment {
   text-align: justify;
 }
