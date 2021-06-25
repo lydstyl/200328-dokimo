@@ -75,7 +75,9 @@ export function mapBalanceToPayments(options) {
 
     payment.cumulRents = max2Decimals(payment.cumulRents);
 
-    payment.balance = payment.cumulRents - payment.cumulPaymentsAmount;
+    payment.balance = max2Decimals(
+      payment.cumulRents - payment.cumulPaymentsAmount
+    );
 
     return payment;
   });
@@ -94,7 +96,18 @@ export function mapBalanceToPayments(options) {
 
     payment.document.term = `du ${payment.term.from} au ${payment.term.to}`;
 
-    payment.document.amount = options.chargeAndRent - payment.balance;
+    console.log(
+      "🚀 ~ options.payments.map ~ options.chargeAndRent",
+      options.chargeAndRent
+    );
+    console.log("🚀 ~ options.payments.map ~ payment.balance", payment.balance);
+    payment.document.amount = max2Decimals(
+      options.chargeAndRent - payment.balance
+    );
+    console.log(
+      "🚀 ~ options.payments.map ~ payment.document.amount",
+      payment.document.amount
+    );
 
     return payment;
   });
