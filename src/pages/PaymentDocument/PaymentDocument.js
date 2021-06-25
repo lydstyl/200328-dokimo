@@ -21,7 +21,7 @@ export const PaymentDocument = () => {
   const payment = batch.payments.filter((payment) => payment.id === id)[0];
 
   const {
-    document: { type, term, amount },
+    document: { type, term },
     date,
     balance,
   } = payment;
